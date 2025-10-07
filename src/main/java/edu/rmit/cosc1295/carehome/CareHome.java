@@ -8,6 +8,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
+import java.util.*;
+
 
 
 public class CareHome implements Serializable {
@@ -339,11 +342,10 @@ public class CareHome implements Serializable {
     public void allocateNursesShifts() {
         String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
         String[] nurseShiftTime = {"08:00-16:00", "14:00-22:00"};
+        Random random = new Random();
 
         // Search the whole staff list
-        for (int i = 0; i < staffList.size(); i++) {
-            Staff staff = staffList.get(i);
-
+        for (Staff staff : staffList) {
             // If the staff is a nurse then run the loop
             if (staff instanceof Nurse nurse) {
 
@@ -353,25 +355,24 @@ public class CareHome implements Serializable {
                     continue; // skip this nurse
                 }
 
-                // Create Shifts for every day and time slot
+                // Randomly create Shifts for every day and time slot
                 for (String day : days) {
-                    for (String time : nurseShiftTime) {
-                        Shift shift = new Shift(day, time);
-                        nurse.addShift(shift);
-                    }
+                    String randomShift = nurseShiftTime[random.nextInt(nurseShiftTime.length)];
+                    Shift shift = new Shift(day, randomShift);
+                    nurse.addShift(shift);
                 }
 
-                System.out.println("Assigned 14 shifts to Nurse: " + nurse.getName());
+
+                System.out.println("Assigned 7 random shifts to Nurse (1 shift per day): " + nurse.getName());
 
                 // Create log message
-                String showlog = "Manager assigned 14 shifts to Nurse "
+                String showlog = "Manager assigned 7 shifts to Nurse "
                         + nurse.getName() + "(" + nurse.getId() + ")";
 
                 createLog(showlog);
 
             }
         }
-
     }
 
 
