@@ -26,7 +26,7 @@ public class Doctor extends Staff {
 
     /**
      * Add new shift to doctor
-     * @param shift
+     * @param shift the Shift object that contains the day and time for this doctor
      */
 
     public void addShift(Shift shift) {
@@ -61,6 +61,13 @@ public class Doctor extends Staff {
         }
     }
 
+    /**
+     * Create a new prescription
+     * @param medicine the name of the medicine
+     * @param dose the dosage or amount to take
+     * @param time the time when the medicine should be taken
+     * @return a new prescription created by this doctor
+     */
 
     public Prescription createPrescription(String medicine, String dose, String time) {
         return new Prescription(this.id, medicine, dose, time);
