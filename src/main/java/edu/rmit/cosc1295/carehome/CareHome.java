@@ -129,6 +129,17 @@ public class CareHome implements Serializable {
             throw new IllegalArgumentException("Resident name can't be null or blank");
         }
 
+        // Find the resident
+        Resident target = null;
+        for (Resident r : residents) {
+            if (r.getName() != null && r.getName().equalsIgnoreCase(residentName)) {
+                target = r;
+                break;
+            }
+        }
+        if (target == null) {
+            throw new IllegalArgumentException("Resident " + residentName + " does not exist");
+        }
 
     }
 
