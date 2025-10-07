@@ -50,12 +50,19 @@ public class Staff implements Serializable{
 
     /**
      * Get the new set-up password of the staff
+     * Only manager can perform this action
+     *
      * @param newPassword the new password of staff
      */
 
     public void setPassword(String newPassword) {
+        if (newPassword == null || newPassword.isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be empty");
+        }
         this.password = newPassword;
     }
+
+
 
 }
 
