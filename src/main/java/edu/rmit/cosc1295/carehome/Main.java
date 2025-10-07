@@ -11,11 +11,9 @@ public class Main {
         if (home == null) {
             home = new CareHome();
             System.out.println("No data found. Creating a new one.");
-
-
-            home.saveToFile("SavedData.ser");
         }
 
+        home.saveToFile("SavedData.ser");
         // GUI
     }
 }
