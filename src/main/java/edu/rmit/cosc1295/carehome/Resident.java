@@ -80,7 +80,7 @@ public class Resident implements Serializable {
      * @param bedId The new bed id to assign, or null if unassigned
      */
 
-    public void saveBedId(Integer bedId) {
+    public void setBedId(Integer bedId) {
         if (bedId != null && bedId < 0) {
             throw new IllegalArgumentException("Bed ID cannot be negative: " + bedId);
         }
@@ -90,10 +90,11 @@ public class Resident implements Serializable {
 
     /**
      * Add a new prescription into the list
-     * @param p
+     * @param p the prescription object to be added for this resident.
+     *          must not be null; contains doctor name, medicine name, dose and time
      */
 
-    public void addNewPres(Prescription p) {
+    public void addPrescription(Prescription p) {
         this.prescriptions.add(p);
     }
 
@@ -119,16 +120,17 @@ public class Resident implements Serializable {
 
     /**
      * Return all the prescriptions
-     * @return
+     * @return A list contains all prescriptions for this resident.
      */
 
-    public ArrayList<Prescription> getAllPres() {
-        return this.prescriptions;
+    public ArrayList<Prescription> getPrescriptions() {
+        return prescriptions;
     }
 
 
     /**
-     * Print all prescriptions
+     * Print all prescriptions of this resident to the console.
+     * If there is no prescriptions, show a message instead.
      */
 
     public void printAllPres() {
@@ -140,5 +142,9 @@ public class Resident implements Serializable {
             }
         }
     }
+
+    /**
+     * Show resident summary
+     */
 }
 

@@ -238,7 +238,7 @@ public class CareHome implements Serializable {
         // Assign and update
         targetbed.assignResident(re);
         targetbed.setAvailable(false);
-        re.saveBedId(bedId);
+        re.setBedId(bedId);
 
         System.out.println("Assigned " + re.getName() + " to BedNo. " + bedId + " by " + manager.getName());
 
@@ -678,7 +678,7 @@ public class CareHome implements Serializable {
         emptyBed.setAvailable(false);
 
         // Update the resident's bedID
-        r.saveBedId(newBedId);
+        r.setBedId(newBedId);
 
         System.out.println("Nurse " + nurse.getName() + " moved resident " + residentName + " to a new bed "
                 + newBedId);
@@ -759,10 +759,10 @@ public class CareHome implements Serializable {
         }
 
         // Does the prescription exist or not
-        if (numberOrdered < 0 || numberOrdered >= r.getAllPres().size()) {
+        if (numberOrdered < 0 || numberOrdered >= r.getPrescriptions().size()) {
             throw new IllegalArgumentException("Can't find the prescription: " + numberOrdered);
         }
-        Prescription p = r.getAllPres().get(numberOrdered);
+        Prescription p = r.getPrescriptions().get(numberOrdered);
 
         // Check is the staff a medical staff
         if (!(staff instanceof Doctor) && !(staff instanceof Nurse)) {

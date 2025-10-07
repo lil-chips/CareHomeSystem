@@ -49,7 +49,7 @@ public class Staff implements Serializable{
     }
 
     /**
-     * Get the new set up password of the staff
+     * Get the new set-up password of the staff
      * @param newPassword the new password of staff
      */
 

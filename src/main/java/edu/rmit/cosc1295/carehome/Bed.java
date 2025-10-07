@@ -40,7 +40,7 @@ public class Bed implements Serializable {
 
     /**
      * Set occupancy status
-     * @param If is true = occupied, false = vacant
+     * @param status true = available, false = occupied
      */
 
     public void setAvailable(boolean status) {
@@ -50,7 +50,7 @@ public class Bed implements Serializable {
 
     /**
      * Get the resident object on this bed
-     * @return
+     * @return resident object or null if empty
      */
 
     public Resident getResident() {
@@ -64,19 +64,27 @@ public class Bed implements Serializable {
 
     public void removeResident() {
         this.resident = null;
+        this.status = true; // The bed is empty
     }
 
 
     /**
      * Assign a resident to a bed
      * If someone was already here, will be replaced
-     * @param r
+     * @param r resident to assign
      */
 
     public void assignResident(Resident r) {
         this.resident = r;
+        this.status = false; // the bed is occupied
     }
 
+    /**
+     * Check if bed is occupied
+     */
+    public boolean isOccupied() {
+        return !status;
+    }
 
     /**
      * Print the status of the bed

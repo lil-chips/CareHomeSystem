@@ -54,7 +54,7 @@ public class Doctor extends Staff {
      */
 
     public void addPresTo(Resident r, Prescription p) {
-        r.addNewPres(p);
+        r.addPrescription(p);
 
         System.out.println("Doctor " + this.getName() + " has written a new prescription for " + r.getName() + "."
                 + "\n" + p);
