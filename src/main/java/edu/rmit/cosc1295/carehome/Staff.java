@@ -81,6 +81,7 @@ public class Staff implements Serializable{
      * Show a short summary of the staff
      * @return formated string including id, name and role
      */
+
     @Override
     public String toString() {
         return "Staff ID: " + id + ", Name: " + name + " -> Role: " + this.getClass().getSimpleName();
