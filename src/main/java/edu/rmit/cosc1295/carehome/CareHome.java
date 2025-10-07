@@ -105,18 +105,21 @@ public class CareHome implements Serializable {
             throw new IllegalArgumentException("Bed ID " + bedId + " is not available");
         }
 
-
+        // Assign the bed
+        targetBed.assignResident(resident);
+        resident.setBedId(bedId);
         residents.add(resident);
+
+        // Show the message
         System.out.println("Manager " + manager.getName() + " added a new resident: "
-                + resident.getName());
+                + resident.getName() + " to bed " + bedId);
 
         // Create log message
         String showlog = "Manager " + manager.getName() + " (" + manager.getId() + ") added resident "
-                + resident.getName();
+                + resident.getName() + " to bed " + bedId;
 
         createLog(showlog);
     }
-
 
     /**
      * Print out all the resident's name, gender and bed condition
