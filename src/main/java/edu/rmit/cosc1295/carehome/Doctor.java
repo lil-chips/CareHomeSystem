@@ -81,6 +81,17 @@ public class Doctor extends Staff {
      */
 
     public void addPrescription(CareHome careHome, Resident r, Prescription p) {
+        if (careHome == null) {
+            throw new IllegalArgumentException("CareHome reference can't be null.");
+        }
+        if (r == null) {
+            throw new IllegalArgumentException("Resident can't be null.");
+        }
+        if (p == null) {
+            throw new IllegalArgumentException("Prescription can't be null.");
+        }
+
+        // Add prescription in list
         r.addPrescription(p);
 
         System.out.println("Doctor " + this.getName() + " has written a new prescription for " + r.getName() + "."
