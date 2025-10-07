@@ -385,16 +385,18 @@ public class CareHome implements Serializable {
         String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
         String doctorShiftTime = "09:00-10:00";
 
-        for (int i = 0; i < staffList.size(); i++) {
-            Staff staff = staffList.get(i);
+        for (Staff staff : staffList) {
 
+            // Only apply to doctor objects
             if (staff instanceof Doctor doctor) {
 
+                // Prevent duplicate shift
                 if (!doctor.getShifts().isEmpty()) {
                     System.out.println("Doctor " + doctor.getName() + " already has shifts assigned");
                     continue; // skip this doctor
                 }
 
+                // Assign 1-hour shift per day
                 for (String day : days) {
                     Shift shift = new Shift(day, doctorShiftTime);
                     doctor.addShift(shift);
