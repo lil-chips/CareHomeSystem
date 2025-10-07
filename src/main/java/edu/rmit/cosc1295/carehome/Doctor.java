@@ -47,13 +47,15 @@ public class Doctor extends Staff {
     }
 
 
+
     /**
      * Add prescription for resident
+     * @param careHome the carehome instance
      * @param r resident
      * @param p prescription
      */
 
-    public void addPresTo(Resident r, Prescription p) {
+    public void addPrescription(CareHome careHome, Resident r, Prescription p) {
         r.addPrescription(p);
 
         System.out.println("Doctor " + this.getName() + " has written a new prescription for " + r.getName() + "."
@@ -62,5 +64,14 @@ public class Doctor extends Staff {
         // Create log message
         CareHome.createLog("Doctor " + this.getName() + " added prescription for " + r.getName()
                 + ": " + p);
+    }
+
+    /**
+     * For debugging
+     * @return doctor name+ID+shift
+     */
+    @Override
+    public String toString() {
+        return "Doctor " + name + " , ID: " + id + " -> Shifts: " + doctorShifts.size();
     }
 }
