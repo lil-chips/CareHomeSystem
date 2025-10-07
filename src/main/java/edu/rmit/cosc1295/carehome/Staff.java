@@ -62,7 +62,10 @@ public class Staff implements Serializable{
         this.password = newPassword;
     }
 
-
+    @Override
+    public String toString() {
+        return "Staff ID: " + id + ", Name: " + name + " -> Role: " + this.getClass().getSimpleName();
+    }
 
 }
 
