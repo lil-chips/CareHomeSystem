@@ -87,6 +87,15 @@ public class CareHome implements Serializable {
     public void addResident(Manager manager, Resident resident, int bedId) {
 
         // Find the target bed
+        Bed targetBed = null;
+        for (Bed b : beds) {
+            if (b.getBedId() == bedId) {
+                targetBed = b;
+                break;
+            }
+        }
+
+
         residents.add(resident);
         System.out.println("Manager " + manager.getName() + " added a new resident: "
                 + resident.getName());
