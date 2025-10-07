@@ -83,7 +83,7 @@ public class Shift implements Serializable {
             start = LocalTime.parse(beginTime, formatter);
             end = LocalTime.parse(endTime, formatter);
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Time must be in HH:MM format, got: " + time);
+            throw new IllegalArgumentException("Time must be in HH:MM format (e.g., 05:00-12:00), got: " + time);
         }
 
         int duration = end.getHour() - start.getHour();
@@ -99,6 +99,17 @@ public class Shift implements Serializable {
         }
 
         return duration;
+    }
+
+
+    public int getDuration() {
+        int hours = 0;
+
+        // Check the shift patterns
+        if (time.contains("8:00-16:00") || time.contains("08:00-16:00")) {
+            hours = 8;
+        }
+
     }
 }
 
