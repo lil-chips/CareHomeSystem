@@ -156,7 +156,26 @@ public class CareHome implements Serializable {
             throw new IllegalArgumentException("Bed ID " + newBedId + " is not available");
         }
 
+        // Release old bed
+        Integer oldBedId = target.getBedId();
+        if (oldBedId != null) {
+            for (Bed b : beds) {
+                if (b.getBedId() == oldBedId) {
+                    b.removeResident(); // Set the status to available
+                    break;
+                }
+            }
+        }
+
+        // Assign new bed + update resident's bedId
+        targetBed.assignResident(target); // Set the status to occupied
+        target.setBedId(newBedId);
+
+        // Record
+        createLog("Nurse " + nurse.getName() + " moved resident "
+        + target.getName() + " to bed " + newBedId);
     }
+
 
     /**
      * Print out all the resident's name, gender and bed condition
