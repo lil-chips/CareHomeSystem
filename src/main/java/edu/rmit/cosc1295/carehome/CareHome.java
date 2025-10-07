@@ -595,6 +595,7 @@ public class CareHome implements Serializable {
 
     public static CareHome loadFromFile(String filename) {
 
+        // Check does the file exist or not
         File file = new File(filename);
         if (!file.exists()) {
             System.out.println("File " + filename + " does not exist.");
