@@ -48,4 +48,16 @@ public class Manager extends Staff {
             throw e;
         }
     }
+
+    /**
+     * Add a new staff member to the system.
+     * Ask CareHome to handle saving and checking.
+     *
+     * @param careHome the CareHome that manages all data
+     * @param newStaff the staff you want to add
+     */
+
+    public void addStaff(CareHome careHome, Staff newStaff) {
+        careHome.addStaff(this, newStaff);
+    }
 }
