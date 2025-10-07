@@ -141,6 +141,21 @@ public class CareHome implements Serializable {
             throw new IllegalArgumentException("Resident " + residentName + " does not exist");
         }
 
+        // Find a new bed
+        Bed targetBed = null;
+        for (Bed b : beds) {
+            if (b.getBedId() == newBedId) {
+                targetBed = b;
+                break;
+            }
+        }
+        if (targetBed == null) {
+            throw new IllegalArgumentException("Bed ID " + newBedId + " does not exist");
+        }
+        if (!targetBed.bedAvailable()) {
+            throw new IllegalArgumentException("Bed ID " + newBedId + " is not available");
+        }
+
     }
 
     /**
