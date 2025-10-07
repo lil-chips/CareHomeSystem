@@ -20,8 +20,8 @@ public class Manager extends Staff {
 
 
     /**
-     * Modify staff's password
-     * Set up new password for staff
+     * Modify or set up staff's password
+     *
      * @param staff The staff whose password will be updated
      * @param newPassword The new password
      */
@@ -59,5 +59,17 @@ public class Manager extends Staff {
 
     public void addStaff(CareHome careHome, Staff newStaff) {
         careHome.addStaff(this, newStaff);
+    }
+
+    /**
+     * Add a new resident and put them into a bed.
+     * Ask CareHome to do the actual work.
+     *
+     * @param careHome the CareHome that manages all data
+     * @param newResident the resident you want to add
+     * @param bedId the bed number to assign
+     */
+    public void addResident(CareHome careHome, Resident newResident, int bedId) {
+        careHome.addResident(this, newResident, bedId);
     }
 }
