@@ -10,6 +10,7 @@ public class Staff implements Serializable{
 
     /**
      * Construct them with id, name and password
+     *
      * @param id the id of staff
      * @param name the name of staff
      * @param password the password of staff
@@ -18,6 +19,12 @@ public class Staff implements Serializable{
     public Staff(String id, String name, String password) {
         if (id == null || id.isBlank()) {
             throw new IllegalArgumentException("Staff ID cannot be null or blank.");
+        }
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Staff name cannot be null or blank.");
+        }
+        if (password == null || password.isBlank()) {
+            throw new IllegalArgumentException("Password cannot be null or blank.");
         }
 
         this.id = id;
