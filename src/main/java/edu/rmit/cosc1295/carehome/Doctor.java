@@ -61,6 +61,11 @@ public class Doctor extends Staff {
         }
     }
 
+
+    public Prescription createPrescription(String medicine, String dose, String time) {
+        return new Prescription(this.id, medicine, dose, time);
+    }
+
     /**
      * Add prescription for resident
      * @param careHome the carehome instance
