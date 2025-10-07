@@ -146,5 +146,10 @@ public class Resident implements Serializable {
     /**
      * Show resident summary
      */
+    @Override
+    public String toString() {
+        return "Resident: " + name + ", gender: " + gender + ", BedID: "
+                + bedId + ", prescriptions: " + prescriptions.size();
+    }
 }
 
