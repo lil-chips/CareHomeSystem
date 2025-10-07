@@ -470,7 +470,7 @@ public class CareHome implements Serializable {
                 for (int j = 0; j < shifts.size(); j++) {
                     Shift shift = shifts.get(j);
                     String whichDay = shift.getDay(); // Get the day
-                    int workingTime = shift.getShiftDuration();
+                    int workingTime = shift.getDuration();
 
                     int hourComb = shiftMap.getOrDefault(whichDay, 0) + workingTime;
 
