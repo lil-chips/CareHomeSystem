@@ -913,6 +913,11 @@ public class CareHome implements Serializable {
         throw new IllegalArgumentException("Staff ID not found: " + id);
     }
 
+    /**
+     * Find a bed by its ID.
+     * @param bedId the bed number to find
+     * @return the Bed object if found, otherwise null
+     */
 
     private Bed findBedById(int bedId) {
         for (Bed b : beds) {
