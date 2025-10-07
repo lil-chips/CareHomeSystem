@@ -33,13 +33,19 @@ public class Manager extends Staff {
         if (newPassword == null || newPassword.isBlank()) {
             throw new IllegalArgumentException("New password can't be null or blank");
         }
-        staff.setPassword(newPassword);
-        System.out.println("Manager " + name + " reset password for " + staff.getName());
 
-        // Create log message
-        String showlog = "Manager " + name + "has reset the password for staff" + staff.getId();
+        try {
+            staff.setPassword(newPassword);
+            System.out.println("Manager " + name + " reset password for " + staff.getName());
 
-        CareHome.createLog(showlog);
-
+            // Create log message
+            String showlog = "Manager " + name + "has reset the password for " + staff.getClass().getSimpleName()
+                    + " (ID: " + staff.getId() + ")";
+            CareHome.createLog(showlog);
+        } catch (Exception e) {
+            CareHome.createLog("Password reset failed: " + staff.getName() + " due to: "
+                    + e.getMessage());
+            throw e;
+        }
     }
 }
