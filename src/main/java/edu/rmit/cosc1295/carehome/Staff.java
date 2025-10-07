@@ -16,6 +16,10 @@ public class Staff implements Serializable{
      */
 
     public Staff(String id, String name, String password) {
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("Staff ID cannot be null or blank.");
+        }
+
         this.id = id;
         this.name = name;
         this.password = password;
@@ -56,7 +60,7 @@ public class Staff implements Serializable{
      */
 
     public void setPassword(String newPassword) {
-        if (newPassword == null || newPassword.isEmpty()) {
+        if (newPassword == null || newPassword.isBlank()) {
             throw new IllegalArgumentException("Password cannot be empty");
         }
         this.password = newPassword;
