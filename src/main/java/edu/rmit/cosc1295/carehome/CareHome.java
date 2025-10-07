@@ -121,6 +121,17 @@ public class CareHome implements Serializable {
         createLog(showlog);
     }
 
+    public void moveResident(Nurse nurse, String residentName, int newBedId) {
+        if (nurse == null) {
+            throw new IllegalArgumentException("Only nurses can move residents");
+        }
+        if (residentName == null || residentName.isBlank()) {
+            throw new IllegalArgumentException("Resident name can't be null or blank");
+        }
+
+
+    }
+
     /**
      * Print out all the resident's name, gender and bed condition
      */
