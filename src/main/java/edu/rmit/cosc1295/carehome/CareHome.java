@@ -31,8 +31,11 @@ public class CareHome implements Serializable {
      */
 
     public void addStaff(Manager manager, Staff newStaff) {
-        for (int i = 0; i < staffList.size(); i++) {
-            Staff s = staffList.get(i);
+        if (manager == null) {
+            throw new UnauthorizedException("Only manager can add staff");
+        }
+
+        for (Staff s : staffList) {
             if (s.getId().equals(newStaff.getId())) {
                 throw new IllegalArgumentException("Staff id already exists: " + newStaff.getId());
             }
@@ -608,7 +611,12 @@ public class CareHome implements Serializable {
                 home = (CareHome) input.readObject();
             }
             System.out.println("Loaded from " + filename);
+
+            // Record log
+            CareHome.createLog("System data loaded from " + filename);
+
             return home;
+
         } catch (IOException ioe) {
             System.err.println("Failed to load due to IO error: " + ioe.getMessage());
             return null;
