@@ -347,6 +347,13 @@ public class CareHome implements Serializable {
             // If the staff is a nurse then run the loop
             if (staff instanceof Nurse nurse) {
 
+                // Prevent duplicate shift
+                if (!nurse.getShifts().isEmpty()) {
+                    System.out.println("Nurse " + nurse.getName() + " already has shifts assigned");
+                    continue; // skip this nurse
+                }
+
+                // Create Shifts for every day and time slot
                 for (String day : days) {
                     for (String time : nurseShiftTime) {
                         Shift shift = new Shift(day, time);
@@ -381,6 +388,11 @@ public class CareHome implements Serializable {
             Staff staff = staffList.get(i);
 
             if (staff instanceof Doctor doctor) {
+
+                if (!doctor.getShifts().isEmpty()) {
+                    System.out.println("Doctor " + doctor.getName() + " already has shifts assigned");
+                    continue; // skip this doctor
+                }
 
                 for (String day : days) {
                     Shift shift = new Shift(day, doctorShiftTime);
