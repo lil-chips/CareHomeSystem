@@ -1,5 +1,9 @@
 package edu.rmit.cosc1295.carehome;
 
+/**
+ * Manager class is the system administrator
+ * The manager can create new staff accounts and reset passwords.
+ */
 public class Manager extends Staff {
 
     // Inherits from Staff
@@ -15,14 +19,20 @@ public class Manager extends Staff {
     }
 
 
-    // Modify staff's password
     /**
+     * Modify staff's password
      * Set up new password for staff
      * @param staff The staff whose password will be updated
      * @param newPassword The new password
      */
 
     public void modifyStaffPassword(Staff staff, String newPassword) {
+        if (staff == null) {
+            throw new IllegalArgumentException("Staff cannot be null");
+        }
+        if (newPassword == null || newPassword.isBlank()) {
+            throw new IllegalArgumentException("New password can't be null or blank");
+        }
         staff.setPassword(newPassword);
         System.out.println("Manager " + name + " reset password for " + staff.getName());
 
