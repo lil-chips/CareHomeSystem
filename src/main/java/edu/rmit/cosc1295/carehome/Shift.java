@@ -101,7 +101,10 @@ public class Shift implements Serializable {
         return duration;
     }
 
-
+    /**
+     *
+     * @return
+     */
     public int getDuration() {
         int hours = 0;
 
@@ -109,7 +112,18 @@ public class Shift implements Serializable {
         if (time.contains("8:00-16:00") || time.contains("08:00-16:00")) {
             hours = 8;
         }
+        else if (time.contains("14:00-22:00")) {
+            hours = 8;
+        }
+        else if (time.contains("1hr") || time.contains("1h")) {
+            hours = 1;
+        }
+        else {
+            // If the time doesn't match any pattern, then calculate it
+            hours = getShiftDuration();
+        }
 
+        return hours;
     }
 }
 
