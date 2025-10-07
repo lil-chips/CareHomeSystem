@@ -75,7 +75,7 @@ public class Doctor extends Staff {
 
     /**
      * Add prescription for resident
-     * @param careHome the carehome instance
+     * @param careHome the care home instance
      * @param r resident
      * @param p prescription
      */
