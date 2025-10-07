@@ -125,9 +125,6 @@ public class CareHome implements Serializable {
         if (nurse == null) {
             throw new UnauthorizedException("Only nurse can move resident");
         }
-        if (nurse == null) {
-            throw new IllegalArgumentException("Only nurses can move residents");
-        }
         if (residentName == null || residentName.isBlank()) {
             throw new IllegalArgumentException("Resident name can't be null or blank");
         }
@@ -299,7 +296,7 @@ public class CareHome implements Serializable {
 
         // Bed must be empty
         // If bedAvailable == false, which means is occupied
-        if (targetbed.bedAvailable() == false) {
+        if (!targetbed.bedAvailable()) {
             throw new IllegalStateException("The bed " + bedId + " is occupied!");
         }
 
@@ -717,7 +714,7 @@ public class CareHome implements Serializable {
 
         // Create log message
         String showlog = "Doctor " + doctor.getName() + " updated prescription [" + numberOrdered + "] for resident "
-                + r.getName() + " in bed " + bedId + " to " + pUpdated.toString();
+                + r.getName() + " in bed " + bedId + " to " + pUpdated;
 
         createLog(showlog);
 
