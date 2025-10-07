@@ -60,8 +60,7 @@ public class CareHome implements Serializable {
         if (staffList.isEmpty()) {
             System.out.println("No staff");
         } else {
-            for (int i = 0; i < staffList.size(); i++) {
-                Staff s = staffList.get(i);
+            for (Staff s : staffList) {
                 System.out.println(s.getClass().getSimpleName() + " " + s.getId() + " - " + s.getName());
             }
         }
@@ -123,6 +122,9 @@ public class CareHome implements Serializable {
     }
 
     public void moveResident(Nurse nurse, String residentName, int newBedId) {
+        if (nurse == null) {
+            throw new UnauthorizedException("Only nurse can move resident");
+        }
         if (nurse == null) {
             throw new IllegalArgumentException("Only nurses can move residents");
         }
@@ -186,8 +188,7 @@ public class CareHome implements Serializable {
         if (residents.isEmpty()) {
             System.out.println("No residents");
         } else {
-            for (int i = 0; i < residents.size(); i++) {
-                Resident resident = residents.get(i);
+            for (Resident resident : residents) {
                 String bedId;
                 if (resident.getBedId() == null) {
                     bedId = "Not assigned to any bed yet";
@@ -208,8 +209,7 @@ public class CareHome implements Serializable {
      */
 
     public Resident findResidentByName(String name) {
-        for (int i = 0; i < residents.size(); i++) {
-            Resident re = residents.get(i);
+        for (Resident re : residents) {
             if (re.getName().equalsIgnoreCase(name)) {
                 return re;
             }
@@ -234,8 +234,8 @@ public class CareHome implements Serializable {
      */
 
     public void addBed(Bed bed) {
-        for (int i = 0; i < beds.size(); i++) {
-            if (beds.get(i).getBedId() == bed.getBedId()) {
+        for (Bed value : beds) {
+            if (value.getBedId() == bed.getBedId()) {
                 throw new IllegalArgumentException("Bed id already exists: " + bed.getBedId());
             }
         }
@@ -254,8 +254,7 @@ public class CareHome implements Serializable {
             return;
         }
 
-        for (int i = 0; i < beds.size(); i++) {
-            Bed b = beds.get(i);
+        for (Bed b : beds) {
             System.out.println("BedNo. " + b.getBedId() + ", is it available? " + b.bedAvailable());
         }
     }
@@ -286,15 +285,14 @@ public class CareHome implements Serializable {
 
         // If the target bed's bed ID is the same as one in the bed list
         // Then save it into targetbed and stop searching
-        for (int i = 0; i < beds.size(); i++) {
-            Bed b = beds.get(i);
+        for (Bed b : beds) {
             if (b.getBedId() == bedId) {
                 targetbed = b;
                 break;
             }
         }
 
-        // If can't find the bed ID, then throw error
+        // If it can't find the bed ID, then throw error
         if (targetbed == null) {
             throw new IllegalArgumentException("Can't find bed ID" + bedId);
         }
@@ -428,8 +426,8 @@ public class CareHome implements Serializable {
 
                 ArrayList<Shift> shifts = nurse.getShifts();
 
-                for (int j = 0; j < shifts.size(); j++) {
-                    System.out.println("  " + shifts.get(j));
+                for (Shift shift : shifts) {
+                    System.out.println("  " + shift);
                 }
 
                 System.out.println("Total shifts: " + shifts.size());
@@ -446,17 +444,15 @@ public class CareHome implements Serializable {
     public void printDoctorShifts() {
         System.out.println("\n Doctor Shifts ");
 
-        for (int i = 0; i < staffList.size(); i++) {
-            Staff staff = staffList.get(i);
-
+        for (Staff staff : staffList) {
             if (staff instanceof Doctor doctor) {
 
                 System.out.println("Shifts for " + doctor.getName() + ":");
 
                 ArrayList<Shift> shifts = doctor.getShifts();
 
-                for (int j = 0; j < shifts.size(); j++) {
-                    System.out.println(shifts.get(j));
+                for (Shift shift : shifts) {
+                    System.out.println(shift);
                 }
 
                 System.out.println("Total shifts: " + shifts.size());
@@ -472,16 +468,13 @@ public class CareHome implements Serializable {
      */
 
     public void checkCompliance() {
-        for (int i = 0; i < staffList.size(); i++) {
-            Staff staff = staffList.get(i);
-
+        for (Staff staff : staffList) {
             if (staff instanceof Nurse nurse) {
                 ArrayList<Shift> shifts = nurse.getShifts();
 
                 HashMap<String, Integer> shiftMap = new HashMap<>();
 
-                for (int j = 0; j < shifts.size(); j++) {
-                    Shift shift = shifts.get(j);
+                for (Shift shift : shifts) {
                     String whichDay = shift.getDay(); // Get the day
                     int workingTime = shift.getDuration();
 
@@ -620,8 +613,8 @@ public class CareHome implements Serializable {
         } catch (IOException ioe) {
             System.err.println("Failed to load due to IO error: " + ioe.getMessage());
             return null;
-        } catch (ClassNotFoundException cnfe) {
-            System.err.println("Failed to load due to missing class: " + cnfe.getMessage());
+        } catch (ClassNotFoundException c) {
+            System.err.println("Failed to load due to missing class: " + c.getMessage());
             return null;
         }
     }
@@ -639,9 +632,11 @@ public class CareHome implements Serializable {
     public void docAddPres(Doctor doctor, int bedId, String medicine,
                            String dose, String time) {
 
+        if (doctor == null) {
+            throw new UnauthorizedException("Only doctor can add prescriptions.");
+        }
         Bed bed = null;
-        for (int i = 0; i < beds.size(); i++) {
-            Bed b = beds.get(i);
+        for (Bed b : beds) {
             if (b.getBedId() == bedId) {
                 bed = b;
                 break;
@@ -693,8 +688,7 @@ public class CareHome implements Serializable {
 
         Bed bed = null;
 
-        for (int i = 0; i < beds.size(); i++) {
-            Bed b = beds.get(i);
+        for (Bed b : beds) {
             if (b.getBedId() == bedId) {
                 bed = b;
                 break;
@@ -748,8 +742,7 @@ public class CareHome implements Serializable {
 
         // Look for the new bed with given ID
         Bed emptyBed = null;
-        for (int i = 0; i < beds.size(); i++) {
-            Bed b = beds.get(i);
+        for (Bed b : beds) {
             if (b.getBedId() == newBedId) {
                 emptyBed = b;
                 break; // stop once we find the bed
@@ -768,8 +761,7 @@ public class CareHome implements Serializable {
 
         // Find the old bed where the resident currently lives
         Bed rOldBed = null;
-        for (int i = 0; i < beds.size(); i++) {
-            Bed b = beds.get(i);
+        for (Bed b : beds) {
             if (r.getBedId() != null && b.getBedId() == r.getBedId()) {
                 rOldBed = b;
                 break;
@@ -816,8 +808,7 @@ public class CareHome implements Serializable {
 
         // Found the bed
         Bed theBed = null;
-        for (int i = 0; i < beds.size(); i++) {
-            Bed b = beds.get(i);
+        for (Bed b : beds) {
             if (b.getBedId() == bedId) {
                 theBed = b;
                 break;
@@ -905,8 +896,8 @@ public class CareHome implements Serializable {
     // Print out all the logs we have in the system
     public void printAllLogs() {
         System.out.println("\nAll the logs:");
-        for (int i = 0; i < logged.size(); i++) {
-            System.out.println(logged.get(i));
+        for (String s : logged) {
+            System.out.println(s);
         }
     }
 
