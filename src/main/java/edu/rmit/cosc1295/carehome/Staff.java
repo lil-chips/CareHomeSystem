@@ -2,6 +2,10 @@ package edu.rmit.cosc1295.carehome;
 
 import java.io.Serializable;
 
+/**
+ * Class for all staff members (Manager, Doctor, Nurse).
+ * Demonstrates encapsulation and inheritance.
+ */
 public class Staff implements Serializable{
     // Use protected so that subclasses can directly access the parent class
     protected String id; // Staff ID
@@ -73,6 +77,10 @@ public class Staff implements Serializable{
         this.password = newPassword;
     }
 
+    /**
+     * Show a short summary of the staff
+     * @return formated string including id, name and role
+     */
     @Override
     public String toString() {
         return "Staff ID: " + id + ", Name: " + name + " -> Role: " + this.getClass().getSimpleName();
