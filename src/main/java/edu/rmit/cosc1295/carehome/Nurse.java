@@ -17,20 +17,24 @@ public class Nurse extends Staff {
     }
 
 
-    // Move the resident to a different bed.
     /**
-     * Move the resident to another bed
+     * Ask CareHome to move a resident to another bed
+     * Only nurses can do this
+     *
+     * @param careHome the CareHome that manages data
      * @param residentName name of resident
-     * @param bedID ID of bed
+     * @param newBedId ID of bed
      */
 
-    public void moveResident(String residentName, int bedId) {
+    public void moveResident(CareHome careHome, String residentName, int newBedId) {
+        careHome.moveResident(this, residentName, newBedId);
+
         System.out.println("Nurse " + name + " requested to move "
-                + residentName + " to bed " + bedId + ".");
+                + residentName + " to bed " + newBedId + ".");
 
         // Create log message
         CareHome.createLog("Nurse " + this.getName() + " moved resident "
-                + residentName + " to bed " + bedId);
+                + residentName + " to bed " + newBedId);
     }
 
 
