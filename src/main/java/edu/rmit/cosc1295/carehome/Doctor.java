@@ -46,11 +46,18 @@ public class Doctor extends Staff {
         return doctorShifts;
     }
 
+    /**
+     * Print all shifts
+     */
+
     public void printShifts() {
         if (doctorShifts.isEmpty()) {
             System.out.println("Doctor " + name + " has no shifts assigned.");
         } else {
             System.out.println("Shifts for Doctor " + name + ":");
+            for (Shift s : doctorShifts) {
+                System.out.println(" - " + s);
+            }
         }
     }
 
