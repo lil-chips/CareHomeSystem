@@ -95,6 +95,16 @@ public class CareHome implements Serializable {
             }
         }
 
+        // If the bed doesn't exist
+        if (targetBed == null) {
+            throw new IllegalArgumentException("Bed ID " + bedId + " does not exist");
+        }
+
+        // If the bed is occupied
+        if (!targetBed.bedAvailable()) {
+            throw new IllegalArgumentException("Bed ID " + bedId + " is not available");
+        }
+
 
         residents.add(resident);
         System.out.println("Manager " + manager.getName() + " added a new resident: "
