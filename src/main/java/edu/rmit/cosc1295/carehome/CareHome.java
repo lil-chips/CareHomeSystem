@@ -87,13 +87,7 @@ public class CareHome implements Serializable {
     public void addResident(Manager manager, Resident resident, int bedId) {
 
         // Find the target bed
-        Bed targetBed = null;
-        for (Bed b : beds) {
-            if (b.getBedId() == bedId) {
-                targetBed = b;
-                break;
-            }
-        }
+        Bed targetBed = findBedById(bedId);
 
         // If the bed doesn't exist
         if (targetBed == null) {
@@ -277,17 +271,9 @@ public class CareHome implements Serializable {
      */
 
     public void assignResidentToBed(Manager manager, String residentName, int bedId) {
-        // Find the bed, set it to null first
-        Bed targetbed = null;
 
-        // If the target bed's bed ID is the same as one in the bed list
-        // Then save it into targetbed and stop searching
-        for (Bed b : beds) {
-            if (b.getBedId() == bedId) {
-                targetbed = b;
-                break;
-            }
-        }
+        // Find the target bed
+        Bed targetbed = findBedById(bedId);
 
         // If it can't find the bed ID, then throw error
         if (targetbed == null) {
