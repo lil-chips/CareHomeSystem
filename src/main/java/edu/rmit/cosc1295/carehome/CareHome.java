@@ -402,7 +402,7 @@ public class CareHome implements Serializable {
                     doctor.addShift(shift);
                 }
 
-                System.out.println("Assigned 7 shifts to Doctor: " + doctor.getName());
+                System.out.println("Assigned 7 shifts (1 per day) to Doctor: " + doctor.getName());
 
                 // Create log message
                 String showlog = "Manager assigned 7 shifts to doctor "
