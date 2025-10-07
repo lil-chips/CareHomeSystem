@@ -102,9 +102,11 @@ public class Shift implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Calculate the time duration with fixed pattern
+     * if nothing here fits then call getShiftDuration() to calculate it
+     * @return shift duration in hours
      */
+
     public int getDuration() {
         int hours = 0;
 
