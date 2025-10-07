@@ -1,11 +1,6 @@
 package edu.rmit.cosc1295.carehome;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -583,11 +578,14 @@ public class CareHome implements Serializable {
                 output.writeObject(this);
             }
             System.out.println("Saved to " + filename);
+
+            // Record log
+            CareHome.createLog("System data saved to " + filename);
+
         } catch (IOException ioe) {
             System.err.println("Failed to save: " + ioe.getMessage());
         }
     }
-
 
     /**
      * Load a CareHome object from file
@@ -596,6 +594,13 @@ public class CareHome implements Serializable {
      */
 
     public static CareHome loadFromFile(String filename) {
+
+        File file = new File(filename);
+        if (!file.exists()) {
+            System.out.println("File " + filename + " does not exist.");
+            return null;
+        }
+
         try {
             CareHome home;
             try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename))) {
