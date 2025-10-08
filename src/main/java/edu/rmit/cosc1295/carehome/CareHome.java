@@ -945,6 +945,11 @@ public class CareHome implements Serializable {
             throw new IllegalArgumentException("Working hours can't be over 8 hours per day: now is " + totalHours + "hours");
         }
 
+        s.getShifts().add(newShift);
+
+        // Create a log
+        createLog("Manager " + m.getName() + " (" + m.getId() + ") " + " has assigned shift to "
+        + s.getName() + " (" + s.getId() + ") " + " (" + newShift.toString() + ")");
 
 
     }
