@@ -263,9 +263,11 @@ public class CareHome implements Serializable {
 
     /**
      * Assign a resident to a specific bed
-     * @param manager Who perform the action
+     * @param s Who perform the action (doctor or nurse)
      * @param residentName The name of the resident
      * @param bedId The ID of the bed
+     * @throws UnauthorizedException only doctor or nurse can perform this action
+     * @throws NotWorkingException check doctor or nurse is on duty that day or not
      * @throws IllegalArgumentException if the bed or resident does not exist
      * @throws IllegalStateException if the bed is already occupied or resident already has a bed
      */
