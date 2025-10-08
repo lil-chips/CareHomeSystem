@@ -110,8 +110,10 @@ public class CareHomeDatabase {
     }
 
     public static void insertLog(String staffId, String action) {
+        String sql = "INSERT INTO logs (timestamp, staff_id, action) VALUES (?, ?, ?)";
 
-        try (Connection conn = connect();
+        try (Connection conn = connect(sql);
+             PreparedStatement pre = conn.prepareStatement(sql)) {
 
 
         } catch (SQLException e) {
