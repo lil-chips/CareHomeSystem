@@ -31,15 +31,19 @@ public class CareHome implements Serializable {
      */
 
     public void addStaff(Manager manager, Staff newStaff) {
+        // Only manager is allowed to add staff
         if (manager == null) {
             throw new UnauthorizedException("Only manager can add staff");
         }
 
+        // Check for duplicate staff ID
         for (Staff s : staffList) {
             if (s.getId().equals(newStaff.getId())) {
                 throw new IllegalArgumentException("Staff id already exists: " + newStaff.getId());
             }
         }
+
+        // Add to in-memory list
         staffList.add(newStaff);
         System.out.println("Manager " + manager.getName() + " added a new staff: "
                 + newStaff.getId() + " - " + newStaff.getName());
@@ -47,8 +51,13 @@ public class CareHome implements Serializable {
         // Create log message
         String showlog = "Manager " + manager.getName() + " add a new staff " + newStaff.getName() + "("
                 + newStaff.getId() + ")";
-
         createLog(showlog);
+
+        // Determine role from class type
+        String role = newStaff.getClass().getSimpleName();
+
+        // Save the new staff member into database
+        CareHomeDatabase.insertStaff(newStaff.getId(), newStaff.getName(), role, newStaff.getPassword());
     }
 
 
