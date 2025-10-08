@@ -649,6 +649,12 @@ public class CareHome implements Serializable {
             throw new IllegalArgumentException("No resident in bed: " + bedId);
         }
 
+        // Check if the doctor is working today or not
+        String today = java.time.LocalDate.now().getDayOfWeek().toString();
+        if (!isWorking(doctor, today)) {
+            throw new NotWorkingException("Doctor " + doctor.getName() + " is not working today (" + today + ")");
+        }
+
         // Write a new prescription
         Prescription p = new Prescription(doctor.getId(), medicine, dose, time);
 
