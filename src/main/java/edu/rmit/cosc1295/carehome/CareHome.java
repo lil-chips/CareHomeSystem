@@ -739,7 +739,7 @@ public class CareHome implements Serializable {
         }
 
         // Look for the new bed with given ID
-        Bed newBed = findBedById(newBedId)
+        Bed newBed = findBedById(newBedId);
 
         // If no bed is found with that id, throw an error
         if (newBed == null) {
@@ -772,12 +772,10 @@ public class CareHome implements Serializable {
 
         int oldBedId;
         if (rOldBed == null) {
-            oldBedId = -1;  // -1 代表沒有舊床
+            oldBedId = -1;  // -1 means there is no old bed
         } else {
             oldBedId = rOldBed.getBedId();
         }
-
-
 
         // Create log message and print
         String showlog = "Nurse " + nurse.getName() + " moved resident " + r.getName() + " from bed "
