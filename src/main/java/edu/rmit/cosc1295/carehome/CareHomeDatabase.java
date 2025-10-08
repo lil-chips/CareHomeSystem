@@ -118,21 +118,26 @@ public class CareHomeDatabase {
     public static void insertLog(String staffId, String action) {
         String sql = "INSERT INTO logs (timestamp, staff_id, action) VALUES (?, ?, ?)";
 
+        // Use try-with-resources to automatically close the connection and statement
         try (Connection conn = connect();
              PreparedStatement pre = conn.prepareStatement(sql)) {
 
             // Generate timestamp
             String now = java.time.LocalDateTime.now().toString();
 
+            // Bind each placeholder (?) in the SQL with the actual values
             pre.setString(1, now);
             pre.setString(2, staffId);
             pre.setString(3, action);
 
+            // Execute the SQL command to insert the new record into the database
             pre.executeUpdate();
+
+            // Print confirmation message
             System.out.println("Log saved to database: " + action);
 
-
         } catch (SQLException e) {
+            // Catch database related errors
             System.out.println("Failed to insert log: " + e.getMessage());
         }
     }
@@ -148,17 +153,24 @@ public class CareHomeDatabase {
     public static void insertStaff(String id, String name, String role, String password) {
         String sql = "INSERT INTO staff (id, name, role, password) VALUES (?, ?, ?, ?)";
 
+        // Use try-with-resources to automatically close the connection and statement
         try (Connection conn = connect();
              PreparedStatement pre = conn.prepareStatement(sql)) {
 
+            // Bind each placeholder (?) in the SQL with the actual values
             pre.setString(1, id);
             pre.setString(2, name);
             pre.setString(3, role);
             pre.setString(4, password);
 
+            // Execute the SQL command to insert the new record into the database
             pre.executeUpdate();
+
+            // Print confirmation message
             System.out.println("Staff saved to database: " + name + " (" + id + ")");
+
         } catch (SQLException e) {
+            // Catch database related errors
             System.out.println("Failed to insert staff: " + e.getMessage());
         }
     }
@@ -166,9 +178,11 @@ public class CareHomeDatabase {
     public static void insertResident(String name, String gender, Integer bedId) {
         String sql = "INSERT INTO resident (name, gender, bed_id) VALUES (?, ?, ?)";
 
+        // Use try-with-resources to automatically close the connection and statement
         try (Connection conn = connect();
              PreparedStatement pre = conn.prepareStatement(sql)) {
 
+            // Bind each placeholder (?) in the SQL with the actual values
             pre.setString(1, name);
             pre.setString(2, gender);
 
@@ -179,10 +193,14 @@ public class CareHomeDatabase {
             else
                 pre.setNull(3, Types.INTEGER);
 
+            // Execute the SQL command to insert the new record into the database
             pre.executeUpdate();
+
+            // Print confirmation message
             System.out.println("Resident added to database: " + name);
 
         } catch (SQLException e) {
+            // Catch database related errors
             System.out.println("Failed to insert resident: " + e.getMessage());
         }
     }
@@ -195,22 +213,29 @@ public class CareHomeDatabase {
      * @param dose dosage
      * @param time Administration time
      */
+
     public static void insertPrescription(int residentId, String doctorId, String medicine, String dose, String time) {
         String sql = "INSERT INTO prescription (resident_id, doctor_id, medicinem, dose, time) VALUES (?, ?, ?, ?, ?)";
 
+        // Use try-with-resources to automatically close the connection and statement
         try (Connection conn = connect();
              PreparedStatement pre = conn.prepareStatement(sql)) {
 
+            // Bind each placeholder (?) in the SQL with the actual values
             pre.setInt(1, residentId);
             pre.setString(2, doctorId);
             pre.setString(3, medicine);
             pre.setString(4, dose);
             pre.setString(5, time);
 
+            // Execute the SQL command to insert the new record into the database
             pre.executeUpdate();
+
+            // Print confirmation message
             System.out.println("Prescription added to database: " + medicine + " (" + dose + ")");
 
         } catch (SQLException e) {
+            // Catch database related errors
             System.out.println("Failed to insert prescription: " + e.getMessage());
         }
     }
