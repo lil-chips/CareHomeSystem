@@ -6,6 +6,7 @@ package edu.rmit.cosc1295.carehome;
  */
 
 public class NotWorkingException extends RuntimeException {
+
     public NotWorkingException(String message) {
         super(message);
     }

@@ -6,7 +6,7 @@ package edu.rmit.cosc1295.carehome;
  */
 public class UnauthorizedException extends RuntimeException {
 
-    public UnauthorizedException(String message, Throwable cause) {
-        super(message, cause);
+    public UnauthorizedException(String message) {
+        super(message);
     }
 }

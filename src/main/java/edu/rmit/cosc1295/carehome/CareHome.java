@@ -270,7 +270,9 @@ public class CareHome implements Serializable {
      * @throws IllegalStateException if the bed is already occupied or resident already has a bed
      */
 
-    public void assignResidentToBed(Manager manager, String residentName, int bedId) {
+    public void assignResidentToBed(Staff s, String residentName, int bedId) {
+
+        // Only nurse or doctor can assign a resident to a bed
 
         // Find the target bed
         Bed targetbed = findBedById(bedId);
