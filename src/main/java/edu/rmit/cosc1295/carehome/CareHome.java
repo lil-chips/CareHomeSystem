@@ -805,14 +805,7 @@ public class CareHome implements Serializable {
         }
 
         // Found the bed
-        Bed theBed = null;
-        for (Bed b : beds) {
-            if (b.getBedId() == bedId) {
-                theBed = b;
-                break;
-            }
-        }
-
+        Bed theBed = findBedById(bedId);
         // If didnt find the bed
         if (theBed == null) {
             throw new IllegalArgumentException("Can't find bed: " + bedId);
@@ -822,16 +815,24 @@ public class CareHome implements Serializable {
         Resident r = theBed.getResident();
         if (r == null) {
             System.out.println("Bed " + bedId + " is empty.");
-        } else {
-            // Print out resident info
-            System.out.println("Bed " + bedId + " has resident: " + r.getName()
-                    + " (" + r.getGender() + ")");
+            return;
+        }
 
-            // Create log message
-            String showlog = "Staff " + staff.getName() + " checked the details of bed "
-                    + bedId + " with resident " + r.getName() + " (" + r.getGender() + ")";
+        // Print out resident info
+        System.out.println("~~~~ Resident Details (Bed " + bedId + ") ~~~~");
+        System.out.println("Name: " + r.getName());
+        System.out.println("Gender: " + r.getGender());
+        System.out.println("Bed ID: " + bedId);
 
-            createLog(showlog);
+
+
+
+        // Create log message
+        String showlog = staff.getClass().getSimpleName() + " " + staff.getName() + " (" +
+                staff.getId() + ") " + "checked the details of bed "
+                + bedId + " with resident " + r.getName() + " (" + r.getGender() + ")";
+        System.out.println(showlog);
+        createLog(showlog);
         }
 
     }
@@ -987,6 +988,8 @@ public class CareHome implements Serializable {
         }
         return false;
     }
+
+
 
 
 
