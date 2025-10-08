@@ -901,6 +901,7 @@ public class CareHome implements Serializable {
 
     /**
      * Find a bed by its ID.
+     * shorten codes to make the code looks clean
      * @param bedId the bed number to find
      * @return the Bed object if found, otherwise null
      */
