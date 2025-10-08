@@ -1,6 +1,7 @@
 package edu.rmit.cosc1295.carehome;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Class for all staff members (Manager, Doctor, Nurse).
@@ -75,6 +76,17 @@ public class Staff implements Serializable{
             throw new IllegalArgumentException("Password cannot be empty");
         }
         this.password = newPassword;
+    }
+
+    // Multiple shifts are allowed
+    protected ArrayList<Shift> shifts = new ArrayList<>();
+
+    /**
+     * Get all shifts assigned to this staff
+     * @return staff shifts
+     */
+    public ArrayList<Shift> getShifts() {
+        return shifts;
     }
 
     /**

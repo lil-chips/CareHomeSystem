@@ -927,6 +927,11 @@ public class CareHome implements Serializable {
         if (m == null) {
             throw new UnauthorizedException("Only manager can assign shifts");
         }
+        if (s == null || newShift == null) {
+            throw new IllegalArgumentException(("Staff or shift can't be null"))
+        }
+
+
     }
 
 
