@@ -1023,6 +1023,11 @@ public class CareHome implements Serializable {
      */
 
     public void exportLogs(String fileName) {
+
+        //Generate date in the file name
+        String filename = "care_home_logs_" + java.time.LocalDate.now() + ".txt";
+
+        // Write the file
         try (FileWriter w = new FileWriter(fileName, true)) {
             w.write("~~~~ CareHome System Log Export ~~~~" + System.lineSeparator());
             w.write("Exported at: " + java.time.LocalDateTime.now() + System.lineSeparator());
