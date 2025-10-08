@@ -928,7 +928,7 @@ public class CareHome implements Serializable {
             throw new UnauthorizedException("Only manager can assign shifts");
         }
         if (s == null || newShift == null) {
-            throw new IllegalArgumentException(("Staff or shift can't be null"))
+            throw new IllegalArgumentException(("Staff or shift can't be null"));
         }
 
         // Calculate total hours in that day
