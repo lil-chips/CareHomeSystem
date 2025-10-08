@@ -806,6 +806,9 @@ public class CareHome implements Serializable {
         if (rOldBed != null) {
             rOldBed.removeResident();
             rOldBed.setAvailable(true);
+
+            // Update the old bed in database (is available)
+            CareHomeDatabase.updateBed(rOldBed.getBedId(), true, null);
         }
 
         // Put the resident into the new bed
@@ -814,6 +817,9 @@ public class CareHome implements Serializable {
 
         // Update the resident's bedID
         r.setBedId(newBedId);
+
+        // Update the new bed in database (not available)
+        CareHomeDatabase.updateBed(newBedId, false, getResidentId(r));
 
         int oldBedId;
         if (rOldBed == null) {
