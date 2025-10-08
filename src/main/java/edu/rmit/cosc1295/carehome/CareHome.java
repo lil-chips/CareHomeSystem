@@ -824,8 +824,16 @@ public class CareHome implements Serializable {
         System.out.println("Gender: " + r.getGender());
         System.out.println("Bed ID: " + bedId);
 
-
-
+        // Show Prescription
+        if (r.getPrescriptions().isEmpty()) {
+            System.out.println("Prescriptions are empty.");
+        } else {
+            System.out.println("Prescriptions: ");
+            for (int i = 0; i < r.getPrescriptions().size(); i++) {
+                Prescription p = r.getPrescriptions().get(i);
+                System.out.println((i + 1) + ". " + p.getMedicine() + " (" + p.getDose()
+                + ") at " + p.getTime() + " [Doctor ID: " + p.getDoctorId() + "]");
+            }
 
         // Create log message
         String showlog = staff.getClass().getSimpleName() + " " + staff.getName() + " (" +
