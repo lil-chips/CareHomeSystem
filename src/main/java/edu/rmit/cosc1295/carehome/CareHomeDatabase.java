@@ -136,4 +136,16 @@ public class CareHomeDatabase {
             System.out.println("Failed to insert log: " + e.getMessage());
         }
     }
+
+    public static void insertStaff(String id, String name, String role, String password) {
+        String sql = "INSERT INTO staff (id, name, role, password) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = connect();
+             PreparedStatement pre = conn.prepareStatement(sql)) {
+
+        }
+
+
+
+    }
 }
