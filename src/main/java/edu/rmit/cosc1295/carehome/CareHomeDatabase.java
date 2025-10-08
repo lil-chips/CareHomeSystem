@@ -289,7 +289,15 @@ public class CareHomeDatabase {
             // Bind each placeholder (?) in the SQL with the actual values
             pre.setInt(1, isAvailable ? 1 : 0);
 
+            // If resident ID is not null insert into the database
+            // Otherwise insert a SQL NULL
+            if (residentId != null)
+                pre.setInt(2, residentId);
+            else
+                pre.setNull(2, Types.INTEGER);
 
+            // Target bed ID
+            pre.setInt(3, bedId);
 
     }
 
