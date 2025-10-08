@@ -172,9 +172,23 @@ public class CareHomeDatabase {
             pre.setString(1, name);
             pre.setString(2, gender);
 
+            // If bed is not null insert into the database
+            // Otherwise insert a SQL NULL
+            if (bedId != null)
+                pre.setInt(3, bedId);
+            else
+                pre.setNull(3, Types.INTEGER);
+
+            pre.executeUpdate();
+            System.out.println("Resident added to database: " + name);
+
         } catch (SQLException e) {
             System.out.println("Failed to insert resident: " + e.getMessage());
         }
+    }
+
+    public static void insertPrescription(int residentId, String doctorId, String medicine, String dose, String time) {
+
     }
 
 
