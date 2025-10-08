@@ -27,6 +27,9 @@ public class CareHomeDatabase {
         return conn;
     }
 
+    /**
+     * Create all the required tables for the system
+     */
     public static void createTable() {
         String createStaffTable = """
             CREATE TABLE IF NOT EXISTS staff (
@@ -52,6 +55,19 @@ public class CareHomeDatabase {
                 is_available INTEGER NOT NULL,
                 resident_id INTEGER,
                 FOREIGN KEY (resident_id) REFERENCES residents(id)
+            );
+        """;
+
+        String createPrescriptionTable = """
+            CREATE TABLE IF NOT EXISTS prescription (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                resident_id INTEGER NOT NULL,
+                doctor_id TEXT NOT NULL,
+                medicine TEXT NOT NULL,
+                dose TEXT NOT NULL,
+                time TEXT NOT NULL,
+                FOREIGN KEY (resident_id) REFERENCES residents(id),
+                FOREIGN KEY (doctor_id) REFERENCES staff(id)
             );
         """;
     }
