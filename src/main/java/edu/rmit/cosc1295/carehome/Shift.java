@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 
 public class Shift implements Serializable {
     private final String day; // Monday~Sunday
@@ -126,6 +127,13 @@ public class Shift implements Serializable {
         }
 
         return hours;
+    }
+
+    // Multiple shift for staff is allowed
+    protected ArrayList<Shift> shifts = new ArrayList<>();
+
+    public ArrayList<Shift> getShifts() {
+        return shifts;
     }
 }
 
