@@ -931,6 +931,11 @@ public class CareHome implements Serializable {
             throw new IllegalArgumentException(("Staff or shift can't be null"))
         }
 
+        for (Shift shift : s.getShifts()) {
+            if (shift.getDay().equalsIgnoreCase(newShift.getDay())) {
+
+            }
+        }
 
     }
 
