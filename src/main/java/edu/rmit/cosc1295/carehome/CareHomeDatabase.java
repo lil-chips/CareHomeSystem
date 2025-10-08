@@ -143,6 +143,15 @@ public class CareHomeDatabase {
         try (Connection conn = connect();
              PreparedStatement pre = conn.prepareStatement(sql)) {
 
+            pre.setString(1, id);
+            pre.setString(2, name);
+            pre.setString(3, role);
+            pre.setString(4, password);
+
+            pre.executeUpdate();
+            System.out.println("Staff saved to database: " + name + " (" + id + ")");
+        } catch (SQLException e) {
+            System.out.println("Failed to insert staff: " + e.getMessage());
         }
 
 
