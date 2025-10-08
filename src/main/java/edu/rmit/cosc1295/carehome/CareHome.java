@@ -748,16 +748,13 @@ public class CareHome implements Serializable {
 
         // Check if the new bed already has a resident
         if (!newBed.bedAvailable()) {
-            throw new IllegalStateException("Bed: " + newBedId + " has a resident already!!");
+            throw new BedOccupiedException("Bed: " + newBedId + " has a resident already!!");
         }
 
         // Find the old bed where the resident currently lives
         Bed rOldBed = null;
-        for (Bed b : beds) {
-            if (r.getBedId() != null && b.getBedId() == r.getBedId()) {
-                rOldBed = b;
-                break;
-            }
+        if (r.getBedId() != null) {
+            rOldBed = findBedById(r.getBedId());
         }
 
         // If the resident had an old bed, remove them from it
@@ -773,13 +770,19 @@ public class CareHome implements Serializable {
         // Update the resident's bedID
         r.setBedId(newBedId);
 
-        System.out.println("Nurse " + nurse.getName() + " moved resident " + residentName + " to a new bed "
-                + newBedId);
+        int oldBedId;
+        if (rOldBed == null) {
+            oldBedId = -1;  // -1 代表沒有舊床
+        } else {
+            oldBedId = rOldBed.getBedId();
+        }
 
-        // Create log message
-        String showlog = "Nurse " + nurse.getName() + " moved resident " + residentName + " from bed "
-                + rOldBed + " to " + "bed" + newBedId;
 
+
+        // Create log message and print
+        String showlog = "Nurse " + nurse.getName() + " moved resident " + r.getName() + " from bed "
+                + oldBedId + " to bed" + newBedId;
+        System.out.println(showlog);
         createLog(showlog);
 
     }
