@@ -187,7 +187,14 @@ public class CareHomeDatabase {
         }
     }
 
-
+    /**
+     * Insert a prescription record into the database
+     * @param residentId resident ID
+     * @param doctorId doctor ID
+     * @param medicine medicine name
+     * @param dose dosage
+     * @param time Administration time
+     */
     public static void insertPrescription(int residentId, String doctorId, String medicine, String dose, String time) {
         String sql = "INSERT INTO prescription (resident_id, doctor_id, medicinem, dose, time) VALUES (?, ?, ?, ?, ?)";
 
