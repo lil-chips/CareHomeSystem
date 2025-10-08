@@ -187,8 +187,25 @@ public class CareHomeDatabase {
         }
     }
 
-    public static void insertPrescription(int residentId, String doctorId, String medicine, String dose, String time) {
 
+    public static void insertPrescription(int residentId, String doctorId, String medicine, String dose, String time) {
+        String sql = "INSERT INTO prescription (resident_id, doctor_id, medicinem, dose, time) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = connect();
+             PreparedStatement pre = conn.prepareStatement(sql)) {
+
+            pre.setInt(1, residentId);
+            pre.setString(2, doctorId);
+            pre.setString(3, medicine);
+            pre.setString(4, dose);
+            pre.setString(5, time);
+
+            pre.executeUpdate();
+            System.out.println("Prescription added to database: " + medicine + " (" + dose + ")");
+
+        } catch (SQLException e) {
+            System.out.println("Failed to insert prescription: " + e.getMessage());
+        }
     }
 
 
