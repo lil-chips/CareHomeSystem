@@ -276,7 +276,7 @@ public class CareHome implements Serializable {
 
         // Only nurse or doctor can assign a resident to a bed
         if (!(s instanceof Nurse || s instanceof Doctor)) {
-            throw new UnauthorizedException("Only nurse or doctors can assign a resident to a bed")
+            throw new UnauthorizedException("Only nurse or doctors can assign a resident to a bed");
         }
 
         // Check is the doc or nurse on duty today
@@ -884,6 +884,7 @@ public class CareHome implements Serializable {
         java.time.LocalDateTime currentTime = java.time.LocalDateTime.now();
         String combine = "[" + currentTime + "]" + log; // Add current time in the front
         logged.add(combine);
+        System.out.println(combine);
     }
 
 
@@ -960,8 +961,9 @@ public class CareHome implements Serializable {
         s.getShifts().add(newShift);
 
         // Create a log
-        createLog("Manager " + m.getName() + " (" + m.getId() + ") " + " has assigned shift to "
+        String showlog = ("Manager " + m.getName() + " (" + m.getId() + ") " + " has assigned shift to "
         + s.getName() + " (" + s.getId() + ") " + " (" + newShift.toString() + ")");
+        createLog(showlog);
     }
 
     /**
