@@ -118,7 +118,7 @@ public class CareHomeDatabase {
     public static void insertLog(String staffId, String action) {
         String sql = "INSERT INTO logs (timestamp, staff_id, action) VALUES (?, ?, ?)";
 
-        try (Connection conn = connect(sql);
+        try (Connection conn = connect();
              PreparedStatement pre = conn.prepareStatement(sql)) {
 
             // Generate timestamp
@@ -128,7 +128,8 @@ public class CareHomeDatabase {
             pre.setString(2, staffId);
             pre.setString(3, action);
 
-
+            pre.executeUpdate();
+            System.out.println("Log saved to database: " + action);
 
 
         } catch (SQLException e) {
