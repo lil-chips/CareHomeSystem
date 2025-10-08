@@ -1036,6 +1036,10 @@ public class CareHome implements Serializable {
             w.write(System.lineSeparator());
             System.out.println("Logs successfully exported to " + fileName);
 
+            // Clean up the logs in the memory after export
+            logged.clear();
+            System.out.println("All the logs in the memory has been cleared.");
+
         } catch (IOException e) {
             System.out.println("Unsuccessful writing logs to file: " + e.getMessage());
         }
