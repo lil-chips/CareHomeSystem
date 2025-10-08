@@ -959,6 +959,7 @@ public class CareHome implements Serializable {
      * @param day day to check
      * @return if is working on that day return true, if not return false
      */
+
     public boolean isWorking(Staff s, String day) {
         if (s == null || day == null) return false;
 
