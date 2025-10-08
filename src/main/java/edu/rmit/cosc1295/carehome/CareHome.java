@@ -922,6 +922,20 @@ public class CareHome implements Serializable {
 
         // Save to memory list
         logged.add(logEntry);
+
+        // Try extract staffId (if exists)
+        // If message = "Manager Edward (M1) added a new staff,
+        // then staffId = "M1"
+        String staffId = null;
+        if (message.contains("(") && message.contains(")")) {
+            try {
+                // Get the substring between "(" and ")"
+                staffId = message.substring(message.indexOf("(") + 1, message.indexOf(")"));
+            } catch (Exception ignore) {}
+        }
+
+        // Save to database
+        CareHomeDatabase.insertLog(staffId, message);
     }
 
 
