@@ -909,7 +909,7 @@ public class CareHome implements Serializable {
     private Bed findBedById(int bedId) {
         for (Bed b : beds) {
             if (b.getBedId() == bedId) {
-                return b;
+                return b; // If found then return bed object
             }
         }
         return null;
