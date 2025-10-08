@@ -931,11 +931,21 @@ public class CareHome implements Serializable {
             throw new IllegalArgumentException(("Staff or shift can't be null"))
         }
 
+        int totalHours = 0;
         for (Shift shift : s.getShifts()) {
             if (shift.getDay().equalsIgnoreCase(newShift.getDay())) {
-
+                totalHours += shift.getDuration();
             }
         }
+        // Add shift duration into totalHours
+        totalHours += newShift.getDuration();
+
+        // If over 8 hrs shows error message
+        if (totalHours > 8) {
+            throw new IllegalArgumentException("Working hours can't be over 8 hours per day: now is " + totalHours + "hours");
+        }
+
+
 
     }
 
