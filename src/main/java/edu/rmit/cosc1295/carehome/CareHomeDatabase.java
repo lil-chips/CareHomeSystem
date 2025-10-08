@@ -287,6 +287,12 @@ public class CareHomeDatabase {
         }
     }
 
+    /**
+     * Update the bed record in database when resident move in or out
+     * @param bedId the bed ID to update
+     * @param isAvailable bed is available or not
+     * @param residentId the ID of the resident in bed
+     */
     public static void updateBed(int bedId, boolean isAvailable, Integer residentId) {
         String sql = "UPDATE bed SET is available = ?, resident_id = ? WHERE bed_id = ?";
 
