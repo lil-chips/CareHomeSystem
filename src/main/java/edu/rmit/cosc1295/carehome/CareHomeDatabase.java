@@ -9,7 +9,8 @@ import java.sql.*;
 
 public class CareHomeDatabase {
 
-    private static final String DB_URL = "jdbc:sqlite:care_home.db"; // file name
+    private static final String DB_URL = "jdbc:sqlite:/Users/edwardedward/Desktop/CareHomeSystem/care_home.db";
+
 
     /**
      * Connect to SQLite database
@@ -30,55 +31,91 @@ public class CareHomeDatabase {
     /**
      * Create all the required tables for the system
      */
-    public static void createTable() {
-        String createStaffTable = """
-            CREATE TABLE IF NOT EXISTS staff (
-                id TEXT PRIMARY KEY,
-                name TEXT NOT NULL,
-                role TEXT NOT NULL,
-                password TEXT NOT NULL
-            );
-        """;
+    public static void createTables() {
+        Connection conn = null;
+        Statement state = null;
 
-        String createResidentTable = """
-            CREATE TABLE IF NOT EXISTS resident (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                gender TEXT NOT NULL,
-                bed_id INTEGER
-            );
-        """;
+        try {
 
-        String createBedTable = """
-            CREATE TABLE IF NOT EXISTS bed (
-                bed_id INTEGER PRIMARY KEY,
-                is_available INTEGER NOT NULL,
-                resident_id INTEGER,
-                FOREIGN KEY (resident_id) REFERENCES residents(id)
-            );
-        """;
+            conn = connect();
+            state = conn.createStatement();
 
-        String createPrescriptionTable = """
-            CREATE TABLE IF NOT EXISTS prescription (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                resident_id INTEGER NOT NULL,
-                doctor_id TEXT NOT NULL,
-                medicine TEXT NOT NULL,
-                dose TEXT NOT NULL,
-                time TEXT NOT NULL,
-                FOREIGN KEY (resident_id) REFERENCES residents(id),
-                FOREIGN KEY (doctor_id) REFERENCES staff(id)
-            );
-        """;
+            String createStaffTable = """
+                CREATE TABLE IF NOT EXISTS staff (
+                    id TEXT PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    role TEXT NOT NULL,
+                    password TEXT NOT NULL
+                );
+            """;
 
-        String createLogsTable = """
-            CREATE TABLE IF NOT EXISTS logs (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                timestamp TEXT NOT NULL,
-                staff_id TEXT,
-                action TEXT NOT NULL,
-                FOREIGN KEY (staff_id) REFERENCES staff(id)
-            );
-        """;
+            String createResidentTable = """
+                CREATE TABLE IF NOT EXISTS resident (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    gender TEXT NOT NULL,
+                    bed_id INTEGER
+                );
+            """;
+
+            String createBedTable = """
+                CREATE TABLE IF NOT EXISTS bed (
+                    bed_id INTEGER PRIMARY KEY,
+                    is_available INTEGER NOT NULL,
+                    resident_id INTEGER,
+                    FOREIGN KEY (resident_id) REFERENCES residents(id)
+                );
+            """;
+
+            String createPrescriptionTable = """
+                CREATE TABLE IF NOT EXISTS prescription (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    resident_id INTEGER NOT NULL,
+                    doctor_id TEXT NOT NULL,
+                    medicine TEXT NOT NULL,
+                    dose TEXT NOT NULL,
+                    time TEXT NOT NULL,
+                    FOREIGN KEY (resident_id) REFERENCES residents(id),
+                    FOREIGN KEY (doctor_id) REFERENCES staff(id)
+                );
+            """;
+
+            String createLogsTable = """
+                CREATE TABLE IF NOT EXISTS logs (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    timestamp TEXT NOT NULL,
+                    staff_id TEXT,
+                    action TEXT NOT NULL,
+                    FOREIGN KEY (staff_id) REFERENCES staff(id)
+                );
+            """;
+
+            // Execute all the SQL statement
+            state.execute(createStaffTable);
+            state.execute(createResidentTable);
+            state.execute(createBedTable);
+            state.execute(createPrescriptionTable);
+            state.execute(createLogsTable);
+
+            System.out.println("Successfully created tables!");
+
+        } catch (Exception e) {
+            System.out.println("Failed to create tables: " + e.getMessage());
+        } finally {
+            try {
+                if (state != null) state.close();
+                if (conn != null) conn.close();
+            } catch (Exception ignore) {}
+        }
+    }
+
+    public static void insertLog(String staffId, String action) {
+
+        try (Connection conn = connect();
+
+
+        } catch (SQLException e) {
+            System.out.println("Failed to insert log: " + e.getMessage());
+        }
     }
 }

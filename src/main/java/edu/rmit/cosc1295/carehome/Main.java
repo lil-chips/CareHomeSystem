@@ -12,6 +12,11 @@ public class Main {
             home = new CareHome();
             System.out.println("No data found. Creating a new one.");
 
+
+            CareHomeDatabase.createTables();
+            System.out.println("✅ Database setup completed.");
+
+
         }
 
         home.saveToFile("SavedData.ser");
