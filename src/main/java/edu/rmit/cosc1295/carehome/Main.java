@@ -12,7 +12,6 @@ public class Main {
             home = new CareHome();
             System.out.println("No data found. Creating a new one.");
 
-
         }
 
         home.saveToFile("SavedData.ser");

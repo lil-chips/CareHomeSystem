@@ -716,6 +716,11 @@ public class CareHome implements Serializable {
      * @param nurse The Nurse performing the action
      * @param residentName The name of the resident being moved
      * @param newBedId  The ID of the new bed to assign
+     * @throws UnauthorizedException Only nurse can move beds
+     * @throws NotWorkingException check nurse is working on that day or not
+     * @throws IllegalArgumentException can't find the resident
+     * @throws IllegalArgumentException can't find the bed
+     * @throws BedOccupiedException check if the bed is occupied
      */
 
     public void nurseMoveBed(Nurse nurse, String residentName, int newBedId) {
@@ -840,10 +845,15 @@ public class CareHome implements Serializable {
      * @param numberOrdered The index of the prescription to administer
      * @throws IllegalArgumentException if the resident or prescription does not exist,
      * or if the staff is not authorized
-     *
+     * @throws UnauthorizedException only doctor or nurse can administer prescriptions
      */
 
     public void adminPres(Staff staff, String residentName, int numberOrdered) {
+
+        // Check is the staff a medical staff
+        if (!(staff instanceof Doctor) && !(staff instanceof Nurse)) {
+            throw new UnauthorizedException("Only medical staff can administer prescriptions.");
+        }
 
         // Look for the resident
         Resident r = findResidentByName(residentName);
@@ -857,23 +867,18 @@ public class CareHome implements Serializable {
         }
         Prescription p = r.getPrescriptions().get(numberOrdered);
 
-        // Check is the staff a medical staff
-        if (!(staff instanceof Doctor) && !(staff instanceof Nurse)) {
-            throw new UnauthorizedException("Only medical staff can administer prescriptions.");
-        }
-
-        // If is a nurse, Check the shift
-        // Need to change it to day + time, not just shift
+        // Check nurse is on duty that day
         if (staff instanceof Nurse nurse) {
-            if (nurse.getShifts().isEmpty()) {
-                throw new IllegalArgumentException("Our dear nurse " + nurse.getName() + " has no shifts today.");
+            String today = java.time.LocalDate.now().getDayOfWeek().toString();
+                if (!isWorking(nurse, today)) {
+                    throw new NotWorkingException("Nurse " + nurse.getName() + " is not working today (" + today + ")");
             }
         }
 
-        // Create log message
-        String showlog = "Staff " + staff.getId() + " "+ staff.getName() + " administered " + p.getMedicine() +
-                " (" + p.getDose() + ") at " + p.getTime() + " to resident " + r.getName();
-
+        // Create log message + print
+        String showlog = staff.getClass().getSimpleName() + " " + staff.getId() + " "+ staff.getName() + " administered " + p.getMedicine() +
+                " (" + p.getDose() + ") at " + p.getTime() + " to resident " + r.getName() + " (Bed " + r.getBedId() + ")";
+        System.out.println(showlog);
         createLog(showlog);
     }
 
