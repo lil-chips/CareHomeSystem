@@ -1017,7 +1017,9 @@ public class CareHome implements Serializable {
         return false;
     }
 
+    public void exportLogs() {
 
+    }
 
 
 
