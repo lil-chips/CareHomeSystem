@@ -278,6 +278,10 @@ public class CareHome implements Serializable {
         }
 
         // Check is the doc or nurse on duty today
+        String today = java.time.LocalDate.now().getDayOfWeek().toString();
+        if (!isWorking(s, today)) {
+            throw new NotWorkingException(s.getName() + " is not working today (" + today + ")");
+        }
 
         // Find the target bed
         Bed targetbed = findBedById(bedId);
@@ -309,13 +313,11 @@ public class CareHome implements Serializable {
         targetbed.setAvailable(false);
         re.setBedId(bedId);
 
-        System.out.println("Assigned " + re.getName() + " to BedNo. " + bedId + " by " + manager.getName());
-
-        // Create log message
-        String showlog = "Manager " + manager.getName() + " (" + manager.getId() + ") assigned resident " + re.getName() +
+        // Create log message and print message
+        String showlog = "Manager " + s.getName() + " (" + s.getId() + ") assigned resident " + re.getName() +
                 " to bed " + bedId;
-
-        createLog(showlog);
+        System.out.println(showlog);
+        CareHome.createLog(showlog);
     }
 
 
