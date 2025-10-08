@@ -163,5 +163,19 @@ public class CareHomeDatabase {
         }
     }
 
+    public static void insertResident(String name, String gender, Integer bedId) {
+        String sql = "INSERT INTO resident (name, gender, bed_id) VALUES (?, ?, ?)";
+
+        try (Connection conn = connect();
+             PreparedStatement pre = conn.prepareStatement(sql)) {
+
+            pre.setString(1, name);
+            pre.setString(2, gender);
+
+        } catch (SQLException e) {
+            System.out.println("Failed to insert resident: " + e.getMessage());
+        }
+    }
+
 
 }
