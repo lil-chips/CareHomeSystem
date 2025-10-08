@@ -26,4 +26,33 @@ public class CareHomeDatabase {
         }
         return conn;
     }
+
+    public static void createTable() {
+        String createStaffTable = """
+            CREATE TABLE IF NOT EXISTS staff (
+                id TEXT PRIMARY KEY,
+                name TEXT NOT NULL,
+                role TEXT NOT NULL,
+                password TEXT NOT NULL
+            );
+        """;
+
+        String createResidentTable = """
+            CREATE TABLE IF NOT EXISTS resident (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                gender TEXT NOT NULL,
+                bed_id INTEGER
+            );
+        """;
+
+        String createBedTable = """
+            CREATE TABLE IF NOT EXISTS bed (
+                bed_id INTEGER PRIMARY KEY,
+                is_available INTEGER NOT NULL,
+                resident_id INTEGER,
+                FOREIGN KEY (resident_id) REFERENCES residents(id)
+            );
+        """;
+    }
 }
