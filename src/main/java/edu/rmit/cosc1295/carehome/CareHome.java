@@ -670,6 +670,13 @@ public class CareHome implements Serializable {
         // Add prescription into resident's prescription list
         r.getPrescriptions().add(p);
 
+        // Save prescription into database
+        int residentId = getResidentId(r);
+        // If it's not null then add it into database
+        if (residentId != -1) {
+            CareHomeDatabase.insertPrescription(residentId, doctor.getId(), medicine, dose, time);
+        }
+
         // Create log message
         String showlog = "Doctor " + doctor.getName() + " (" + doctor.getId() + ") added prescription " + medicine +
                 " (" + dose + ")" + " at " + time + " to " + r.getName();
