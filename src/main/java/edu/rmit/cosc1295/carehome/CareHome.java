@@ -913,11 +913,15 @@ public class CareHome implements Serializable {
 
 
     // Log the actions
-    public static void createLog(String log) {
-        java.time.LocalDateTime currentTime = java.time.LocalDateTime.now();
-        String combine = "[" + currentTime + "]" + log; // Add current time in the front
-        logged.add(combine);
-        System.out.println(combine);
+    public static void createLog(String message) {
+        String timestamp = java.time.LocalDateTime.now().toString();
+        String logEntry = "[" + timestamp + "] " + message;
+
+        // Print to console
+        System.out.println(logEntry);
+
+        // Save to memory list
+        logged.add(logEntry);
     }
 
 
