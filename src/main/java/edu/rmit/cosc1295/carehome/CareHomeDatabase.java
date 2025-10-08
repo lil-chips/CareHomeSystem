@@ -70,5 +70,15 @@ public class CareHomeDatabase {
                 FOREIGN KEY (doctor_id) REFERENCES staff(id)
             );
         """;
+
+        String createLogsTable = """
+            CREATE TABLE IF NOT EXISTS logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                timestamp TEXT NOT NULL,
+                staff_id TEXT,
+                action TEXT NOT NULL,
+                FOREIGN KEY (staff_id) REFERENCES staff(id)
+            );
+        """;
     }
 }
