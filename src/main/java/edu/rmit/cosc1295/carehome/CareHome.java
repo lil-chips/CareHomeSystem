@@ -957,11 +957,17 @@ public class CareHome implements Serializable {
      * Check is the staff working on that day
      * @param s who to check
      * @param day day to check
-     * @return
+     * @return if is working on that day return true, if not return false
      */
     public boolean isWorking(Staff s, String day) {
         if (s == null || day == null) return false;
 
+        for (Shift shift : s.getShifts()) {
+            if (shift.getDay().equalsIgnoreCase(day)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
