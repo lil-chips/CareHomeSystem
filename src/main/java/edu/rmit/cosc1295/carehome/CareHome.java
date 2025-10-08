@@ -629,13 +629,9 @@ public class CareHome implements Serializable {
         if (doctor == null) {
             throw new UnauthorizedException("Only doctor can add prescriptions.");
         }
-        Bed bed = null;
-        for (Bed b : beds) {
-            if (b.getBedId() == bedId) {
-                bed = b;
-                break;
-            }
-        }
+
+        // method in line 920
+        Bed bed = findBedById(bedId);
 
         // If bed is null then throw error
         if (bed == null) {
@@ -683,14 +679,8 @@ public class CareHome implements Serializable {
     public void docUpdatePres(Doctor doctor, int bedId, int numberOrdered, String newMedicine,
                               String newDose, String newTime) {
 
-        Bed bed = null;
-
-        for (Bed b : beds) {
-            if (b.getBedId() == bedId) {
-                bed = b;
-                break;
-            }
-        }
+        // method in line 920
+        Bed bed = findBedById(bedId);
 
         // If bed is null then throw error
         if (bed == null) {
