@@ -109,11 +109,26 @@ public class CareHomeDatabase {
         }
     }
 
+    /**
+     * Insert a log record into the database
+     * @param staffId The ID of the staff performing the action
+     * @param action The action message
+     */
+
     public static void insertLog(String staffId, String action) {
         String sql = "INSERT INTO logs (timestamp, staff_id, action) VALUES (?, ?, ?)";
 
         try (Connection conn = connect(sql);
              PreparedStatement pre = conn.prepareStatement(sql)) {
+
+            // Generate timestamp
+            String now = java.time.LocalDateTime.now().toString();
+
+            pre.setString(1, now);
+            pre.setString(2, staffId);
+            pre.setString(3, action);
+
+
 
 
         } catch (SQLException e) {
