@@ -279,5 +279,19 @@ public class CareHomeDatabase {
         }
     }
 
+    public static void updateBed(int bedId, boolean isAvailable, Integer residentId) {
+        String sql = "UPDATE bed SET is available = ?, resident_id = ? WHERE bed_id = ?";
+
+        // Use try-with-resources to automatically close the connection and statement
+        try (Connection conn = connect();
+             PreparedStatement pre = conn.prepareStatement(sql)) {
+
+            // Bind each placeholder (?) in the SQL with the actual values
+            pre.setInt(1, isAvailable ? 1 : 0);
+
+
+
+    }
+
 
 }
