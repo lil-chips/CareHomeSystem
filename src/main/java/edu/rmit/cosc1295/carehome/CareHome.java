@@ -931,6 +931,7 @@ public class CareHome implements Serializable {
             throw new IllegalArgumentException(("Staff or shift can't be null"))
         }
 
+        // Calculate total hours in that day
         int totalHours = 0;
         for (Shift shift : s.getShifts()) {
             if (shift.getDay().equalsIgnoreCase(newShift.getDay())) {
@@ -950,9 +951,9 @@ public class CareHome implements Serializable {
         // Create a log
         createLog("Manager " + m.getName() + " (" + m.getId() + ") " + " has assigned shift to "
         + s.getName() + " (" + s.getId() + ") " + " (" + newShift.toString() + ")");
-
-
     }
+
+
 
 
 }
