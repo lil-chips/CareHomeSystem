@@ -1028,8 +1028,16 @@ public class CareHome implements Serializable {
             w.write("Exported at: " + java.time.LocalDateTime.now() + System.lineSeparator());
             w.write("----------------------------------------" + System.lineSeparator());
 
-        } catch (IOException e) {
+            // All the logs in the system
+            for (String log : logged) {
+                w.write(log + System.lineSeparator());
+            }
 
+            w.write(System.lineSeparator());
+            System.out.println("Logs successfully exported to " + fileName);
+
+        } catch (IOException e) {
+            System.out.println("Unsuccessful writing logs to file: " + e.getMessage());
         }
     }
 
