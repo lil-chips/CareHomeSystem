@@ -137,6 +137,14 @@ public class CareHomeDatabase {
         }
     }
 
+    /**
+     * Insert staff record into the database
+     * @param id Staff ID
+     * @param name Staff name
+     * @param role Staff role
+     * @param password Login password
+     */
+
     public static void insertStaff(String id, String name, String role, String password) {
         String sql = "INSERT INTO staff (id, name, role, password) VALUES (?, ?, ?, ?)";
 
@@ -153,8 +161,7 @@ public class CareHomeDatabase {
         } catch (SQLException e) {
             System.out.println("Failed to insert staff: " + e.getMessage());
         }
-
-
-
     }
+
+
 }
