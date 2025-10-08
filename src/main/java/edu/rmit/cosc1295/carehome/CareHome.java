@@ -681,7 +681,7 @@ public class CareHome implements Serializable {
 
         // If is not a doctor show error message
         if (doctor == null) {
-            throw new UnauthorizedException("Only doctor can update prescriptions.")
+            throw new UnauthorizedException("Only doctor can update prescriptions.");
         }
 
         // method in line 920
@@ -691,10 +691,23 @@ public class CareHome implements Serializable {
         if (bed == null) {
             throw new IllegalArgumentException("Can't find bed: " + bedId);
         }
+
         // Search the resident
         Resident r = bed.getResident();
         if (r == null) {
             throw new IllegalArgumentException("No resident in bed: " + bedId);
+        }
+
+        // Check the prescription index
+        if (numberOrdered < 0 || numberOrdered >= r.getPrescriptions().size()) {
+            throw new IllegalArgumentException("Number of prescriptions doesn't exist: " + numberOrdered);
+        }
+
+        // Check is it the same doctor
+        Prescription oldPrescription = r.getPrescriptions().get(numberOrdered);
+        if (!oldPrescription.getDoctorId().equals(doctor.getId())) {
+            throw new UnauthorizedException("Doctor " + doctor.getName()
+                    + " can't modify prescriptions written by another doctor.");
         }
 
         // Write a new prescription
@@ -705,11 +718,13 @@ public class CareHome implements Serializable {
 
         // Print out the message
         System.out.println("Doctor " + doctor.getName() + " updated prescription [" + numberOrdered
-                + "] for resident " + r.getName() + " in bed " + bedId + ": " + pUpdated);
+                + "] for resident " + r.getName() + " in bed " + bedId + ": " + pUpdated.getMedicine()
+                + " (" + pUpdated.getDose() + ") at " + pUpdated.getTime());
 
         // Create log message
         String showlog = "Doctor " + doctor.getName() + " updated prescription [" + numberOrdered + "] for resident "
-                + r.getName() + " in bed " + bedId + " to " + pUpdated;
+                + r.getName() + " in bed " + bedId + ": " + pUpdated.getMedicine()
+                + " (" + pUpdated.getDose() + ") at " + pUpdated.getTime();
 
         createLog(showlog);
 
