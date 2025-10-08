@@ -720,6 +720,17 @@ public class CareHome implements Serializable {
 
     public void nurseMoveBed(Nurse nurse, String residentName, int newBedId) {
 
+        // Only nurse can move a resident
+        if (nurse == null) {
+            throw new UnauthorizedException("Only nurse can move beds.");
+        }
+
+        // Check nurse is on duty that day
+        String today = java.time.LocalDate.now().getDayOfWeek().toString();
+        if (!isWorking(nurse, today)) {
+            throw new NotWorkingException("Nurse " + nurse.getName() + " is not working today (" + today + ")");
+        }
+
         // Find the resident by name
         Resident r = findResidentByName(residentName);
         if (r == null) {
@@ -728,21 +739,15 @@ public class CareHome implements Serializable {
         }
 
         // Look for the new bed with given ID
-        Bed emptyBed = null;
-        for (Bed b : beds) {
-            if (b.getBedId() == newBedId) {
-                emptyBed = b;
-                break; // stop once we find the bed
-            }
-        }
+        Bed newBed = findBedById(newBedId)
 
         // If no bed is found with that id, throw an error
-        if (emptyBed == null) {
+        if (newBed == null) {
             throw new IllegalArgumentException("Can't find the bed: " + newBedId);
         }
 
         // Check if the new bed already has a resident
-        if (emptyBed.getResident() != null) {
+        if (!newBed.bedAvailable()) {
             throw new IllegalStateException("Bed: " + newBedId + " has a resident already!!");
         }
 
@@ -762,8 +767,8 @@ public class CareHome implements Serializable {
         }
 
         // Put the resident into the new bed
-        emptyBed.assignResident(r);
-        emptyBed.setAvailable(false);
+        newBed.assignResident(r);
+        newBed.setAvailable(false);
 
         // Update the resident's bedID
         r.setBedId(newBedId);
@@ -773,7 +778,7 @@ public class CareHome implements Serializable {
 
         // Create log message
         String showlog = "Nurse " + nurse.getName() + " moved resident " + residentName + " from bed "
-                + emptyBed + " to " + "bed" + newBedId;
+                + rOldBed + " to " + "bed" + newBedId;
 
         createLog(showlog);
 
