@@ -679,6 +679,11 @@ public class CareHome implements Serializable {
     public void docUpdatePres(Doctor doctor, int bedId, int numberOrdered, String newMedicine,
                               String newDose, String newTime) {
 
+        // If is not a doctor show error message
+        if (doctor == null) {
+            throw new UnauthorizedException("Only doctor can update prescriptions.")
+        }
+
         // method in line 920
         Bed bed = findBedById(bedId);
 
