@@ -273,6 +273,11 @@ public class CareHome implements Serializable {
     public void assignResidentToBed(Staff s, String residentName, int bedId) {
 
         // Only nurse or doctor can assign a resident to a bed
+        if (!(s instanceof Nurse || s instanceof Doctor)) {
+            throw new UnauthorizedException("Only nurse or doctors can assign a resident to a bed")
+        }
+
+        // Check is the doc or nurse on duty today
 
         // Find the target bed
         Bed targetbed = findBedById(bedId);
