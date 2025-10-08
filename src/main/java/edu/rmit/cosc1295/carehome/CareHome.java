@@ -915,7 +915,19 @@ public class CareHome implements Serializable {
         return null;
     }
 
+    /**
+     * Assign new shifts to staffs
+     * Each day can't work over 8 hrs
+     * @param m who assign new shift
+     * @param s who get assign new shift
+     * @param newShift shifts assigned
+     */
 
+    public void assignShift(Manager m, Staff s, Shift newShift) {
+        if (m == null) {
+            throw new UnauthorizedException("Only manager can assign shifts");
+        }
+    }
 
 
 }
