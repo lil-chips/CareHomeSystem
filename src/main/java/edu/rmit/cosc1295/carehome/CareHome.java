@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.*;
+import java.sql.*;
 
 
 
@@ -1085,7 +1086,34 @@ public class CareHome implements Serializable {
         }
     }
 
+    /**
+     * Find the database ID of a given resident by their name
+     * @param r The resident
+     * @return The resident's database ID, -1 if not found
+     */
 
+    private int getResidentId(Resident r) {
+        String sql = "SELECT id FROM resident WHERE name = ?";
+
+        // Use try-with-resources to automatically close the connection and statement
+        try (Connection conn = CareHomeDatabase.connect();
+             PreparedStatement pre = conn.prepareStatement(sql)) {
+
+            // Bind each placeholder (?) in the SQL with the actual values
+            pre.setString(1, r.getName());
+
+            // Run query and read the first matching record
+            ResultSet rs = pre.executeQuery();
+            if (rs.next()) {
+                // Return the resident's database ID
+                return rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            // Catch database related errors
+            System.out.println("Cannot get resident ID from DB: " + e.getMessage());
+        }
+        return -1; // not found
+    }
 
 
 }
