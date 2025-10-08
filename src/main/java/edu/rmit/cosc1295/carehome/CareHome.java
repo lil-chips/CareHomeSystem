@@ -659,16 +659,13 @@ public class CareHome implements Serializable {
         Prescription p = new Prescription(doctor.getId(), medicine, dose, time);
 
         // Add prescription into resident's prescription list
-        doctor.addPrescription(this, r, p);
-
-        // Print out the message
-        System.out.println("Doctor " + doctor.getName() + " added prescription for resident "
-                + r.getName() + " in bed " + bedId + ": " + medicine + " (" + dose + ") at " + time);
+        r.getPrescriptions().add(p);
 
         // Create log message
         String showlog = "Doctor " + doctor.getName() + " (" + doctor.getId() + ") added prescription " + medicine +
                 " (" + dose + ")" + " at " + time + " to " + r.getName();
-
+        // Print out the message
+        System.out.println(showlog);
         createLog(showlog);
     }
 
