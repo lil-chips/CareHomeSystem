@@ -1017,8 +1017,20 @@ public class CareHome implements Serializable {
         return false;
     }
 
-    public void exportLogs() {
+    /**
+     * Export all system logs to a text file
+     * @param fileName The name of the log file
+     */
 
+    public void exportLogs(String fileName) {
+        try (FileWriter w = new FileWriter(fileName, true)) {
+            w.write("~~~~ CareHome System Log Export ~~~~" + System.lineSeparator());
+            w.write("Exported at: " + java.time.LocalDateTime.now() + System.lineSeparator());
+            w.write("----------------------------------------" + System.lineSeparator());
+
+        } catch (IOException e) {
+
+        }
     }
 
 
