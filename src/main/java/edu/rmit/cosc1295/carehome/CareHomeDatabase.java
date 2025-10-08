@@ -269,9 +269,17 @@ public class CareHomeDatabase {
             pre.executeUpdate();
 
             // Print confirmation message
-            System.out.println("Bed inserted into database: ID=" + bedId +
-                    ", Available=" + isAvailable +
-                    (residentId != null ? ", ResidentID=" + residentId : ", (no resident)"));
+            String message = "Bed inserted into database: ID:" + bedId + ", Available=" + isAvailable;
+
+            // If there is a resident assigned
+            if (residentId != null) {
+                message += ", ResidentID=" + residentId;
+            } else {
+                message += ", (no resident)";
+            }
+
+            // Print confirmation
+            System.out.println(message);
 
         } catch (SQLException e) {
             // Catch database related errors
@@ -299,7 +307,32 @@ public class CareHomeDatabase {
             // Target bed ID
             pre.setInt(3, bedId);
 
+            // Execute the SQL command to insert the new record into the database
+            int executedUpdate = pre.executeUpdate();
+
+            if (executedUpdate > 0) {
+                // Print confirmation message
+                String message = "Bed updated in database: ID:" + bedId + ", Available:" + isAvailable;
+
+                // If there is a resident assigned
+                if (residentId != null) {
+                    message += ", ResidentID:" + residentId;
+                } else {
+                    message += ", (no resident)";
+                }
+
+                // Print confirmation
+                System.out.println(message);
+
+            } else {
+                System.out.println("No bed found in database with ID: " + bedId);
+            }
+
+        } catch (SQLException e) {
+            // Catch database related errors
+            System.out.println("Failed to update bed: " + e.getMessage());
+        }
+
+
     }
-
-
 }
