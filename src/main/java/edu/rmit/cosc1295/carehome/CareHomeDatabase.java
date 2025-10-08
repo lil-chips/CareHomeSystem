@@ -316,6 +316,7 @@ public class CareHomeDatabase {
             // Execute the SQL command to insert the new record into the database
             int executedUpdate = pre.executeUpdate();
 
+            // Log to console
             if (executedUpdate > 0) {
                 // Print confirmation message
                 String message = "Bed updated in database: ID:" + bedId + ", Available:" + isAvailable;
@@ -359,4 +360,22 @@ public class CareHomeDatabase {
             pre.setString(2, newDose);
             pre.setString(3, newTime);
             pre.setInt(4, prescriptionId); // Target record
+
+            // Execute the SQL command to insert the new record into the database
+            int executedUpdate = pre.executeUpdate();
+
+            // Log to console
+            if (executedUpdate > 0)
+                // Print confirmation message
+                System.out.println("Prescription updated in database: ID:" + prescriptionId +
+                        ", Medicine:" + newMedicine + ", Dose:" + newDose + ", Time:" + newTime);
+            else
+                System.out.println("No prescription found with ID: " + prescriptionId);
+
+        } catch (SQLException e) {
+            // Catch database related errors
+            System.out.println("Failed to update prescription: " + e.getMessage());
+
+        }
+    }
 }
