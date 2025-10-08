@@ -240,5 +240,44 @@ public class CareHomeDatabase {
         }
     }
 
+    /**
+     * Insert a new bed record into the database.
+     * @param bedId The bed number
+     * @param isAvailable Whether the bed is available (true = 1, false = 0)
+     * @param residentId The ID of the resident
+     */
+
+    public static void insertBed(int bedId, boolean isAvailable, Integer residentId) {
+        String sql = "INSERT INTO bed (bed_id, is_available, resident_id) VALUES (?, ?, ?)";
+
+        // Use try-with-resources to automatically close the connection and statement
+        try (Connection conn = connect();
+             PreparedStatement pre = conn.prepareStatement(sql)) {
+
+            // Bind each placeholder (?) in the SQL with the actual values
+            pre.setInt(1, bedId);
+            pre.setInt(2, isAvailable ? 1 : 0);
+
+            // If resident ID is not null insert into the database
+            // Otherwise insert a SQL NULL
+            if (residentId != null)
+                pre.setInt(3, residentId);
+            else
+                pre.setNull(3, Types.INTEGER);
+
+            // Execute the SQL command to insert the new record into the database
+            pre.executeUpdate();
+
+            // Print confirmation message
+            System.out.println("Bed inserted into database: ID=" + bedId +
+                    ", Available=" + isAvailable +
+                    (residentId != null ? ", ResidentID=" + residentId : ", (no resident)"));
+
+        } catch (SQLException e) {
+            // Catch database related errors
+            System.out.println("Failed to insert bed: " + e.getMessage());
+        }
+    }
+
 
 }
