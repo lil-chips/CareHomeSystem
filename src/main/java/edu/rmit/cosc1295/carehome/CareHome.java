@@ -329,6 +329,9 @@ public class CareHome implements Serializable {
                 " to bed " + bedId;
         System.out.println(showlog);
         CareHome.createLog(showlog);
+
+        // Save the updated resident into the database
+        CareHomeDatabase.insertResident(re.getName(), re.getGender(), bedId);
     }
 
 
