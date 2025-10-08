@@ -338,7 +338,25 @@ public class CareHomeDatabase {
             // Catch database related errors
             System.out.println("Failed to update bed: " + e.getMessage());
         }
-
-
     }
+
+    /**
+     * Update prescription in database (medicine, dose, and time)
+     * @param prescriptionId the ID of the prescription
+     * @param newMedicine the new medicine name
+     * @param newDose  the new dosage
+     * @param newTime the new administration time
+     */
+    public static void updatePrescription(int prescriptionId, String newMedicine, String newDose, String newTime) {
+        String sql = "UPDATE prescription SET medicine = ?, dose = ?, time = ? WHERE id = ?";
+
+        // Use try-with-resources to automatically close the connection and statement
+        try (Connection conn = connect();
+             PreparedStatement pre = conn.prepareStatement(sql)) {
+
+            // Bind each placeholder (?) in the SQL with the actual values
+            pre.setString(1, newMedicine);
+            pre.setString(2, newDose);
+            pre.setString(3, newTime);
+            pre.setInt(4, prescriptionId); // Target record
 }
