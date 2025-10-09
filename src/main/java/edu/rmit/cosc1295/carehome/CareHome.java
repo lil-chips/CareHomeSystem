@@ -746,12 +746,14 @@ public class CareHome implements Serializable {
             // Use try-with-resources to automatically close the connection and statement
             try (Connection conn = CareHomeDatabase.connect();
                 PreparedStatement pre = conn.prepareStatement(
-                        "SELECT id FROM prescription WHERE resident_id = ? AND doctor_id = ? LIMIT 1 OFFSET ?")) {
+                        "SELECT id FROM prescription WHERE resident_id = ? AND doctor_id = ? AND medicine = ? AND dose = ? AND time = ? LIMIT 1")) {
 
                 // Bind each placeholder (?) in the SQL with the actual values
                 pre.setInt(1, residentId);
                 pre.setString(2, doctor.getId());
-                pre.setInt(3, numberOrdered);
+                pre.setString(3, oldPrescription.getMedicine());
+                pre.setString(4, oldPrescription.getDose());
+                pre.setString(5, oldPrescription.getTime());
 
                 // Execute the SQL command to insert the new record into the database
                 ResultSet rs = pre.executeQuery();
