@@ -90,12 +90,23 @@ public class CareHomeDatabase {
                 );
             """;
 
+            String createShiftTable = """
+                CREATE TABLE IF NOT EXISTS shift (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    staff_id TEXT NOT NULL,
+                    day TEXT NOT NULL,
+                    time TEXT NOT NULL,
+                    FOREIGN KEY (staff_id) REFERENCES staff(id)
+                );
+            """;
+
             // Execute all the SQL statement
             state.execute(createStaffTable);
             state.execute(createResidentTable);
             state.execute(createBedTable);
             state.execute(createPrescriptionTable);
             state.execute(createLogsTable);
+            state.execute(createShiftTable);
 
             System.out.println("Successfully created tables!");
 
