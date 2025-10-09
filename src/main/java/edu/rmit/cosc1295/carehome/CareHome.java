@@ -970,7 +970,11 @@ public class CareHome implements Serializable {
     }
 
 
-    // Log the actions
+    /**
+     * Create a log entry
+     * @param message The log message
+     */
+
     public static void createLog(String message) {
         String timestamp = java.time.LocalDateTime.now().toString();
         String logEntry = "[" + timestamp + "] " + message;
