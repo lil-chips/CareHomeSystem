@@ -127,7 +127,11 @@ public class CareHomeDatabase {
 
             // Bind each placeholder (?) in the SQL with the actual values
             pre.setString(1, now);
-            pre.setString(2, staffId);
+            if (staffId != null) {
+                pre.setString(2, staffId);
+            } else {
+                pre.setNull(2, Types.NULL);
+            }
             pre.setString(3, action);
 
             // Execute the SQL command to insert the new record into the database
