@@ -775,8 +775,8 @@ public class CareHome implements Serializable {
         }
 
         // Create log message
-        String showlog = "Doctor " + doctor.getName() + " updated prescription [" + numberOrdered
-                + "] for resident " + r.getName() + " in bed " + bedId + ": " + pUpdated.getMedicine()
+        String showlog = "Doctor " + doctor.getName() + " (" + doctor.getId() + ") updated prescription ["
+                + numberOrdered + "] for resident " + r.getName() + " in bed " + bedId + ": " + pUpdated.getMedicine()
                 + " (" + pUpdated.getDose() + ") at " + pUpdated.getTime();
 
         createLog(showlog);
