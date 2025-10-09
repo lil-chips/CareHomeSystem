@@ -351,7 +351,7 @@ public class CareHomeDatabase {
     public static void updatePrescription(int prescriptionId, String newMedicine, String newDose, String newTime) {
         String sql = "UPDATE prescription SET medicine = ?, dose = ?, time = ? WHERE id = ?";
 
-        // Use try-with-resources to automatically close the connection and statement
+
         try (Connection conn = connect();
              PreparedStatement pre = conn.prepareStatement(sql)) {
 

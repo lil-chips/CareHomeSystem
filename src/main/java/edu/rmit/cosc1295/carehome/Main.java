@@ -14,7 +14,7 @@ public class Main {
 
 
             CareHomeDatabase.createTables();
-            System.out.println("✅ Database setup completed.");
+            System.out.println("Database setup completed.");
 
 
         }

@@ -96,6 +96,11 @@ public class CareHome implements Serializable {
 
     public void addResident(Manager manager, Resident resident, int bedId) {
 
+        // Only manager can perform this action
+        if (manager == null) {
+            throw new UnauthorizedException("Only manager can add resident");
+        }
+
         // Find the target bed
         Bed targetBed = findBedById(bedId);
 
@@ -114,14 +119,13 @@ public class CareHome implements Serializable {
         resident.setBedId(bedId);
         residents.add(resident);
 
-        // Show the message
-        System.out.println("Manager " + manager.getName() + " added a new resident: "
-                + resident.getName() + " to bed " + bedId);
+        // Save resident record to database
+        CareHomeDatabase.insertResident(resident.getName(), resident.getGender(), resident.getBedId());
 
         // Create log message
-        String showlog = "Manager " + manager.getName() + " (" + manager.getId() + ") added resident "
+        String showlog = "Manager " + manager.getName() + " (" + manager.getId() + ") added a new resident "
                 + resident.getName() + " to bed " + bedId;
-
+        System.out.println(showlog);
         createLog(showlog);
     }
 
@@ -736,17 +740,45 @@ public class CareHome implements Serializable {
         // Update the resident prescription
         r.updatePres(numberOrdered, pUpdated);
 
-        // Print out the message
-        System.out.println("Doctor " + doctor.getName() + " updated prescription [" + numberOrdered
-                + "] for resident " + r.getName() + " in bed " + bedId + ": " + pUpdated.getMedicine()
-                + " (" + pUpdated.getDose() + ") at " + pUpdated.getTime());
+        // Update in database
+        int residentId = getResidentId(r);
+        if (residentId != -1) {
+            // Use try-with-resources to automatically close the connection and statement
+            try (Connection conn = CareHomeDatabase.connect();
+                PreparedStatement pre = conn.prepareStatement(
+                        "SELECT id FROM prescription WHERE resident_id = ? AND doctor_id = ? LIMIT 1 OFFSET ?")) {
+
+                // Bind each placeholder (?) in the SQL with the actual values
+                pre.setInt(1, residentId);
+                pre.setString(2, doctor.getId());
+                pre.setInt(3, numberOrdered);
+
+                // Execute the SQL command to insert the new record into the database
+                ResultSet rs = pre.executeQuery();
+
+                // If found the prescription in the database
+                if (rs.next()) {
+
+                    // Get the prescription ID from the result
+                    int prescriptionId = rs.getInt("id");
+
+                    // Update this prescription record in the database
+                    CareHomeDatabase.updatePrescription(prescriptionId, newMedicine, newDose, newTime);
+                }
+            } catch (SQLException e) {
+                // Catch database related errors
+                System.out.println("Failed to update prescription in database: " + e.getMessage());
+            }
+
+        }
 
         // Create log message
-        String showlog = "Doctor " + doctor.getName() + " updated prescription [" + numberOrdered + "] for resident "
-                + r.getName() + " in bed " + bedId + ": " + pUpdated.getMedicine()
+        String showlog = "Doctor " + doctor.getName() + " updated prescription [" + numberOrdered
+                + "] for resident " + r.getName() + " in bed " + bedId + ": " + pUpdated.getMedicine()
                 + " (" + pUpdated.getDose() + ") at " + pUpdated.getTime();
 
         createLog(showlog);
+        System.out.println(showlog);
 
     }
 
