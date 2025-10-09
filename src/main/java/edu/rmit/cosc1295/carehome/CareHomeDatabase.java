@@ -128,9 +128,11 @@ public class CareHomeDatabase {
             // Bind each placeholder (?) in the SQL with the actual values
             pre.setString(1, now);
             if (staffId != null) {
+                // If staffId is not null insert into the database
+                // Otherwise insert a SQL NULL
                 pre.setString(2, staffId);
             } else {
-                pre.setNull(2, Types.NULL);
+                pre.setNull(2, Types.VARCHAR);
             }
             pre.setString(3, action);
 
