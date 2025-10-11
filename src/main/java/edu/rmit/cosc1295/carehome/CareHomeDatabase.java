@@ -428,6 +428,13 @@ public class CareHomeDatabase {
     }
 
     public static void deletePrescription(int prescriptionId) {
+        String sql = "DELETE FROM prescription WHERE id = ?";
+
+        // Use try-with-resources to automatically close the connection and statement
+        try (Connection conn = connect();
+             PreparedStatement pre = conn.prepareStatement(sql)) {
+
+        }
 
     }
 }
