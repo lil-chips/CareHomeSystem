@@ -396,7 +396,13 @@ public class CareHomeDatabase {
         }
     }
 
-    // staff id & day & time
+    /**
+     * Insert a new shift record into the database
+     * @param staffId The staff ID
+     * @param day The day of the shift
+     * @param time The time range of the shift
+     */
+
     public static void insertShift(String staffId, String day, String time) {
         String sql = "INSERT INTO shift (staff_id, day, time) VALUES (?, ?, ?)";
 
@@ -416,6 +422,7 @@ public class CareHomeDatabase {
             System.out.println("Shift inserted into database: " + staffId + ", " + day + ", " + time);
 
         } catch (SQLException e) {
+            // Catch database related errors
             System.out.println("Failed to insert shift: " + e.getMessage());
         }
     }
