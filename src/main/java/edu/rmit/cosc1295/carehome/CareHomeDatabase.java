@@ -427,6 +427,11 @@ public class CareHomeDatabase {
         }
     }
 
+    /**
+     * Delete a prescription from the database by its ID
+     * @param prescriptionId The ID of the prescription
+     */
+
     public static void deletePrescription(int prescriptionId) {
         String sql = "DELETE FROM prescription WHERE id = ?";
 
