@@ -415,6 +415,8 @@ public class CareHomeDatabase {
             // Print confirmation message
             System.out.println("Shift inserted into database: " + staffId + ", " + day + ", " + time);
 
+        } catch (SQLException e) {
+            System.out.println("Failed to insert shift: " + e.getMessage());
         }
     }
 }
