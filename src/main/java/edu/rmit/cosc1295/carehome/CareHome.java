@@ -330,7 +330,7 @@ public class CareHome implements Serializable {
         targetbed.setAvailable(false);
         re.setBedId(bedId);
 
-        // Create log message and print message
+        // Create log message + print to console
         String showlog = "Manager " + s.getName() + " (" + s.getId() + ") assigned resident " + re.getName() +
                 " to bed " + bedId;
         System.out.println(showlog);
@@ -373,11 +373,11 @@ public class CareHome implements Serializable {
 
                 System.out.println("Assigned 7 random shifts to Nurse (1 shift per day): " + nurse.getName());
 
-                // Create log message
+                // Create log message + print to console
                 String showlog = "Manager assigned 7 shifts to Nurse "
                         + nurse.getName() + "(" + nurse.getId() + ")";
-
-                createLog(showlog);
+                System.out.println(showlog);
+                CareHome.createLog(showlog);
 
             }
         }
@@ -412,11 +412,11 @@ public class CareHome implements Serializable {
 
                 System.out.println("Assigned 7 shifts (1 per day) to Doctor: " + doctor.getName());
 
-                // Create log message
+                // Create log message + print to console
                 String showlog = "Manager assigned 7 shifts to doctor "
                         + doctor.getName() + "(" + doctor.getId() + ")";
-
-                createLog(showlog);
+                System.out.println(showlog);
+                CareHome.createLog(showlog);
             }
         }
     }
@@ -528,12 +528,12 @@ public class CareHome implements Serializable {
         // Modified the old one to new, use set to combine
         shifts.set(i, newShift);
 
-        // Create log message
+        // Create log message + print to console
         String showlog = "Manager " + manager.getName() + " has modified the shift for nurse "
                 + nurse.getName() + "(" + nurse.getId() + ")" + " , from " + preShift.toString() + " to "
                 + newShift.toString();
-
-        createLog(showlog);
+        System.out.println(showlog);
+        CareHome.createLog(showlog);
 
         // Check does it over 8 hours
         checkCompliance();
@@ -563,12 +563,12 @@ public class CareHome implements Serializable {
         // Modified the old one to new, use set to combine
         shifts.set(i, newShift);
 
-        // Create log message
+        // Create log message + print to console
         String showlog = "Manager " + manager.getName() + " has modified the shift for doctor "
                 + doctor.getName() + "(" + doctor.getId() + ")" + " , from " + preShift.toString() + " to "
                 + newShift.toString();
-
-        createLog(showlog);
+        System.out.println(showlog);
+        CareHome.createLog(showlog);
 
         // Check does it over 8 hours
         checkCompliance();
@@ -682,12 +682,12 @@ public class CareHome implements Serializable {
             CareHomeDatabase.insertPrescription(residentId, doctor.getId(), medicine, dose, time);
         }
 
-        // Create log message
+        // Create log message + print to console
         String showlog = "Doctor " + doctor.getName() + " (" + doctor.getId() + ") added prescription " + medicine +
                 " (" + dose + ")" + " at " + time + " to " + r.getName();
         // Print out the message
         System.out.println(showlog);
-        createLog(showlog);
+        CareHome.createLog(showlog);
     }
 
 
@@ -775,14 +775,12 @@ public class CareHome implements Serializable {
 
         }
 
-        // Create log message
+        // Create log message + print to console
         String showlog = "Doctor " + doctor.getName() + " (" + doctor.getId() + ") updated prescription ["
                 + numberOrdered + "] for resident " + r.getName() + " in bed " + bedId + ": " + pUpdated.getMedicine()
                 + " (" + pUpdated.getDose() + ") at " + pUpdated.getTime();
-
-        createLog(showlog);
         System.out.println(showlog);
-
+        CareHome.createLog(showlog);
     }
 
 
@@ -863,11 +861,11 @@ public class CareHome implements Serializable {
             oldBedId = rOldBed.getBedId();
         }
 
-        // Create log message and print
+        // Create log message + print to console
         String showlog = "Nurse " + nurse.getName() + " moved resident " + r.getName() + " from bed "
                 + oldBedId + " to bed" + newBedId;
         System.out.println(showlog);
-        createLog(showlog);
+        CareHome.createLog(showlog);
 
     }
 
@@ -916,12 +914,12 @@ public class CareHome implements Serializable {
                 + ") at " + p.getTime() + " [Doctor ID: " + p.getDoctorId() + "]");
             }
 
-        // Create log message
+        // Create log message + print to console
         String showlog = staff.getClass().getSimpleName() + " " + staff.getName() + " (" +
                 staff.getId() + ") " + "checked the details of bed "
                 + bedId + " with resident " + r.getName() + " (" + r.getGender() + ")";
         System.out.println(showlog);
-        createLog(showlog);
+        CareHome.createLog(showlog);
         }
 
     }
@@ -965,11 +963,11 @@ public class CareHome implements Serializable {
             }
         }
 
-        // Create log message + print
+        // Create log message + print to console
         String showlog = staff.getClass().getSimpleName() + " " + staff.getId() + " "+ staff.getName() + " administered " + p.getMedicine() +
                 " (" + p.getDose() + ") at " + p.getTime() + " to resident " + r.getName() + " (Bed " + r.getBedId() + ")";
         System.out.println(showlog);
-        createLog(showlog);
+        CareHome.createLog(showlog);
     }
 
 
@@ -1080,11 +1078,11 @@ public class CareHome implements Serializable {
         // Save to database
         CareHomeDatabase.insertShift(s.getId(), newShift.getDay(), newShift.getTime());
 
-        // Create a log
+        // Create a log + print to console
         String showlog = ("Manager " + m.getName() + " (" + m.getId() + ") " + " has assigned shift to "
         + s.getName() + " (" + s.getId() + ") " + " (" + newShift.toString() + ")");
         System.out.println(showlog);
-        createLog(showlog);
+        CareHome.createLog(showlog);
     }
 
     /**
@@ -1238,12 +1236,21 @@ public class CareHome implements Serializable {
                     // Print confirmation message
                     System.out.println("Prescription deleted successfully from database: " +
                             p.getMedicine() + " (" + p.getDose() + ") for resident " + r.getName());
+                } else {
+                    System.out.println("Can't find the matching record.");
                 }
-
-
+            } catch (SQLException e) {
+                // Catch database related errors
+                System.out.println("Failed to delete prescription from database: " + e.getMessage());
             }
-                )
         }
+
+        // Create a log + print to console
+        String showlog = "Doctor " + doctor.getName() + " deleted prescription " +
+                p.getMedicine() + " for resident " + r.getName() + " (bed " + bedId + ")";
+        System.out.println(showlog);
+        CareHome.createLog(showlog);
+
     }
 
 
