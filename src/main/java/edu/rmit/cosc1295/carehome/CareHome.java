@@ -1181,6 +1181,29 @@ public class CareHome implements Serializable {
 
     public void docDeletePres(Doctor doctor, int bedId, int numberOrdered) {
 
+        // Only doctor can perform this action
+        if (doctor == null) {
+            throw new UnauthorizedException(("Only doctor can delete prescriptions"));
+        }
+
+        // Find the bed, must not be null
+        Bed bed = findBedById(bedId);
+        if (bed == null) {
+            throw new IllegalArgumentException("Can't find the bed: " + bedId);
+        }
+
+        // Find the resident, must not be null
+        Resident r = bed.getResident();
+        if (r == null) {
+            throw new IllegalArgumentException("No resident in bed " + bedId);
+        }
+
+        // Check if index valid
+        if (numberOrdered < 0 || numberOrdered >= r.getPrescriptions().size()) {
+            throw new IllegalArgumentException("Prescription index out of range: " + numberOrdered);
+        }
+
+
 
     }
 
