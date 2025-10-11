@@ -396,5 +396,13 @@ public class CareHomeDatabase {
         }
     }
 
-    public static void insertShift()
+    // staff id & day & time
+    public static void insertShift(String staffId, String day, String time) {
+        String sql = "INSERT INTO shift (staff_id, day, time) VALUES (?, ?, ?)";
+
+        try (Connection conn = connect();
+             PreparedStatement pre = conn.prepareStatement(sql)) {
+
+        }
+    }
 }
