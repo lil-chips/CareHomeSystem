@@ -1211,6 +1211,22 @@ public class CareHome implements Serializable {
             throw new UnauthorizedException("Doctor ID: " + doctor.getId() + " doesn't match the prescription ID: " + p.getDoctorId());
         }
 
+        // Remove from memory
+        r.getPrescriptions().remove(numberOrdered);
+
+        // Remove from database
+        int residentId = getResidentId(r);
+
+        //
+        if (residentId != -1) {
+            try (Connection conn = CareHomeDatabase.connect();
+                PreparedStatement pre = conn.prepareStatement(
+                        "DELETE FROM prescription WHERE resident_id = ? AND doctor_id = ? AND medicine = ? AND dose = ? AND time = ?")) {
+
+
+            }
+                )
+        }
     }
 
 
