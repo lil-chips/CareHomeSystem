@@ -368,7 +368,7 @@ public class CareHomeDatabase {
     public static void updatePrescription(int prescriptionId, String newMedicine, String newDose, String newTime) {
         String sql = "UPDATE prescription SET medicine = ?, dose = ?, time = ? WHERE id = ?";
 
-
+        // Use try-with-resources to automatically close the connection and statement
         try (Connection conn = connect();
              PreparedStatement pre = conn.prepareStatement(sql)) {
 
@@ -400,8 +400,20 @@ public class CareHomeDatabase {
     public static void insertShift(String staffId, String day, String time) {
         String sql = "INSERT INTO shift (staff_id, day, time) VALUES (?, ?, ?)";
 
+        // Use try-with-resources to automatically close the connection and statement
         try (Connection conn = connect();
              PreparedStatement pre = conn.prepareStatement(sql)) {
+
+            // Bind each placeholder (?) in the SQL with the actual values
+            pre.setString(1, staffId);
+            pre.setString(2, day);
+            pre.setString(3, time);
+
+            // Execute the SQL command to insert the new record into the database
+            pre.executeUpdate();
+
+            // Print confirmation message
+            System.out.println("Shift inserted into database: " + staffId + ", " + day + ", " + time);
 
         }
     }
