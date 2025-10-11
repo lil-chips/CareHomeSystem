@@ -1217,11 +1217,28 @@ public class CareHome implements Serializable {
         // Remove from database
         int residentId = getResidentId(r);
 
-        //
+        // Only proceed if the resident ID is valid (not -1)
         if (residentId != -1) {
             try (Connection conn = CareHomeDatabase.connect();
                 PreparedStatement pre = conn.prepareStatement(
                         "DELETE FROM prescription WHERE resident_id = ? AND doctor_id = ? AND medicine = ? AND dose = ? AND time = ?")) {
+
+                // Bind each placeholder (?) in the SQL with the actual values
+                pre.setInt(1, residentId);
+                pre.setString(2, doctor.getId());
+                pre.setString(3, p.getMedicine());
+                pre.setString(4, p.getDose());
+                pre.setString(5, p.getTime());
+
+                // Execute the SQL command to insert the new record into the database
+                int executeUpdate = pre.executeUpdate();
+
+                // Log to console
+                if (executeUpdate > 0) {
+                    // Print confirmation message
+                    System.out.println("Prescription deleted successfully from database: " +
+                            p.getMedicine() + " (" + p.getDose() + ") for resident " + r.getName());
+                }
 
 
             }
