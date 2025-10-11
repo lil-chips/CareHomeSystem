@@ -438,11 +438,17 @@ public class CareHomeDatabase {
             pre.setInt(1, prescriptionId);
 
             // Execute the SQL command to delete the prescription in the database
-            int rows = pre.executeUpdate();
+            int deletePres = pre.executeUpdate();
 
-
-
+            if ( deletePres > 0) {
+                // Print confirmation message
+                System.out.println("Prescription deleted from database: " + prescriptionId);
+            } else {
+                System.out.println("Can't not find prescription with ID: " + prescriptionId);
+            }
+        } catch (SQLException e) {
+            // Catch database related errors
+            System.out.println("Failed to delete prescription: " + e.getMessage());
         }
-
     }
 }
