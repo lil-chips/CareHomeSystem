@@ -434,6 +434,14 @@ public class CareHomeDatabase {
         try (Connection conn = connect();
              PreparedStatement pre = conn.prepareStatement(sql)) {
 
+            // Bind each placeholder (?) in the SQL with the actual values
+            pre.setInt(1, prescriptionId);
+
+            // Execute the SQL command to delete the prescription in the database
+            int rows = pre.executeUpdate();
+
+
+
         }
 
     }
