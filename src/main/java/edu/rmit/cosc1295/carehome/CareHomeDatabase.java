@@ -232,7 +232,7 @@ public class CareHomeDatabase {
      */
 
     public static void insertPrescription(int residentId, String doctorId, String medicine, String dose, String time) {
-        String sql = "INSERT INTO prescription (resident_id, doctor_id, medicinem, dose, time) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO prescription (resident_id, doctor_id, medicine, dose, time) VALUES (?, ?, ?, ?, ?)";
 
         // Use try-with-resources to automatically close the connection and statement
         try (Connection conn = connect();

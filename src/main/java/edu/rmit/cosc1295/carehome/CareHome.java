@@ -1,5 +1,6 @@
 package edu.rmit.cosc1295.carehome;
 
+import javax.print.Doc;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -1169,6 +1170,18 @@ public class CareHome implements Serializable {
             System.out.println("Cannot get resident ID from DB: " + e.getMessage());
         }
         return -1; // not found
+    }
+
+    /**
+     * Allow a doctor to delete a prescription
+     * @param doctor The doctor performing the action
+     * @param bedId The bed ID of the resident
+     * @param numberOrdered The index of the prescription to delete
+     */
+
+    public void docDeletePres(Doctor doctor, int bedId, int numberOrdered) {
+
+
     }
 
 
