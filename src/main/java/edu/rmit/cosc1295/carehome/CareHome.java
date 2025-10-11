@@ -1203,7 +1203,13 @@ public class CareHome implements Serializable {
             throw new IllegalArgumentException("Prescription index out of range: " + numberOrdered);
         }
 
+        // Get the prescription
+        Prescription p = r.getPrescriptions().get(numberOrdered);
 
+        // Is it the same doctor
+        if (!p.getDoctorId().equals(doctor.getId())) {
+            throw new UnauthorizedException("Doctor ID: " + doctor.getId() + " doesn't match the prescription ID: " + p.getDoctorId());
+        }
 
     }
 
