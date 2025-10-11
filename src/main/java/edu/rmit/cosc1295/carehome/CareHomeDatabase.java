@@ -426,4 +426,8 @@ public class CareHomeDatabase {
             System.out.println("Failed to insert shift: " + e.getMessage());
         }
     }
+
+    public static void deletePrescription(int prescriptionId) {
+
+    }
 }
