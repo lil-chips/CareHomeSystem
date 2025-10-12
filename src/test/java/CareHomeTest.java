@@ -287,6 +287,7 @@ public class CareHomeTest {
         assertEquals("30678", nurse.getPassword(),
                 "Password should be successfully changed by the manager");
 
+        // Show success message
         System.out.println("Manager successfully changed staff password!");
     }
 }
