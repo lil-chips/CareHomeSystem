@@ -108,4 +108,18 @@ public class CareHomeTest {
         // Show success message
         System.out.println("Successfully added staff to the internal list!");
     }
+
+    // Doctor should be assigned a shift successfully
+    @Test
+    @DisplayName("assignShift() should assign a doctor a valid shift without any error")
+    void assignShift_toDoctor_success() {
+        CareHome c = new CareHome();
+
+        Manager manager = new Manager("manager1", "Edward", "0722");
+
+        // Create a doctor
+        Doctor doctor = new Doctor("doctor1", "Ellen", "2222");
+
+
+    }
 }
