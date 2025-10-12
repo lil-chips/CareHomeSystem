@@ -242,6 +242,7 @@ public class CareHomeTest {
                 },
                 "Doctor should not have more than one shift per day");
 
+        // Show success message
         System.out.println("Successfully blocked doctor from working twice on the same day!");
     }
 
