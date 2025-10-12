@@ -353,6 +353,18 @@ public class CareHomeTest {
     void addStaff_duplicateInDB_throwError() {
         CareHome c = new CareHome();
 
-        // Create a manager
-        Manager manager = new Manager("m1", "Edward", "0722");
+        // Create a manager and two nurses with same ID
+        Manager manager = new Manager("manager1", "Edward", "0722");
+        Nurse nurse1 = new Nurse("nurseA", "Lucy", "1111");
+        Nurse nurse2 = new Nurse("nurseA", "Lin", "2222");
+
+        // Add the first nurse
+        assertDoesNotThrow(() -> c.addStaff(manager, nurse1));
+        // Add the second nurse, should fail
+        assertThrows(IllegalArgumentException.class,
+                () -> c.addStaff(manager, nurse2),
+                "Staff ID already exists in database");
+
+        System.out.println("Successfully blocked duplicate staff insertion (DB check)!");
+    }
 }
