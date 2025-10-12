@@ -191,6 +191,20 @@ public class CareHomeTest {
         assertEquals(2, nurse.getShifts().size(),
                 "Nurse should have exactly 2 valid shifts assigned");
 
+        // Show success message
         System.out.println("Successfully assigned shift to nurse within working limit!");
+    }
+
+    // CheckCompliance() should return false when a nurse is overwork
+    @Test
+    @DisplayName("checkCompliance() should return false if a nurse has more than 8 hours of shifts in a single day")
+    void checkCompliance_returnsFalse() {
+        CareHome c = new CareHome();
+
+        // Create manager and nurse
+        Manager manager = new Manager("manager1", "Edward", "0722");
+        Nurse nurse = new Nurse("nurse1", "Qin", "1234");
+
+
     }
 }
