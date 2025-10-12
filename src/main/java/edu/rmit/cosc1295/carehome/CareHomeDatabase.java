@@ -456,4 +456,10 @@ public class CareHomeDatabase {
             System.out.println("Failed to delete prescription: " + e.getMessage());
         }
     }
+
+
+    public static boolean staffExists(String id) {
+        String sql = "SELECT 1 FROM staff WHERE id = ?";
+        try (Connection conn = connect();
+             PreparedStatement pre = conn.prepareStatement(sql)) {
 }
