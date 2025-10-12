@@ -24,13 +24,24 @@ public class CareHomeTest {
         System.out.println("successfully blocked the duplicate ID!");
     }
 
-
+    // Allow to add multiple IDs
     @Test
     @DisplayName("addStuff() should allow multiple different IDs without throwing error")
     void addStaff_duplicateIds_throwError() {
         CareHome c = new CareHome();
         Manager manager = new Manager("manager1", "Edward", "0722");
 
+        // Create two nurses with different IDs
+        Nurse nurse = new Nurse("nurse1", "Qin", "1234");
+        Nurse nurse2 = new Nurse("nurse2", "Mona", "6666");
 
+        // Manager add 2 nurses
+        assertDoesNotThrow(() -> {
+            c.addStaff(manager, nurse);
+            c.addStaff(manager, nurse2);
+        }, "Different IDs should not cause any error");
+
+        // Show success message
+        System.out.println("Successfully added multiple different IDs without throwing error!");
     }
 }
