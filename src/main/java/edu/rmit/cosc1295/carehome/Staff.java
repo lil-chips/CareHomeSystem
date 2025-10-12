@@ -23,13 +23,13 @@ public class Staff implements Serializable{
 
     public Staff(String id, String name, String password) {
         if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("Staff ID cannot be null or blank.");
+            throw new IllegalArgumentException("Staff ID cannot be empty");
         }
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Staff name cannot be null or blank.");
+            throw new IllegalArgumentException("Staff name cannot be empty");
         }
         if (password == null || password.isBlank()) {
-            throw new IllegalArgumentException("Password cannot be null or blank.");
+            throw new IllegalArgumentException("Password cannot be empty");
         }
 
         this.id = id;

@@ -324,4 +324,26 @@ public class CareHomeTest {
 
         // Create a manager
         Manager manager = new Manager("m1", "Edward", "0722");
+
+        // ID is missing
+        assertThrows(IllegalArgumentException.class, () -> {
+                    Nurse noId = new Nurse("", "Hi", "0000");
+                    c.addStaff(manager, noId);
+        });
+
+        // Name is missing
+        assertThrows(IllegalArgumentException.class, () -> {
+                    Nurse noName = new Nurse("nurse1", "", "8888");
+                    c.addStaff(manager, noName);
+        });
+
+        // Password is missing
+        assertThrows(IllegalArgumentException.class, () -> {
+            Nurse noPassword = new Nurse("nurse2", "Me", "");
+            c.addStaff(manager, noPassword);
+        });
+
+        // Show success message
+        System.out.println("Successfully blocked invalid staff creation!");
+    }
 }
