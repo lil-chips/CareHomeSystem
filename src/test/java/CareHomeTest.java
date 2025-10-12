@@ -301,4 +301,18 @@ public class CareHomeTest {
         Manager manager = new Manager("manager1", "Edward", "0722");
         Nurse nurse1 = new Nurse("nurse1", "Qin", "1234");
         Nurse nurse2 = new Nurse("nurse2", "Mona", "6666");
+
+        // Add them to system
+        assertDoesNotThrow(() -> c.addStaff(manager, manager));
+        assertDoesNotThrow(() -> c.addStaff(manager, nurse1));
+        assertDoesNotThrow(() -> c.addStaff(manager, nurse2));
+
+        // Try to make nurse1 modify nurse2's password
+        assertThrows(UnauthorizedException.class,
+                () -> nurse1.modifyStaffPassword(nurse2, "hackPass"),
+                "Only manager can modify passwords");
+
+        // Show success message
+        System.out.println("Successfully blocked unauthorized password change!");
+    }
 }
