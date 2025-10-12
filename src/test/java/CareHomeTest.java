@@ -350,7 +350,7 @@ public class CareHomeTest {
     // Prevent adding staff whose ID already exists in database
     @Test
     @DisplayName("addStaff() should throw IllegalArgumentException if staff already exists in DB")
-    void addStaff_duplicateInDB_throwError() {
+    void addStaff_idDuplicateInDB_throwError() {
         // Clean up the staff data first
         CareHomeDatabase.cleanAllStaff();
 
