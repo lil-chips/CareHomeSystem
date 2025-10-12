@@ -290,4 +290,15 @@ public class CareHomeTest {
         // Show success message
         System.out.println("Manager successfully changed staff password!");
     }
+
+    // Non-manager can't modify another staff's password
+    @Test
+    @DisplayName("Only manager can modify staff password, others should throw UnauthorizedException")
+    void nonManager_modifyPassword_throwError() {
+        CareHome c = new CareHome();
+
+        // Create a manager and two nurses
+        Manager manager = new Manager("manager1", "Edward", "0722");
+        Nurse nurse1 = new Nurse("nurse1", "Qin", "1234");
+        Nurse nurse2 = new Nurse("nurse2", "Mona", "6666");
 }
