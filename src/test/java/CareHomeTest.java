@@ -223,4 +223,18 @@ public class CareHomeTest {
         // Show success message
         System.out.println("Successfully detected overworked nurse!");
     }
+
+    // Doctor cannot have two shifts on the same day
+    @Test
+    @DisplayName("addShift() should throw NotWorkingException if a doctor has two shifts on the same day")
+    void doctorTwoShifts_sameDay_throwError() {
+        Doctor doctor = new Doctor("doctor", "Ellen", "2222");
+
+        // Added two shifts on Friday
+        Shift shift1 = new Shift("Friday", "09:00-10:00");
+        Shift shift2 = new Shift("Friday", "11:00-12:00");
+
+
+    }
+
 }
