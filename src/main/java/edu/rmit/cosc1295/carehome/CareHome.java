@@ -38,6 +38,21 @@ public class CareHome implements Serializable {
             throw new UnauthorizedException("Only manager can add staff");
         }
 
+        // Staff ID can't be null or empty
+        if (newStaff.getId() == null || newStaff.getId().trim().isEmpty()) {
+            throw new IllegalArgumentException("Staff ID cannot be empty");
+        }
+
+        // Staff name can't be null or empty
+        if (newStaff.getName() == null || newStaff.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Staff name cannot be empty");
+        }
+
+        // Staff password can't be null or empty
+        if (newStaff.getPassword() == null || newStaff.getPassword().trim().isEmpty()) {
+            throw new IllegalArgumentException("Staff password cannot be empty");
+        }
+
         // Check for duplicate staff ID
         for (Staff s : staffList) {
             if (s.getId().equals(newStaff.getId())) {
