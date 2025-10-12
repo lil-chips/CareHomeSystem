@@ -54,6 +54,12 @@ public class CareHomeTest {
         //Create a nurse
         Nurse nurse = new Nurse("nurse1", "Qin", "1234");
 
+        // Should throw error here, not a manager to add staff
+        assertThrows(UnauthorizedException.class,
+                () -> c.addStaff(null, nurse),
+                "Only manager can add staff");
 
+        // Show success message
+        System.out.println("Successfully blocked the non-manager from adding staff!");
     }
 }
