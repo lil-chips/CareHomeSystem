@@ -1278,5 +1278,22 @@ public class CareHome implements Serializable {
 
     }
 
+    /**
+     * Only manager can modify another staff's password.
+     * @param requester The staff trying to change password
+     * @param target The staff whose password will be changed
+     * @param newPass The new password
+     */
+
+    public void modifyStaffPassword(Staff requester, Staff target, String newPass) {
+        // Only Manager can do this
+        if (!(requester instanceof Manager realManager)) {
+            throw new UnauthorizedException("Only manager can modify passwords");
+        }
+
+        // Safe cast and perform password update
+        realManager.modifyStaffPassword(target, newPass);
+    }
+
 
 }

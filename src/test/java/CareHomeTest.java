@@ -309,7 +309,7 @@ public class CareHomeTest {
 
         // Try to make nurse1 modify nurse2's password
         assertThrows(UnauthorizedException.class,
-                () -> nurse1.modifyStaffPassword(nurse2, "hackPass"),
+                () -> c.modifyStaffPassword(nurse1, nurse2, "1234567"),
                 "Only manager can modify passwords");
 
         // Show success message
