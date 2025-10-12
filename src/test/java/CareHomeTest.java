@@ -205,6 +205,22 @@ public class CareHomeTest {
         Manager manager = new Manager("manager1", "Edward", "0722");
         Nurse nurse = new Nurse("nurse1", "Qin", "1234");
 
+        // Add a nurse, should not throw any error
+        assertDoesNotThrow(() -> c.addStaff(manager, nurse));
 
+        // Assigned normal shift + extra 1 hour
+        Shift shift1 = new Shift("Friday", "07:00-15:00");
+        Shift shift2 = new Shift("Friday", "18:00-19:00");
+
+        // The second addShift should throw exception
+        assertThrows(NotWorkingException.class,
+                () -> {
+                    nurse.addShift(shift1);
+                    nurse.addShift(shift2);
+                },
+                "Nurse should not work more than 8 hours a day");
+
+        // Show success message
+        System.out.println("Successfully detected overworked nurse!");
     }
 }
