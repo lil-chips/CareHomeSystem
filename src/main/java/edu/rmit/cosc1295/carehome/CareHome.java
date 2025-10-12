@@ -475,11 +475,11 @@ public class CareHome implements Serializable {
 
 
     /**
-     * Checks if any Nurse is scheduled to work more than 8 hours per day
-     * @throws IllegalStateException if a Nurse exceeds 8 hours in a single day
+     * Check if all staff comply with shift rules.
+     * @return true if everyone is compliant, false otherwise
      */
 
-    public void checkCompliance() {
+    public boolean checkCompliance() {
         for (Staff staff : staffList) {
             if (staff instanceof Nurse nurse) {
                 ArrayList<Shift> shifts = nurse.getShifts();
@@ -488,21 +488,37 @@ public class CareHome implements Serializable {
 
                 for (Shift shift : shifts) {
                     String whichDay = shift.getDay(); // Get the day
-                    int workingTime = shift.getDuration();
+                    int workingTime = shift.getDuration(); // Get shift hours
 
                     int hourComb = shiftMap.getOrDefault(whichDay, 0) + workingTime;
 
                     if (hourComb > 8) {
-                        throw new IllegalStateException("Nurse " + nurse.getName()
+                        System.out.println("Nurse " + nurse.getName()
                                 + " works more than 8 hours on " + whichDay);
+                        return false;
                     }
 
                     shiftMap.put(whichDay, hourComb);
                 }
+            }
 
+            if (staff instanceof Doctor doctor) {
+                ArrayList<Shift> shifts = doctor.getShifts();
+
+                // only one shift per day
+                HashSet<String> dayWork = new HashSet<>();
+                for (Shift s : shifts) {
+                    if (dayWork.contains(s.getDay())) {
+                        System.out.println("Doctor " + doctor.getName() +
+                                " works more than one shift on " + s.getDay());
+                        return false;
+                    }
+                    dayWork.add(s.getDay());
+                }
             }
         }
-        System.out.println("All nurses are compliant with the shift rules.");
+        System.out.println("All staff are compliant with the shift rules.");
+        return true;
     }
 
 
