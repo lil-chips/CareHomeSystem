@@ -361,7 +361,7 @@ public class CareHomeTest {
         Nurse nurse1 = new Nurse("nurse1", "Lucy", "1111");
         Nurse nurse2 = new Nurse("nurse1", "Lin", "2222");
 
-        // Add the first nurse
+        // Add the first nurse, should not throw any error
         assertDoesNotThrow(() -> c.addStaff(manager, nurse1));
         // Add the second nurse, should fail
         assertThrows(IllegalArgumentException.class,
@@ -383,4 +383,15 @@ public class CareHomeTest {
         Nurse nurse = new Nurse("nurse1", "Eva", "0225");
         Doctor doctor = new Doctor("doctor1", "Vienna", "0222");
 
+        // Add them to system, should not throw any error
+        assertDoesNotThrow(() -> c.addStaff(manager, nurse));
+        assertDoesNotThrow(() -> c.addStaff(manager, doctor));
+
+        // Assign shifts to them
+        Shift shift1 = new Shift("Monday", "07:00-15:00");
+        Shift shift2 = new Shift("Tuesday", "07:00-15:00");
+
+        // Added shift
+        nurse.addShift(shift1);
+        doctor.addShift(shift2);
     }
