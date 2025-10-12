@@ -234,7 +234,15 @@ public class CareHomeTest {
         Shift shift1 = new Shift("Friday", "09:00-10:00");
         Shift shift2 = new Shift("Friday", "11:00-12:00");
 
+        // The second addShift should throw exception
+        assertThrows(NotWorkingException.class,
+                () -> {
+                    doctor.addShift(shift1);
+                    doctor.addShift(shift2);
+                },
+                "Doctor should not have more than one shift per day");
 
+        System.out.println("Successfully blocked doctor from working twice on the same day!");
     }
 
 }
