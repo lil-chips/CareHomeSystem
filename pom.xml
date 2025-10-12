@@ -22,6 +22,12 @@
             <version>6.0.0</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.46.0.0</version>
+        </dependency>
     </dependencies>
 
     <!--Let Maven automatically run JUnit tests -->
@@ -39,6 +45,9 @@
             </plugin>
         </plugins>
     </build>
+
+
+
 
 
 
