@@ -485,4 +485,26 @@ public class CareHomeDatabase {
             return false;
         }
     }
+
+    /**
+     * Clean up the staff records in database
+     */
+
+    public static void cleanAllStaff() {
+        String sql = "DELETE FROM staff";
+
+        // Use try-with-resources to automatically close the connection and statement
+        try (Connection conn = connect();
+             PreparedStatement pre = conn.prepareStatement(sql)) {
+
+            // Execute the SQL command to delete the staff record into the database
+            pre.executeUpdate();
+
+            // Print confirmation message
+            System.out.println("Clean up all staff records for testing.");
+        } catch (SQLException e) {
+            // Catch database related errors
+            System.out.println("Failed to clean staff table: " + e.getMessage());
+        }
+    }
 }
