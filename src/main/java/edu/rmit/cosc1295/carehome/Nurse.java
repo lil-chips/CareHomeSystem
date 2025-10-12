@@ -1,6 +1,7 @@
 package edu.rmit.cosc1295.carehome;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Nurse extends Staff {
 
@@ -80,6 +81,20 @@ public class Nurse extends Staff {
 
     public ArrayList<Shift> getShifts() {
         return nurseShifts;
+    }
+
+    /**
+     * Check if this nurse is compliant with working hour rules.
+     * @return true if all daily hours ≤ 8, false if any day exceeds limit
+     */
+    public boolean isCompliant() {
+        HashMap<String, Integer> shiftMap = new HashMap<>();
+
+        for (Shift shift : nurseShifts) {
+            String whichDay = shift.getDay();
+            int workingTime = shift.getDuration();  // shift hours
+            int totalHours = shiftMap.getOrDefault(whichDay, 0) + workingTime;
+        }
     }
 }
 
