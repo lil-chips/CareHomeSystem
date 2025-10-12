@@ -53,6 +53,11 @@ public class CareHome implements Serializable {
             throw new IllegalArgumentException("Staff password cannot be empty");
         }
 
+        // Check if staff ID already exists in the database
+        if (CareHomeDatabase.staffExists(newStaff.getId())) {
+            throw new IllegalArgumentException("Staff ID already exists in the database: " + newStaff.getId());
+        }
+
         // Check for duplicate staff ID
         for (Staff s : staffList) {
             if (s.getId().equals(newStaff.getId())) {
