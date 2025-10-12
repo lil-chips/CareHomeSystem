@@ -471,7 +471,27 @@ public class CareHomeTest {
         home.getBeds().add(bed1);
         home.getBeds().add(bed2);
 
+        // Create a resident and assign to bed1
+        Resident r = new Resident("Mona", "Female", 1);
+        bed1.setAvailable(false);
+        bed1.assignResident(r);  // direct assign for setup
+        home.getResidents().add(r);
 
+        // Create nurse and manager, then add nurse
+        Manager manager = new Manager("manager1", "Edward", "0722");
+        Nurse nurse = new Nurse("nurse1", "Qin", "1234");
+        home.addStaff(manager, nurse);
+
+        // Move resident from bed1 to bed2
+        assertDoesNotThrow(() -> nurse.moveResident(home, "Mona", 2));
+
+        // Check results
+        assertEquals(2, r.getBedId(), "Resident's bedId should now be 2");
+        assertTrue(bed1.bedAvailable(), "Old bed should now be available");
+        assertFalse(bed2.bedAvailable(), "New bed should now be occupied");
+
+        // Print success message
+        System.out.println("Successfully moved resident from bed1 to bed2!");
     }
 
 }
