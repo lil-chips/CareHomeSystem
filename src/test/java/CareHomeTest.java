@@ -20,6 +20,8 @@ public class CareHomeTest {
         assertThrows(IllegalArgumentException.class,
                 () -> c.addStaff(manager, dup),
                 "Same ID should not be allowed");
+        // Show successful message
+        System.out.println("successfully blocked the duplicate ID!");
     }
 
 }
