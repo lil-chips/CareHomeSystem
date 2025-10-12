@@ -432,4 +432,25 @@ public class CareHomeTest {
         // Added shift to shift
         nurse.addShift(shift);
 
+        // Save current CareHome object to file
+        String filename = "TestSaveData.ser";
+        assertDoesNotThrow(() -> homeBefore.saveToFile(filename));
+
+        // Load new object from that file
+        CareHome homeAfter = CareHome.loadFromFile(filename);
+
+        // Check if loaded data matches the original one
+        assertNotNull(homeAfter, "Loaded CareHome should not be null");
+        assertEquals(
+                homeBefore.getStaffList().size(),
+                homeAfter.getStaffList().size(),
+                "Staff list size should stay the same after loading"
+        );
+
+        // Ensure log list is also preserved
+        assertFalse(homeAfter.getLogs().isEmpty(), "Logs should still exist after reload");
+
+        // Print success message
+        System.out.println("Successfully save and load CareHome data!");
+    }
 }
