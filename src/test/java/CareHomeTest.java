@@ -365,6 +365,7 @@ public class CareHomeTest {
                 () -> c.addStaff(manager, nurse2),
                 "Staff ID already exists in database");
 
+        // Show success message
         System.out.println("Successfully blocked duplicate staff insertion (DB check)!");
     }
 }
