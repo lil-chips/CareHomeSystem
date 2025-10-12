@@ -120,6 +120,17 @@ public class CareHomeTest {
         // Create a doctor
         Doctor doctor = new Doctor("doctor1", "Ellen", "2222");
 
+        // Add the doctor
+        assertDoesNotThrow(() -> c.addStaff(manager, doctor));
 
+        // Create a shift for the doctor
+        Shift shift = new Shift("Friday", "12:00-13:00");
+
+        // Assign the shift without throwing any error
+        assertDoesNotThrow(() -> doctor.addShift(shift),
+                "Doctor should receive a valid shift");
+
+        // Show success message
+        System.out.println("Successfully assigned shift to a doctor!");
     }
 }
