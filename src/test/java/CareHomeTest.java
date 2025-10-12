@@ -276,4 +276,17 @@ public class CareHomeTest {
         Manager manager = new Manager("manager1", "Edward", "0722");
         Nurse nurse = new Nurse("nurse1", "Qin", "1234");
 
+        // Add both into the system
+        assertDoesNotThrow(() -> c.addStaff(manager, manager));
+        assertDoesNotThrow(() -> c.addStaff(manager, nurse));
+
+        // Manager updates nurse's password
+        manager.modifyStaffPassword(nurse, "30678");
+
+        // Confirm the password has been updated
+        assertEquals("30678", nurse.getPassword(),
+                "Password should be successfully changed by the manager");
+
+        System.out.println("Manager successfully changed staff password!");
+    }
 }
