@@ -346,4 +346,13 @@ public class CareHomeTest {
         // Show success message
         System.out.println("Successfully blocked invalid staff creation!");
     }
+
+    // Prevent adding staff whose ID already exists in database
+    @Test
+    @DisplayName("addStaff() should throw IllegalArgumentException if staff already exists in DB")
+    void addStaff_duplicateInDB_throwError() {
+        CareHome c = new CareHome();
+
+        // Create a manager
+        Manager manager = new Manager("m1", "Edward", "0722");
 }
