@@ -62,4 +62,18 @@ public class CareHomeTest {
         // Show success message
         System.out.println("Successfully blocked the non-manager from adding staff!");
     }
+
+    // When adding a staff should create a log
+    @Test
+    @DisplayName("addStaff() should create a log when successfully adding a new staff")
+    void addStaff_createLog() {
+        CareHome c = new CareHome();
+
+        Manager manager = new Manager("manager1", "Edward", "0722");
+
+        // Create a nurse
+        Nurse nurse = new Nurse("nurse1", "Qin", "1234");
+
+
+    }
 }
