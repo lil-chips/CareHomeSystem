@@ -44,4 +44,16 @@ public class CareHomeTest {
         // Show success message
         System.out.println("Successfully added multiple different IDs without throwing error!");
     }
+
+    // Not a manager but try to add new staff
+    @Test
+    @DisplayName("addStuff() should throw UnauthorizedException if non-manager tries to add staff")
+    void addStaff_non_manager_throwUnauthorizedException() {
+        CareHome c = new CareHome();
+
+        //Create a nurse
+        Nurse nurse = new Nurse("nurse1", "Qin", "1234");
+
+
+    }
 }
