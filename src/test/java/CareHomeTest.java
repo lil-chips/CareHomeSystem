@@ -327,14 +327,14 @@ public class CareHomeTest {
 
         // ID is missing
         assertThrows(IllegalArgumentException.class, () -> {
-                    Nurse noId = new Nurse("", "Hi", "0000");
-                    c.addStaff(manager, noId);
+            Nurse noId = new Nurse("", "Hi", "0000");
+            c.addStaff(manager, noId);
         });
 
         // Name is missing
         assertThrows(IllegalArgumentException.class, () -> {
-                    Nurse noName = new Nurse("nurse1", "", "8888");
-                    c.addStaff(manager, noName);
+            Nurse noName = new Nurse("nurse1", "", "8888");
+            c.addStaff(manager, noName);
         });
 
         // Password is missing
@@ -376,6 +376,9 @@ public class CareHomeTest {
     @Test
     @DisplayName("printAllLogs() should display all recorded actions in console output")
     void printAllLogs_displayAllActions() {
+        // Clean up the staff data first
+        CareHomeDatabase.cleanAllStaff();
+
         CareHome c = new CareHome();
 
         // Create a manager, a nurse and a doctor
@@ -389,9 +392,19 @@ public class CareHomeTest {
 
         // Assign shifts to them
         Shift shift1 = new Shift("Monday", "07:00-15:00");
-        Shift shift2 = new Shift("Tuesday", "07:00-15:00");
+        Shift shift2 = new Shift("Tuesday", "07:00-08:00");
 
         // Added shift
         nurse.addShift(shift1);
         doctor.addShift(shift2);
+
+        // Print all logs, should not throw any error
+        assertDoesNotThrow(() -> c.printAllLogs());
+
+        // Confirm log content exists
+        assertFalse(CareHome.getLogs().isEmpty(), "Logs should not be empty after actions");
+
+        // Print success message
+        System.out.println("Successfully displayed all recorded actions via printAllLogs()!");
     }
+}
