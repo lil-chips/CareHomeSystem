@@ -120,7 +120,7 @@ public class CareHomeTest {
         // Create a doctor
         Doctor doctor = new Doctor("doctor1", "Ellen", "2222");
 
-        // Add the doctor
+        // Add a doctor, should not throw any error
         assertDoesNotThrow(() -> c.addStaff(manager, doctor));
 
         // Create a shift for the doctor
@@ -132,5 +132,22 @@ public class CareHomeTest {
 
         // Show success message
         System.out.println("Successfully assigned shift to a doctor!");
+    }
+
+    // If a shift is over 8 hours in one day should throw error
+    @Test
+    @DisplayName("assignShift() should throw error if a staff has more than 8 hours work in one day")
+    void assignShift_over8Hours_throwError() {
+        CareHome c = new CareHome();
+
+        Manager manager = new Manager("Manager1", "Edward", "0722");
+
+        // Create a doctor
+        Doctor doctor = new Doctor("doctor1", "Ellen", "2222");
+
+        // Add a doctor, should not throw any error
+        assertDoesNotThrow(() -> c.addStaff(manager, doctor));
+
+
     }
 }
