@@ -371,4 +371,16 @@ public class CareHomeTest {
         // Show success message
         System.out.println("Successfully blocked duplicate staff insertion (DB check)!");
     }
-}
+
+    // printAllLogs() should displays all recorded logs correctly
+    @Test
+    @DisplayName("printAllLogs() should display all recorded actions in console output")
+    void printAllLogs_displayAllActions() {
+        CareHome c = new CareHome();
+
+        // Create a manager, a nurse and a doctor
+        Manager manager = new Manager("manager1", "Edward", "0722");
+        Nurse nurse = new Nurse("nurse1", "Eva", "0225");
+        Doctor doctor = new Doctor("doctor1", "Vienna", "0222");
+
+    }
