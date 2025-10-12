@@ -1,6 +1,7 @@
 package edu.rmit.cosc1295.carehome;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Doctor extends Staff {
 
@@ -114,6 +115,16 @@ public class Doctor extends Staff {
         CareHome.createLog("Doctor " + this.getName() + " added prescription for " + r.getName()
                 + ": " + p);
     }
+
+    /**
+     * Check if this doctor is compliant with working hour rules.
+     * @return true if 1 shift per day, false if violates rule
+     */
+
+    public boolean isCompliant() {
+        HashSet<String> workedDays = new HashSet<>();
+
+
 
     /**
      * For debugging
