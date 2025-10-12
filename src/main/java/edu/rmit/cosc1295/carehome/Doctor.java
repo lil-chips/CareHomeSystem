@@ -122,9 +122,19 @@ public class Doctor extends Staff {
      */
 
     public boolean isCompliant() {
-        HashSet<String> workedDays = new HashSet<>();
+        HashSet<String> workDay = new HashSet<>();
 
-
+        for (Shift s : doctorShifts) {
+            if (workDay.contains(s.getDay())) {
+                return false; // duplicate shift on the same day
+            }
+            if (s.getShiftDuration() != 1) {
+                return false; // doctor shift must be only 1 hour
+            }
+            workDay.add(s.getDay());
+        }
+        return true;
+    }
 
     /**
      * For debugging
