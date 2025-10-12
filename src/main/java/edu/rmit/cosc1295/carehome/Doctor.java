@@ -30,6 +30,19 @@ public class Doctor extends Staff {
      */
 
     public void addShift(Shift shift) {
+
+        // Check if already has a shift on the same day
+        for (Shift s : doctorShifts) {
+            if (s.getDay().equals(shift.getDay())) {
+                throw new NotWorkingException("Doctor " + getName() + " can only work 1 hour per day.");
+            }
+        }
+
+        // Check the duration, is it exactly 1 hour
+        if (shift.getShiftDuration() != 1) {
+            throw new NotWorkingException("Doctor shifts must be exactly 1 hour long");
+        }
+
         doctorShifts.add(shift);
 
         // Create log message
