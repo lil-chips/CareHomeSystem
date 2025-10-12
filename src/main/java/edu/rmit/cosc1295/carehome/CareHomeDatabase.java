@@ -460,6 +460,24 @@ public class CareHomeDatabase {
 
     public static boolean staffExists(String id) {
         String sql = "SELECT 1 FROM staff WHERE id = ?";
+
+        // Use try-with-resources to automatically close the connection and statement
         try (Connection conn = connect();
              PreparedStatement pre = conn.prepareStatement(sql)) {
+
+            // Bind each placeholder (?) in the SQL with the actual values
+            pre.setString(1, id);
+
+            // Execute the SQL command to check if this staff already exists
+            ResultSet rs = pre.executeQuery();
+
+            // If is true, staff already exists in the database
+            return rs.next();
+
+        } catch (SQLException e) {
+            // Catch database related errors
+            System.out.println("Failed to check staff existence: " + e.getMessage());
+            return false;
+        }
+    }
 }
