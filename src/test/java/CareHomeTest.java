@@ -257,7 +257,13 @@ public class CareHomeTest {
         // Added 2 hours to shift
         Shift invalidShift = new Shift("Tuesday", "09:00-11:00");
 
+        // Should throw error if the shift is not exactly 1 hour
+        assertThrows(NotWorkingException.class,
+                () -> doctor.addShift(invalidShift),
+                "Doctor's shift must be exactly 1 hour");
 
+        // Show success message
+        System.out.println("Successfully blocked invalid doctor shift duration!");
     }
 
 
