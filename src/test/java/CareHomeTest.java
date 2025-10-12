@@ -174,5 +174,23 @@ public class CareHomeTest {
         Manager manager = new Manager("Manager1", "Edward", "0722");
         Nurse nurse = new Nurse("nurse1", "Qin", "1234");
 
+        // Add a nurse, should not throw any error
+        assertDoesNotThrow(() -> c.addStaff(manager, nurse));
+
+        // Assign two shifts that total hour under 8 hours
+        Shift shift1 = new Shift("Friday", "07:00-13:00");
+        Shift shift2 = new Shift("Friday", "15:00-16:00");
+
+        // Should not throw any error since total hour is under 8 hours
+        assertDoesNotThrow(() -> {
+            nurse.addShift(shift1);
+            nurse.addShift(shift2);
+        }, "Nurse working under 8 hours should be allowed");
+
+        // Confirm both shifts exist in nurse’s list
+        assertEquals(2, nurse.getShifts().size(),
+                "Nurse should have exactly 2 valid shifts assigned");
+
+        System.out.println("Successfully assigned shift to nurse within working limit!");
     }
 }
