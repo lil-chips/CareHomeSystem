@@ -453,4 +453,25 @@ public class CareHomeTest {
         // Print success message
         System.out.println("Successfully save and load CareHome data!");
     }
+
+    // Nurse should be able to move a resident to a new bed successfully
+    @Test
+    @DisplayName("moveResident() should update bed assignment correctly")
+    void moveResident_updatesBedAssignment() {
+        // Clean up the staff data first
+        CareHomeDatabase.cleanAllStaff();
+
+        CareHome home = new CareHome();
+
+        // Create two beds
+        Bed bed1 = new Bed(1);
+        Bed bed2 = new Bed(2);
+
+        // Add both beds into system
+        home.getBeds().add(bed1);
+        home.getBeds().add(bed2);
+
+
+    }
+
 }
