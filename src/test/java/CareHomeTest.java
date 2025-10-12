@@ -74,6 +74,10 @@ public class CareHomeTest {
         // Create a nurse
         Nurse nurse = new Nurse("nurse1", "Qin", "1234");
 
+        // Add a nurse
+        assertDoesNotThrow(() -> c.addStaff(manager, nurse));
+
+        assertFalse(CareHome.);
 
     }
 }

@@ -1010,6 +1010,15 @@ public class CareHome implements Serializable {
         }
     }
 
+    /**
+     * Get all system logs (for testing)
+     * @return list of log messages
+     */
+
+    public static ArrayList<String> getLogs() {
+        return logged;
+    }
+
 
     public Staff login(String id, String password) {
         for (Staff s : staffList) {
