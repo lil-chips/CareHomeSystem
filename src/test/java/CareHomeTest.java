@@ -421,4 +421,15 @@ public class CareHomeTest {
         Manager manager = new Manager("manager1", "Edward", "0722");
         Nurse nurse = new Nurse("nurse1", "Qin", "1234");
         Doctor doctor = new Doctor("doctor1", "Ellen", "6666");
+
+        // Add them to system, should not throw any error
+        assertDoesNotThrow(() -> homeBefore.addStaff(manager, nurse));
+        assertDoesNotThrow(() -> homeBefore.addStaff(manager, doctor));
+
+        // Give shift to a nurse
+        Shift shift = new Shift("Wednesday", "07:00-15:00");
+
+        // Added shift to shift
+        nurse.addShift(shift);
+
 }
