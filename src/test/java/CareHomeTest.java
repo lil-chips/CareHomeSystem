@@ -83,4 +83,11 @@ public class CareHomeTest {
         // Show success message
         System.out.println("Successfully created a new log!");
     }
+
+    // Staff should be added to the staff list
+    @Test
+    @DisplayName("addStuff() should add new staff to the internal list")
+    void addStaff_toList() {
+        CareHome c = new CareHome();
+    }
 }
