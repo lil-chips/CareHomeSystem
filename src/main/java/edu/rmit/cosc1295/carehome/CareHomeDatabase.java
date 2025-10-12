@@ -457,6 +457,11 @@ public class CareHomeDatabase {
         }
     }
 
+    /**
+     * Check if a staff with the given ID already exists in the database.
+     * @param id The staff ID to check
+     * @return true if the staff exists in the database, false otherwise
+     */
 
     public static boolean staffExists(String id) {
         String sql = "SELECT 1 FROM staff WHERE id = ?";
