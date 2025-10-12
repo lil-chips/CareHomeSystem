@@ -89,5 +89,23 @@ public class CareHomeTest {
     @DisplayName("addStuff() should add new staff to the internal list")
     void addStaff_toList() {
         CareHome c = new CareHome();
+
+        Manager manager = new Manager("manager1", "Edward", "0722");
+
+        // Create a nurse
+        Nurse nurse = new Nurse("nurse1", "Qin", "1234");
+
+        // List size before adding
+        int oldList = c.getStaffList().size();
+
+        // Add a nurse, should not throw any error
+        assertDoesNotThrow(() -> c.addStaff(manager, nurse));
+
+        // Check list size increased by 1
+        int newList = c.getStaffList().size();
+        assertEquals(oldList + 1, newList, "Staff list size should increase by 1");
+
+        // Show success message
+        System.out.println("Successfully added staff to the internal list!");
     }
 }
