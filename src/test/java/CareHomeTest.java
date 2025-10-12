@@ -351,12 +351,15 @@ public class CareHomeTest {
     @Test
     @DisplayName("addStaff() should throw IllegalArgumentException if staff already exists in DB")
     void addStaff_duplicateInDB_throwError() {
+        // Clean up the staff data first
+        CareHomeDatabase.cleanAllStaff();
+
         CareHome c = new CareHome();
 
         // Create a manager and two nurses with same ID
         Manager manager = new Manager("manager1", "Edward", "0722");
-        Nurse nurse1 = new Nurse("nurseA", "Lucy", "1111");
-        Nurse nurse2 = new Nurse("nurseA", "Lin", "2222");
+        Nurse nurse1 = new Nurse("nurse1", "Lucy", "1111");
+        Nurse nurse2 = new Nurse("nurse1", "Lin", "2222");
 
         // Add the first nurse
         assertDoesNotThrow(() -> c.addStaff(manager, nurse1));
