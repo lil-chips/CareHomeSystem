@@ -10,8 +10,11 @@ public class CareHomeTest {
     void addStaff_duplicateId_throwsError() {
         // Add objects
         CareHome c = new CareHome();
+
+        // Create manager and nurse
         Manager manager = new Manager("manager1", "Edward", "0722");
         Nurse nurse = new Nurse("nurse1", "Qin", "1234");
+
         // Manager add new nurse
         assertDoesNotThrow(() -> c.addStaff(manager, nurse));
 
@@ -29,6 +32,8 @@ public class CareHomeTest {
     @DisplayName("addStuff() should allow multiple different IDs without throwing error")
     void addStaff_duplicateIds_throwError() {
         CareHome c = new CareHome();
+
+        // Create a manager
         Manager manager = new Manager("manager1", "Edward", "0722");
 
         // Create two nurses with different IDs
@@ -69,9 +74,8 @@ public class CareHomeTest {
     void addStaff_createLog() {
         CareHome c = new CareHome();
 
+        // Create manager and nurse
         Manager manager = new Manager("manager1", "Edward", "0722");
-
-        // Create a nurse
         Nurse nurse = new Nurse("nurse1", "Qin", "1234");
 
         // Add a nurse, should not throw any error
@@ -90,9 +94,8 @@ public class CareHomeTest {
     void addStaff_toList() {
         CareHome c = new CareHome();
 
+        // Create manager and nurse
         Manager manager = new Manager("manager1", "Edward", "0722");
-
-        // Create a nurse
         Nurse nurse = new Nurse("nurse1", "Qin", "1234");
 
         // List size before adding
@@ -115,9 +118,8 @@ public class CareHomeTest {
     void assignShift_toDoctor_success() {
         CareHome c = new CareHome();
 
+        // Create manager and doctor
         Manager manager = new Manager("manager1", "Edward", "0722");
-
-        // Create a doctor
         Doctor doctor = new Doctor("doctor1", "Ellen", "2222");
 
         // Add a doctor, should not throw any error
@@ -140,9 +142,8 @@ public class CareHomeTest {
     void assignShift_over8Hours_throwError() {
         CareHome c = new CareHome();
 
+        // Create manager and nurse
         Manager manager = new Manager("Manager1", "Edward", "0722");
-
-        // Create a nurse
         Nurse nurse = new Nurse("nurse1", "Qin", "1234");
 
         // Add a doctor, should not throw any error
@@ -161,5 +162,17 @@ public class CareHomeTest {
 
         // Show success message
         System.out.println("Successfully blocked over 8 hours shift");
+    }
+
+    // Nurse should be assigned valid shifts successfully
+    @Test
+    @DisplayName("assignShift() should allow nurse to receive shifts under 8 hours per day")
+    void assignShift_toNurse_success() {
+        CareHome c = new CareHome();
+
+        // Create manager and nurse
+        Manager manager = new Manager("Manager1", "Edward", "0722");
+        Nurse nurse = new Nurse("nurse1", "Qin", "1234");
+
     }
 }
