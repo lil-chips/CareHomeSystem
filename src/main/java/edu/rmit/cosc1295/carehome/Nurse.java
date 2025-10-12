@@ -87,14 +87,23 @@ public class Nurse extends Staff {
      * Check if this nurse is compliant with working hour rules.
      * @return true if all daily hours ≤ 8, false if any day exceeds limit
      */
+
     public boolean isCompliant() {
         HashMap<String, Integer> shiftMap = new HashMap<>();
 
         for (Shift shift : nurseShifts) {
             String whichDay = shift.getDay();
-            int workingTime = shift.getDuration();  // shift hours
+            int workingTime = shift.getShiftDuration();  // shift hours
             int totalHours = shiftMap.getOrDefault(whichDay, 0) + workingTime;
+
+            // Over 8 hours will against the rule
+            if (totalHours > 8) {
+                return false;
+            }
+
+            shiftMap.put(whichDay, totalHours);
         }
+        return true;
     }
 }
 
