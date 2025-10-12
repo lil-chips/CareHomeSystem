@@ -246,4 +246,19 @@ public class CareHomeTest {
         System.out.println("Successfully blocked doctor from working twice on the same day!");
     }
 
+    // Doctor's shift must be exactly 1 hour long
+    @Test
+    @DisplayName("addShift() should throw NotWorkingException if a doctor's shift is not exactly 1 hour long")
+    void doctorShift_notOneHour_throwError() {
+
+        // Create a doctor
+        Doctor doctor = new Doctor("doctor1", "Ellen", "2222");
+
+        // Added 2 hours to shift
+        Shift invalidShift = new Shift("Tuesday", "09:00-11:00");
+
+
+    }
+
+
 }
