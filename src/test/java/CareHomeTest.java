@@ -266,5 +266,14 @@ public class CareHomeTest {
         System.out.println("Successfully blocked invalid doctor shift duration!");
     }
 
+    // Manager can modify a staff password
+    @Test
+    @DisplayName("Manager should be able to modify a staff password")
+    void manager_modifyStaffPassword_success() {
+        CareHome c = new CareHome();
+
+        // Create manager and nurse
+        Manager manager = new Manager("manager1", "Edward", "0722");
+        Nurse nurse = new Nurse("nurse1", "Qin", "1234");
 
 }
