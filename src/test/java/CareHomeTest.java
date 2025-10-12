@@ -315,4 +315,13 @@ public class CareHomeTest {
         // Show success message
         System.out.println("Successfully blocked unauthorized password change!");
     }
+
+    // Manager cannot add staff with invalid info
+    @Test
+    @DisplayName("addStaff() should throw IllegalArgumentException if staff info is invalid")
+    void addStaff_invalidInfo_throwError() {
+        CareHome c = new CareHome();
+
+        // Create a manager
+        Manager manager = new Manager("m1", "Edward", "0722");
 }
