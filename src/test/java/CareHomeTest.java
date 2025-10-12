@@ -74,10 +74,13 @@ public class CareHomeTest {
         // Create a nurse
         Nurse nurse = new Nurse("nurse1", "Qin", "1234");
 
-        // Add a nurse
+        // Add a nurse, should not throw any error
         assertDoesNotThrow(() -> c.addStaff(manager, nurse));
 
-        assertFalse(CareHome.);
+        // Check if the log list is empty or not
+        assertFalse(CareHome.getLogs().isEmpty(), "Logs should not be empty after adding a staff");
 
+        // Show success message
+        System.out.println("Successfully created a new log!");
     }
 }
