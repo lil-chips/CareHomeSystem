@@ -407,4 +407,18 @@ public class CareHomeTest {
         // Print success message
         System.out.println("Successfully displayed all recorded actions via printAllLogs()!");
     }
+
+    // Make sure saveToFile() and loadFromFile() actually save and restore data
+    @Test
+    @DisplayName("saveToFile() and loadFromFile() should save and restore CareHome data correctly")
+    void canSaveToFileAndLoadFromFile() {
+        // Clean up the staff data first
+        CareHomeDatabase.cleanAllStaff();
+
+        CareHome homeBefore = new CareHome();
+
+        // Create a manager, nurse and doctor
+        Manager manager = new Manager("manager1", "Edward", "0722");
+        Nurse nurse = new Nurse("nurse1", "Qin", "1234");
+        Doctor doctor = new Doctor("doctor1", "Ellen", "6666");
 }
