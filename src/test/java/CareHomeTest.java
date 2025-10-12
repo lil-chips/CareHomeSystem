@@ -25,4 +25,12 @@ public class CareHomeTest {
     }
 
 
+    @Test
+    @DisplayName("addStuff() should allow multiple different IDs without throwing error")
+    void addStaff_duplicateIds_throwError() {
+        CareHome c = new CareHome();
+        Manager manager = new Manager("manager1", "Edward", "0722");
+
+
+    }
 }
