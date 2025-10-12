@@ -50,6 +50,22 @@ public class Nurse extends Staff {
      */
 
     public void addShift(Shift shift) {
+        // Calculate total hours already assigned on that day
+        int totalHours = 0;
+        for (Shift s : nurseShifts) {
+            if (s.getDay().equals(shift.getDay())) {
+                totalHours += s.getShiftDuration();
+            }
+        }
+
+        // Add the new shift hours
+        totalHours += shift.getShiftDuration();
+
+        // If more than 8 hours, throw exception
+        if (totalHours > 8) {
+            throw new NotWorkingException("Nurse " + getName() + " can't work more than 8 hours per day");
+        }
+
         nurseShifts.add(shift);
 
         // Create log message
