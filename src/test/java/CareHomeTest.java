@@ -142,12 +142,24 @@ public class CareHomeTest {
 
         Manager manager = new Manager("Manager1", "Edward", "0722");
 
-        // Create a doctor
-        Doctor doctor = new Doctor("doctor1", "Ellen", "2222");
+        // Create a nurse
+        Nurse nurse = new Nurse("nurse1", "Qin", "1234");
 
         // Add a doctor, should not throw any error
-        assertDoesNotThrow(() -> c.addStaff(manager, doctor));
+        assertDoesNotThrow(() -> c.addStaff(manager, nurse));
 
+        // Assign one shifts plus one more hour to the same staff
+        Shift shift1 = new Shift("Friday", "07:00-15:00");
+        Shift shift2 = new Shift("Friday", "17:00-18:00");
 
+        // Assign the shift without throwing any error
+        assertDoesNotThrow(() -> nurse.addShift(shift1));
+
+        // Assign another shift, this should throw error
+        assertThrows(NotWorkingException.class, () -> nurse.addShift(shift2),
+                "nurse should not work more than 8 hours per day");
+
+        // Show success message
+        System.out.println("Successfully blocked over 8 hours shift");
     }
 }
