@@ -1,10 +1,13 @@
 package edu.rmit.cosc1295.ui;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import edu.rmit.cosc1295.carehome.CareHome;
 import edu.rmit.cosc1295.carehome.Staff;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.Scene;
+import javafx.event.ActionEvent;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,5 +61,18 @@ public class StaffListController {
         );
 
         staffTable.setItems(observableList);
+    }
+
+    /**
+     * Go back to the main Dashboard screen
+     * @param event the button click event
+     */
+
+    @FXML
+    void onBack(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
+            Scene dashboardScene = new Scene(loader.load(), 600, 400);
+        }
     }
 }
