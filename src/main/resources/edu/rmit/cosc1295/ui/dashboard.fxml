@@ -4,43 +4,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.rmit.cosc1295.ui.DashboardController"
-            prefWidth="600" prefHeight="400">
+<AnchorPane prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.rmit.cosc1295.ui.DashboardController">
 
     <children>
-        <Label fx:id="welcomeLabel"
-               text="Welcome!"
-               layoutX="180" layoutY="50"
-               style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+        <Label fx:id="welcomeLabel" layoutX="180" layoutY="50" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Welcome!" />
 
-        <Button fx:id="staffListBtn"
-                layoutX="80" layoutY="150"
-                prefWidth="150"
-                text="Staff List"
-                onAction="#onOpenStaffList" />
+        <Button fx:id="staffListBtn" layoutX="23.0" layoutY="194.0" onAction="#onOpenStaffList" prefWidth="150" text="Staff List" />
+        <Button fx:id="residentBtn" layoutX="23.0" layoutY="82.0" prefWidth="150" text="Residents" />
+        <Button fx:id="addPrescriptionBtn" layoutX="23.0" layoutY="246.0" onAction="#onAddPrescription" prefHeight="10.0" prefWidth="150.0" text="Add Prescription" />
+        <Button fx:id="addBtn" layoutX="23.0" layoutY="114.0" onAction="#onAddResident" prefHeight="26.0" prefWidth="150.0" text="Add Resident" />
+        <Button fx:id="logsBtn" layoutX="473.0" layoutY="82.0" prefWidth="100" text="Logs" />
 
-        <Button fx:id="residentBtn"
-                layoutX="250" layoutY="150"
-                prefWidth="150" text="Residents" />
-
-        <Button text="Add Resident" layoutX="200"
-                layoutY="180" prefWidth="180"
-                onAction="#onAddResident"/>
-
-        <Button fx:id="addBedBtn"
-                text="Add Bed"
-                layoutX="200" layoutY="220"
-                prefWidth="180"
-                onAction="#onAddBed"/>
-
-        <Button fx:id="logsBtn"
-                layoutX="420" layoutY="150"
-                prefWidth="100" text="Logs" />
-
-        <Button fx:id="logoutBtn"
-                layoutX="250" layoutY="300"
-                onAction="#onLogout" text="Logout" />
-
+        <Button fx:id="logoutBtn" layoutX="250" layoutY="300" onAction="#onLogout" text="Logout" />
     </children>
 </AnchorPane>

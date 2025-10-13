@@ -5,10 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="250" prefWidth="400"
-            xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/25"
-            fx:controller="edu.rmit.cosc1295.ui.AddBedController">
+<AnchorPane prefHeight="250" prefWidth="400" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.rmit.cosc1295.ui.AddBedController">
 
     <children>
         <Label layoutX="130" layoutY="40" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Add New Bed" />
@@ -16,10 +13,8 @@
         <Label layoutX="80" layoutY="110" text="Bed ID:" />
         <TextField fx:id="bedIdField" layoutX="150" layoutY="105" prefWidth="150" />
 
-        <Button fx:id="addBtn" layoutX="150.0" layoutY="167.0"
-                onAction="#onAddBed" prefWidth="150" text="Add Bed" />
+        <Button fx:id="addBtn" layoutX="150.0" layoutY="167.0" onAction="#onAddBed" prefWidth="150" text="Add Bed" />
 
-        <Button fx:id="backBtn" layoutX="20.0" layoutY="21.0"
-                onAction="#onBack" prefWidth="80" text="Back" />
+        <Button fx:id="backBtn" layoutX="20.0" layoutY="21.0" onAction="#onBack" prefWidth="80" text="Back" />
     </children>
 </AnchorPane>

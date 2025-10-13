@@ -2,6 +2,8 @@ package edu.rmit.cosc1295.carehome;
 
 import javax.print.Doc;
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -150,12 +152,24 @@ public class CareHome implements Serializable {
         createLog(showlog);
     }
 
-    public void moveResident(Nurse nurse, String residentName, int newBedId) {
+    public void moveResident(Nurse nurse, String residentName, int newBedId)
+            throws UnauthorizedException, IllegalArgumentException, NotWorkingException {
         if (nurse == null) {
             throw new UnauthorizedException("Only nurse can move resident");
         }
         if (residentName == null || residentName.isBlank()) {
             throw new IllegalArgumentException("Resident name can't be null or blank");
+        }
+
+        // check if nurse is working today
+        // Get today (e.g., "Monday")
+        String today = LocalDate.now().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+
+        // Call your existing method
+        boolean working = isWorking(nurse, today);
+
+        if (!working) {
+            throw new NotWorkingException("Nurse " + nurse.getName() + " is not scheduled to work on " + today + ".");
         }
 
         // Find the resident
