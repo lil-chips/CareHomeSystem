@@ -31,7 +31,13 @@ public class LoginController {
         String pass = passwordField.getText();
         String role = roleChoice.getValue();
 
+        if (id == null || id.isBlank() || pass == null || pass.isBlank()) {
+            showAlert("Please enter ID and password!");
+            return;
+        }
 
+        System.out.println("Login success :) Role: " + role + ", ID: " + id);
+        showAlert("Login success!\nRole: " + role + "\nID: " + id);
     }
 
     private void showAlert(String msg) {
