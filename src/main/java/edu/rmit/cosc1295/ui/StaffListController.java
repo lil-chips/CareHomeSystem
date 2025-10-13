@@ -93,6 +93,10 @@ public class StaffListController {
 
             // Show the new window (dashboard)
             stage.show();
+
+        } catch (Exception e) {
+            //print the error details in the console
+            e.printStackTrace();
         }
     }
 }
