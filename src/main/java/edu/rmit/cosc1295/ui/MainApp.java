@@ -17,5 +17,10 @@ public class MainApp extends Application {
         // Load the FXML file
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/login.fxml"));
         Scene scene = new Scene(loader.load(), 520, 360);
+
+        // Get the controller object that is linked to login.fxml
+        LoginController controller = loader.getController();
+        // Give the controller access to the CareHome model
+        controller.setModel(app);
     }
 }
