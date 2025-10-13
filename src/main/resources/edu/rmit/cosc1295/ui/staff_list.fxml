@@ -15,6 +15,12 @@
                layoutX="220" layoutY="30"
                style="-fx-font-size: 18px; -fx-font-weight: bold;" />
 
+        <TableView fx:id="staffTable"
+                   layoutX="50" layoutY="80"
+                   prefWidth="500" prefHeight="220">
+
+        </TableView>
+
     </children>
 
 
