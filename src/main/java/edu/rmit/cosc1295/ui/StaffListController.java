@@ -7,11 +7,13 @@ import edu.rmit.cosc1295.carehome.Staff;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.event.ActionEvent;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 /**
  * Displays all staff in a table view
@@ -71,8 +73,26 @@ public class StaffListController {
     @FXML
     void onBack(ActionEvent event) {
         try {
+            // Load the FXML file for the dashboard screen
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
+
+            // Create a new Scene using that FXML file (set width and height)
             Scene dashboardScene = new Scene(loader.load(), 600, 400);
+
+            // Get the controller class (DashboardController) linked to dashboard.fxml
+            DashboardController controller = loader.getController();
+
+            // Get the current window (stage) from the button event
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Switch the screen from login to dashboard
+            stage.setScene(dashboardScene);
+
+            // Set the window title
+            stage.setTitle("CareHome - Dashboard");
+
+            // Show the new window (dashboard)
+            stage.show();
         }
     }
 }

@@ -47,6 +47,8 @@ public class LoginController {
         try {
             // If login info looks fine, load dashboard.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
+
+            // Create a new Scene using that FXML file (set width and height)
             Scene dashboardScene = new Scene(loader.load(), 600, 400);
 
             // Replace the current scene with the new one
