@@ -53,7 +53,7 @@ public class DashboardController {
 
             // Pass the model and user info to the staff list controller
             StaffListController controller = loader.getController();
-
+            controller.setData(model, userId, role);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(staffListScene);

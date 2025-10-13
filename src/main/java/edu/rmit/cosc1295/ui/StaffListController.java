@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import edu.rmit.cosc1295.carehome.CareHome;
 import edu.rmit.cosc1295.carehome.Staff;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.Scene;
@@ -37,7 +38,12 @@ public class StaffListController {
     @FXML
     private Button backBtn;
 
+    @FXML
+    private Label titleLabel;
+
     private CareHome model;
+    private String userId;
+    private String role;
 
     /**
      * Called from DashboardController to reuse the same CareHome data here.
@@ -47,6 +53,20 @@ public class StaffListController {
     public void setModel(CareHome model) {
         this.model = model;
 
+    }
+
+    /**
+     * Get data from the previous scene (Dashboard)
+     * Used to access the same CareHome object and know who logged in
+     */
+
+    public void setData(CareHome model, String userId, String role) {
+        this.model = model;
+        this.userId = userId;
+        this.role = role;
+
+        // Just a display on top
+        titleLabel.setText("Staff List - Logged in as " + role + " (" + userId + ")");
     }
 
     /**
