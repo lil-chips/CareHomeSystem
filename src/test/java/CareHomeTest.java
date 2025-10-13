@@ -494,4 +494,31 @@ public class CareHomeTest {
         System.out.println("Successfully moved resident from bed1 to bed2!");
     }
 
+    // If the target bed is already taken, nurse.moveResident() should throw BedOccupiedException
+    @Test
+    @DisplayName("moveResident() should throw BedOccupiedException if bed is already occupied")
+    void moveResident_toOccupiedBed_throwError() {
+        // Clean up the staff data first
+        CareHomeDatabase.cleanAllStaff();
+
+        CareHome home = new CareHome();
+
+        // Create and add two beds
+        Bed bed1 = new Bed(1);
+        Bed bed2 = new Bed(2);
+        home.getBeds().add(bed1);
+        home.getBeds().add(bed2);
+
+        // Create two residents and assign them to different beds
+        Resident r1 = new Resident("Jack", "Male", 1);
+        Resident r2 = new Resident("Rose", "Female", 2);
+        bed1.assignResident(r1);
+        bed2.assignResident(r2);
+        home.getResidents().add(r1);
+        home.getResidents().add(r2);
+
+
+    }
+
+
 }

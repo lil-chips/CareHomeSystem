@@ -182,7 +182,7 @@ public class CareHome implements Serializable {
             throw new IllegalArgumentException("Bed ID " + newBedId + " does not exist");
         }
         if (!targetBed.bedAvailable()) {
-            throw new IllegalArgumentException("Bed ID " + newBedId + " is not available");
+            throw new BedOccupiedException("Bed ID " + newBedId + " is not available");
         }
 
         // Release old bed
