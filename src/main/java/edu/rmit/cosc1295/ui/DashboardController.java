@@ -1,15 +1,13 @@
 package edu.rmit.cosc1295.ui;
 
 import edu.rmit.cosc1295.carehome.CareHome;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
 import javafx.scene.Node;
-import java.awt.*;
-import java.awt.event.ActionEvent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.scene.control.Label;
 
 public class DashboardController {
 
@@ -36,8 +34,12 @@ public class DashboardController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/login.fxml"));
             Scene loginScene = new Scene(loader.load(), 600, 400);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(loginScene);
+            stage.setTitle("CareHome - Login");
+            stage.show();
+            System.out.println("Logout success!");
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
     }
