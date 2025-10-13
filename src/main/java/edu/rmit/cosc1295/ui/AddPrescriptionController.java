@@ -31,6 +31,12 @@ public class AddPrescriptionController {
     private CareHome model;
     private Staff loggedInStaff;
 
+    /**
+     * Let the dashboard receive the shared CareHome model
+     * Gives the controller access to all system data
+     * @param model The shared CareHome object that holds all data
+     */
+
     public void setModel(CareHome model) {
         this.model = model;
 
@@ -43,8 +49,29 @@ public class AddPrescriptionController {
             residentChoice.setValue(residentChoice.getItems().get(0));
     }
 
+    /**
+     * Called from Dashboard to know who is logged in
+     * Mainly for recording actions in the log
+     * @param staff The staff member who is logged in
+     */
+
     public void setLoggedInStaff(Staff staff) {
         this.loggedInStaff = staff;
+    }
+
+    @FXML
+    void onAddPrescription(ActionEvent event) {
+        String residentName = residentChoice.getValue();
+        String medicine = medicineField.getText().trim();
+        String dose = doseField.getText().trim();
+        String time = timeField.getText().trim();
+
+        if (residentName == null || medicine.isEmpty() || dose.isEmpty() || time.isEmpty()) {
+            showAlert("Please fill all fields.");
+            return;
+        }
+
+
     }
 
     @FXML

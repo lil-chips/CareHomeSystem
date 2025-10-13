@@ -1329,5 +1329,29 @@ public class CareHome implements Serializable {
         realManager.modifyStaffPassword(target, newPass);
     }
 
+    /**
+     * Doctor create and attach a new prescription
+     * to a specific resident in the CareHome system
+     *
+     * @param doctor The doctor who is prescribing the medicine
+     * @param residentName The name of the resident
+     * @param medicine The name of the medicine
+     * @param dose The amount of the medicine
+     * @param time The time the medicine should be taken
+     */
+
+    public void addPrescription(Doctor doctor, String residentName, String medicine, String dose, String time) {
+        Resident resident = findResidentByName(residentName);
+        if (resident == null) {
+            throw new IllegalArgumentException("Resident not found: " + residentName);
+        }
+
+        Prescription p = new Prescription(doctor.getId(), medicine, dose, time);
+        resident.addPrescription(p);
+
+        createLog("Doctor " + doctor.getName() + " prescribed " + medicine +
+                " (" + dose + ", " + time + ") to " + residentName);
+    }
+
 
 }
