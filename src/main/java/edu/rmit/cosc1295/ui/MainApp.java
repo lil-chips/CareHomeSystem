@@ -22,5 +22,16 @@ public class MainApp extends Application {
         LoginController controller = loader.getController();
         // Give the controller access to the CareHome model
         controller.setModel(app);
+
+        // Configure and show the stage
+        stage.setTitle("CareHome System - Login");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    // Launch JavaFX app
+    public static void main(String[] args) {
+        launch(args);
     }
 }
