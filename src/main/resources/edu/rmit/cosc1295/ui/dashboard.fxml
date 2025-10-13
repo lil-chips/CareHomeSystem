@@ -9,13 +9,23 @@
             prefWidth="600" prefHeight="400">
 
     <children>
-        <Label fx:id="welcomeLabel" layoutX="160" layoutY="50" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Welcome to CareHome Dashboard" />
+        <Label fx:id="welcomeLabel"
+               text="Welcome!"
+               layoutX="180" layoutY="50"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
-        <Button fx:id="staffBtn" layoutX="80" layoutY="150" prefWidth="150" text="Staff List" />
-        <Button fx:id="residentBtn" layoutX="250" layoutY="150" prefWidth="150" text="Residents" />
-        <Button fx:id="logsBtn" layoutX="420" layoutY="150" prefWidth="100" text="Logs" />
+        <Button fx:id="staffBtn"
+                layoutX="80" layoutY="150"
+                prefWidth="150" text="Staff List" />
+        <Button fx:id="residentBtn"
+                layoutX="250" layoutY="150"
+                prefWidth="150" text="Residents" />
+        <Button fx:id="logsBtn"
+                layoutX="420" layoutY="150"
+                prefWidth="100" text="Logs" />
 
-        <Button fx:id="logoutBtn" layoutX="250" layoutY="300" onAction="#onLogout" text="Logout" />
-
+        <Button fx:id="logoutBtn"
+                layoutX="250" layoutY="300"
+                onAction="#onLogout" text="Logout" />
     </children>
 </AnchorPane>
