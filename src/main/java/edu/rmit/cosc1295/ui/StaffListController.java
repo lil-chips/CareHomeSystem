@@ -6,6 +6,9 @@ import edu.rmit.cosc1295.carehome.Staff;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 
+/**
+ * Displays all staff in a table view
+ */
 
 public class StaffListController {
 
@@ -22,4 +25,14 @@ public class StaffListController {
     private TableColumn<Staff, String> roleCol;
 
     private CareHome model;
+
+    /**
+     *
+     * @param model
+     */
+
+    public void setModel(CareHome model) {
+        this.model = model;
+
+    }
 }
