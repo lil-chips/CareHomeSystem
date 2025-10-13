@@ -48,9 +48,19 @@
         </dependency>
     </dependencies>
 
-    <!--Let Maven automatically run JUnit tests -->
     <build>
         <plugins>
+            <!-- Let Maven automatically run JavaFX -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>edu.rmit.cosc1295.ui.MainApp</mainClass>
+                </configuration>
+            </plugin>
+
+            <!--Let Maven automatically run JUnit tests -->
             <!-- surefire will run the @Test method -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
