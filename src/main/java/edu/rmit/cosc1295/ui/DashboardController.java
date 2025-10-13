@@ -16,8 +16,20 @@ public class DashboardController {
     private String userId;
     private String role;
 
+    /**
+     * Receive model and user info from LoginController
+     */
+
+    public void setData(CareHome model, String userId, String role) {
+        this.model = model;
+        this.userId = userId;
+        this.role = role;
+        welcomeLabel.setText("Welcome " + role + " " + userId + "!");
+    }
+
     @FXML
     void onLogout(ActionEvent event) {
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setContentText("You have logged out successfully.");
