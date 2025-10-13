@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import edu.rmit.cosc1295.carehome.CareHome;
 import edu.rmit.cosc1295.carehome.Staff;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.Scene;
@@ -32,6 +33,9 @@ public class StaffListController {
 
     @FXML
     private TableColumn<Staff, String> roleCol;
+
+    @FXML
+    private Button backBtn;
 
     private CareHome model;
 

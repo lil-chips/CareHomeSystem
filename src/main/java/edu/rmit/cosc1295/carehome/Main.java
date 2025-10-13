@@ -19,6 +19,13 @@ public class Main {
 
         }
 
+        Manager manager = new Manager("m1", "Edward", "0722");
+        Nurse nurse = new Nurse("n1", "Lucy", "1234");
+        Doctor doctor = new Doctor("d1", "Ryan", "9999");
+
+        home.addStaff(manager, nurse);
+        home.addStaff(manager, doctor);
+
         home.saveToFile("SavedData.ser");
         // GUI
     }

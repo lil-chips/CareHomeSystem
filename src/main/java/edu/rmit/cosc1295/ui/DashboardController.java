@@ -43,4 +43,12 @@ public class DashboardController {
         }
 
     }
+
+    @FXML
+    void onOpenStaffList(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/staff_list.fxml"));
+            Scene staffListScene = new Scene(loader.load(), 600, 400);
+
+        }
 }
