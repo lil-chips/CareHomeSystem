@@ -1,5 +1,6 @@
 package edu.rmit.cosc1295.ui;
 
+import edu.rmit.cosc1295.carehome.CareHome;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -25,6 +26,9 @@ public class LoginController {
     @FXML
     private ChoiceBox<String> roleChoice;
 
+    // Reference to the careHome model, shared data for the whole system
+    private CareHome model;
+
     @FXML
     void onLogin(ActionEvent event) {
         String id = idField.getText();
@@ -45,5 +49,13 @@ public class LoginController {
         a.setHeaderText(null);
         a.setContentText(msg);
         a.showAndWait();
+    }
+
+    /**
+     * Let MainApp inject the CareHome model into this controller
+     * @param model The CareHome model
+     */
+    public void setModel(CareHome model) {
+        this.model = model;
     }
 }
