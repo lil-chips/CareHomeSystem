@@ -3,6 +3,8 @@ package edu.rmit.cosc1295.ui;
 import edu.rmit.cosc1295.carehome.CareHome;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
@@ -38,6 +40,14 @@ public class LoginController {
         if (id == null || id.isBlank() || pass == null || pass.isBlank()) {
             showAlert("Please enter ID and password!");
             return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
+            Scene dashboardScene = new Scene(loader.load(), 600, 400);
+        } catch (Exception e){
+            e.printStackTrace();
+
         }
 
         System.out.println("Login success :) Role: " + role + ", ID: " + id);
