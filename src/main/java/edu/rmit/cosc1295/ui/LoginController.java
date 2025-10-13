@@ -80,6 +80,11 @@ public class LoginController {
             // Create a new Scene using that FXML file (set width and height)
             Scene dashboardScene = new Scene(loader.load(), 600, 400);
 
+            // Get controller & inject data
+            DashboardController dashboardController = loader.getController();
+            dashboardController.setModel(model);
+            dashboardController.setLoggedInStaff(found);
+
             // Replace the current scene with the new one
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(dashboardScene);

@@ -1,6 +1,7 @@
 package edu.rmit.cosc1295.ui;
 
 import edu.rmit.cosc1295.carehome.CareHome;
+import edu.rmit.cosc1295.carehome.Staff;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,7 @@ public class DashboardController {
     private CareHome model;
     private String userId;
     private String role;
+    private Staff loggedInStaff;
 
     @FXML
     private Button staffListBtn;
@@ -31,6 +33,25 @@ public class DashboardController {
         this.userId = userId;
         this.role = role;
         welcomeLabel.setText("Welcome " + role + " " + userId + "!");
+    }
+
+    /**
+     * Let the dashboard receive the shared CareHome model
+     * Gives the controller access to all system data
+     */
+
+    public void setModel(CareHome model) {
+        this.model = model;
+    }
+
+    /**
+     * Passes the logged-in staff member to the dashboard and update the welcome message
+     * @param staff Who logged in
+     */
+
+    public void setLoggedInStaff(Staff staff) {
+        this.loggedInStaff = staff;
+        welcomeLabel.setText("Welcome, " + staff.getName() + " (" + staff.getClass().getSimpleName() + ")");
     }
 
     @FXML
