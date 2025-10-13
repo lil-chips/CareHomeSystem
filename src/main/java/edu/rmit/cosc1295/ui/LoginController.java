@@ -4,12 +4,14 @@ import edu.rmit.cosc1295.carehome.CareHome;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 /**
  * Controller for login.fxml, handles login UI actions.
@@ -43,11 +45,21 @@ public class LoginController {
         }
 
         try {
+            // If login info looks fine, load dashboard.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
             Scene dashboardScene = new Scene(loader.load(), 600, 400);
+
+            // Replace the current scene with the new one
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(dashboardScene);
+            stage.setTitle("CareHome - Dashboard");
+            stage.show();
+
+            System.out.println("Login success! Jumped to dashboard.");
+
         } catch (Exception e){
             e.printStackTrace();
-
+            showAlert("Failed to load dashboard: " + e.getMessage());
         }
 
         System.out.println("Login success :) Role: " + role + ", ID: " + id);
