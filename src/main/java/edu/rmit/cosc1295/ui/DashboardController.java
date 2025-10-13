@@ -118,4 +118,23 @@ public class DashboardController {
         }
     }
 
+    /**
+     * When the user clicks "Add Bed", this opens the AddBed page
+     * @param event to add a new bed
+     */
+
+    @FXML
+    void onAddBed(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/AddBed.fxml"));
+            Scene scene = new Scene(loader.load(), 400, 250);
+
+            AddBedController controller = loader.getController();
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
+
+
+    }
+
+
 }
