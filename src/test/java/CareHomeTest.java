@@ -517,8 +517,20 @@ public class CareHomeTest {
         home.getResidents().add(r1);
         home.getResidents().add(r2);
 
+        // Create a manager and a nurse
+        Manager manager = new Manager("manager1", "Edward", "0722");
+        Nurse nurse = new Nurse("nurse1", "Qin", "1234");
+        home.addStaff(manager, nurse);
 
+        // Try to move Jack from bed1 to bed2, but bed2 already has Rose
+        assertThrows(BedOccupiedException.class,
+                () -> nurse.moveResident(home, "Jack", 2),
+                "Should throw BedOccupiedException when target bed is occupied");
+
+        // Confirm Jack is still on bed 1, no change
+        assertEquals(1, r1.getBedId(), "Resident should stay on original bed after failed move");
+
+        // Print success message
+        System.out.println("Correctly threw BedOccupiedException when bed is already occupied!");
     }
-
-
 }
