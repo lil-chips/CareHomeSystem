@@ -16,8 +16,8 @@
         <javafx.classifier>mac-aarch64</javafx.classifier>
     </properties>
 
-    <!-- Import JUnit testing framework -->
     <dependencies>
+        <!-- Import JavaFX Controls -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -25,6 +25,15 @@
             <classifier>${javafx.classifier}</classifier>
         </dependency>
 
+        <!-- Import FXML -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+            <classifier>${javafx.classifier}</classifier>
+        </dependency>
+
+        <!-- Import JUnit testing framework -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
