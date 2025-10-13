@@ -3,7 +3,11 @@ package edu.rmit.cosc1295.ui;
 import edu.rmit.cosc1295.carehome.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.stage.Stage;
 
 
 import java.awt.*;
@@ -101,6 +105,36 @@ public class AddResidentController {
         } catch (Exception e) {
             // If something goes wrong, print the error details
             showAlert("Failed to add resident: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Called when the user clicks the "Back" button.
+     * This method switches the current scene back to the dashboard.
+     * @param event The button click event used to get the current window
+     */
+
+    @FXML
+    void onBack(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
+            Scene scene = new Scene(loader.load(), 600, 400);
+
+            // Pass data back to DashboardController
+            DashboardController controller = loader.getController();
+            controller.setModel(model);
+            if (loggedInStaff != null)
+                controller.setLoggedInStaff(loggedInStaff);
+
+            // Replace current scene with dashboard
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Dashboard");
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Failed to return to dashboard: " + e.getMessage());
         }
     }
 
