@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 
@@ -90,10 +91,10 @@ public class AddResidentController {
         try {
             // Create a new resident and assign to the selected bed
             Resident newResident = new Resident(name, gender, bedId);
-            model.addResidentToBed(newResident, bedId);
+            model.assignResidentToBed(loggedInStaff, newResident, bedId);
 
             // Record this action in the system log
-            CareHome.createLog("Added new resident " + name + " to bed " + bedId);
+            CareHome.createLog(loggedInStaff.getName() + " added new resident " + name + " to bed " + bedId);
 
             // Inform the user that everything worked
             showAlert("Resident added successfully!");
@@ -138,5 +139,18 @@ public class AddResidentController {
         }
     }
 
+    /**
+     * Helper function that shows an information pop-up message.
+     * @param msg The message to display in the alert box
+     */
 
+    private void showAlert(String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null); // We don’t need a title
+        alert.setContentText(msg); // Show our message
+        alert.showAndWait();       // Wait until the user closes it
+    }
 }
+
+
+

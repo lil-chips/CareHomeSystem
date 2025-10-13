@@ -91,4 +91,29 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Add resident button
+     * @param event to add a new resident
+     */
+
+    @FXML
+    void onAddResident(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/add_resident.fxml"));
+            Scene scene = new Scene(loader.load(), 500, 350);
+
+            AddResidentController controller = loader.getController();
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Add Resident");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

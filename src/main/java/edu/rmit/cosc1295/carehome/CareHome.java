@@ -299,7 +299,7 @@ public class CareHome implements Serializable {
     /**
      * Assign a resident to a specific bed
      * @param s Who perform the action (doctor or nurse)
-     * @param residentName The name of the resident
+     * @param resident The name of the resident
      * @param bedId The ID of the bed
      * @throws UnauthorizedException only doctor or nurse can perform this action
      * @throws NotWorkingException check doctor or nurse is on duty that day or not
@@ -307,7 +307,7 @@ public class CareHome implements Serializable {
      * @throws IllegalStateException if the bed is already occupied or resident already has a bed
      */
 
-    public void assignResidentToBed(Staff s, String residentName, int bedId) {
+    public void assignResidentToBed(Staff s, Resident resident, int bedId) {
 
         // Only nurse or doctor can assign a resident to a bed
         if (!(s instanceof Nurse || s instanceof Doctor)) {
@@ -335,9 +335,9 @@ public class CareHome implements Serializable {
         }
 
         // Find the resident by name
-        Resident re = findResidentByName(residentName);
+        Resident re = findResidentByName(resident.getName());
         if (re == null) {
-            throw new IllegalArgumentException("Can't find the resident named: " + residentName);
+            throw new IllegalArgumentException("Can't find the resident named: " + resident);
         }
 
         // Resident has a bed or not
