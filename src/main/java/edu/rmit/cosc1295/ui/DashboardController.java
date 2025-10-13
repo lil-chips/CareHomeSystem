@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 
+
 public class DashboardController {
 
     @FXML
@@ -47,8 +48,21 @@ public class DashboardController {
     @FXML
     void onOpenStaffList(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/staff_list.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("src/main/resources/edu/rmit/cosc1295/ui/staff_list.fxml"));
             Scene staffListScene = new Scene(loader.load(), 600, 400);
 
+            // Pass the model and user info to the staff list controller
+            StaffListController controller = loader.getController();
+
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(staffListScene);
+            stage.setTitle("CareHome - Staff List");
+            stage.show();
+
+            System.out.println("Opened Staff List screen!");
+
+
         }
+    }
 }
