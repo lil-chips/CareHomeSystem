@@ -38,6 +38,7 @@ public class DashboardController {
     /**
      * Let the dashboard receive the shared CareHome model
      * Gives the controller access to all system data
+     * @param model The CareHome model
      */
 
     public void setModel(CareHome model) {

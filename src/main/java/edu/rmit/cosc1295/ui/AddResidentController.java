@@ -25,4 +25,30 @@ public class AddResidentController {
         genderChoice.getItems().addAll("Male", "Female", "Other");
         genderChoice.setValue("Male");
     }
+
+    /**
+     * Let the dashboard receive the shared CareHome model
+     * Gives the controller access to all system data
+     * @param model The CareHome model
+     */
+
+    public void setModel(CareHome model) {
+        this.model = model;
+
+        // Populate empty bed IDs
+        bedChoice.getItems().clear();
+        for (Bed b : model.getBeds()) {
+            // Only show beds that are still available (not occupied)
+            if (b.bedAvailable()) {
+                bedChoice.getItems().add(b.getBedId()); // Add the bed ID to the dropdown list
+            }
+        }
+        // If there are any available beds, automatically select the first one
+        if (!bedChoice.getItems().isEmpty())
+            bedChoice.setValue(bedChoice.getItems().get(0));
+    }
+
+
+
+
 }
