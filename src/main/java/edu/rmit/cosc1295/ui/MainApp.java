@@ -52,6 +52,14 @@ public class MainApp extends Application {
         });
     }
 
+    // Accessors for login info
+    public CareHome getModel() { return model; }
+    public String getLoggedInId() { return loggedInId; }
+    public void setLoggedInId(String id) { this.loggedInId = id; }
+    public String getLoggedInRole() { return loggedInRole; }
+    public void setLoggedInRole(String role) { this.loggedInRole = role; }
+
+
     // Launch JavaFX app
     public static void main(String[] args) {
         launch(args);
