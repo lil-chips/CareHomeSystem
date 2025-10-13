@@ -3,6 +3,8 @@ package edu.rmit.cosc1295.ui;
 import edu.rmit.cosc1295.carehome.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -14,6 +16,7 @@ import javafx.stage.Stage;
 import java.awt.*;
 
 public class AddResidentController {
+
     @FXML
     private TextField nameField;
 

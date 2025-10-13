@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="edu.rmit.cosc1295.ui.AddResidentController"
+            prefWidth="500" prefHeight="350">
 
+    <children>
+        <Label text="Add New Resident"
+               layoutX="170" layoutY="40"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+        <Label text="Name:" layoutX="100" layoutY="120"/>
+        <TextField fx:id="nameField" layoutX="200" layoutY="115" prefWidth="200"/>
+
+        <Label text="Gender:" layoutX="100" layoutY="160"/>
+        <ChoiceBox fx:id="genderChoice" layoutX="200" layoutY="155" prefWidth="200"/>
+
+        <Label text="Select Empty Bed:" layoutX="100" layoutY="200"/>
+        <ChoiceBox fx:id="bedChoice" layoutX="200" layoutY="195" prefWidth="200"/>
+
+        <Button fx:id="addBtn" text="Add Resident"
+                layoutX="200" layoutY="250" prefWidth="200"
+                onAction="#onAddResident"/>
+
+        <Button fx:id="backBtn" text="Back"
+                layoutX="20" layoutY="20" prefWidth="80"
+                onAction="#onBack"/>
+    </children>
 </AnchorPane>
