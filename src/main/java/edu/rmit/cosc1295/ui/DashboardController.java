@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
@@ -100,13 +101,14 @@ public class DashboardController {
     @FXML
     void onAddResident(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/add_resident.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/AddResident.fxml"));
             Scene scene = new Scene(loader.load(), 500, 350);
 
             AddResidentController controller = loader.getController();
             controller.setModel(model);
             controller.setLoggedInStaff(loggedInStaff);
 
+            // Switch the scene
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("CareHome - Add Resident");
