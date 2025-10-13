@@ -59,6 +59,10 @@ public class AddPrescriptionController {
         this.loggedInStaff = staff;
     }
 
+    /**
+     * Called when the user clicks "Add Prescription
+     */
+
     @FXML
     void onAddPrescription(ActionEvent event) {
         String residentName = residentChoice.getValue();
@@ -71,8 +75,21 @@ public class AddPrescriptionController {
             return;
         }
 
+        try {
+            model.addPrescription((Doctor) loggedInStaff, residentName, medicine, dose, time);
+            CareHome.createLog("Doctor " + loggedInStaff.getName() +
+                    " prescribed " + medicine + " to " + residentName);
 
+            showAlert("Prescription added successfully!");
+            onBack(event);
+        } catch (Exception e) {
+            showAlert("Failed to add prescription: " + e.getMessage());
+        }
     }
+
+    /**
+     * Go back to dashboard
+     */
 
     @FXML
     void onBack(ActionEvent event) {
