@@ -5,6 +5,9 @@ import edu.rmit.cosc1295.carehome.CareHome;
 import edu.rmit.cosc1295.carehome.Staff;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * Displays all staff in a table view
@@ -35,4 +38,12 @@ public class StaffListController {
         this.model = model;
 
     }
-}
+
+    /**
+     * Load all staff into the table
+     */
+    private void loadStaffData() {
+        ArrayList<Staff> list = model.getStaffList(); // already exists in your CareHome class
+        ObservableList<Staff> observableList = FXCollections.observableArrayList(list);
+
+    }
