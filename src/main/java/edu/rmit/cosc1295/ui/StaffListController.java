@@ -8,6 +8,7 @@ import javafx.scene.control.TableColumn;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * Displays all staff in a table view
@@ -46,4 +47,16 @@ public class StaffListController {
         ArrayList<Staff> list = model.getStaffList(); // already exists in your CareHome class
         ObservableList<Staff> observableList = FXCollections.observableArrayList(list);
 
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        // Show each staff member's role
+        roleCol.setCellValueFactory(cellData ->
+                new javafx.beans.property.SimpleStringProperty(
+                        cellData.getValue().getClass().getSimpleName()
+                )
+        );
+
+        staffTable.setItems(observableList);
     }
+}
