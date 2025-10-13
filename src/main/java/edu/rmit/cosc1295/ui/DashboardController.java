@@ -133,7 +133,17 @@ public class DashboardController {
             controller.setModel(model);
             controller.setLoggedInStaff(loggedInStaff);
 
+            // Switch the scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Add Bed");
+            stage.show();
 
+            System.out.println("Switched to AddBed.fxml");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
