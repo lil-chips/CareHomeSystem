@@ -31,7 +31,21 @@ public class AddPrescriptionController {
     private CareHome model;
     private Staff loggedInStaff;
 
+    public void setModel(CareHome model) {
+        this.model = model;
 
+        // Populate resident names
+        residentChoice.getItems().clear();
+        for (Resident r : model.getResidents()) {
+            residentChoice.getItems().add(r.getName());
+        }
+        if (!residentChoice.getItems().isEmpty())
+            residentChoice.setValue(residentChoice.getItems().get(0));
+    }
+
+    public void setLoggedInStaff(Staff staff) {
+        this.loggedInStaff = staff;
+    }
 
     @FXML
     void onBack(ActionEvent event) {
