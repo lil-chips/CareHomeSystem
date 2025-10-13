@@ -19,12 +19,21 @@
                 prefWidth="150"
                 text="Staff List"
                 onAction="#onOpenStaffList" />
+
         <Button fx:id="residentBtn"
                 layoutX="250" layoutY="150"
                 prefWidth="150" text="Residents" />
+
         <Button text="Add Resident" layoutX="200"
                 layoutY="180" prefWidth="180"
                 onAction="#onAddResident"/>
+
+        <Button fx:id="addBedBtn"
+                text="Add Bed"
+                layoutX="200" layoutY="220"
+                prefWidth="180"
+                onAction="#onAddBed"/>
+
         <Button fx:id="logsBtn"
                 layoutX="420" layoutY="150"
                 prefWidth="100" text="Logs" />
@@ -32,5 +41,6 @@
         <Button fx:id="logoutBtn"
                 layoutX="250" layoutY="300"
                 onAction="#onLogout" text="Logout" />
+
     </children>
 </AnchorPane>
