@@ -30,5 +30,10 @@ public class LoginController {
 
     }
 
-
+    private void showAlert(String msg) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setHeaderText(null);
+        a.setContentText(msg);
+        a.showAndWait();
+    }
 }
