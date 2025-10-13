@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="250" prefWidth="400"
+            xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/25"
+            fx:controller="edu.rmit.cosc1295.ui.AddBedController">
 
+    <children>
+        <Label layoutX="130" layoutY="40" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Add New Bed" />
+
+        <Label layoutX="80" layoutY="110" text="Bed ID:" />
+        <TextField fx:id="bedIdField" layoutX="150" layoutY="105" prefWidth="150" />
+
+        <Button fx:id="addBtn" layoutX="150.0" layoutY="167.0"
+                onAction="#onAddBed" prefWidth="150" text="Add Bed" />
+
+        <Button fx:id="backBtn" layoutX="20.0" layoutY="21.0"
+                onAction="#onBack" prefWidth="80" text="Back" />
+    </children>
 </AnchorPane>
