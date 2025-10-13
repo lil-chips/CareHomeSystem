@@ -1,6 +1,7 @@
 package edu.rmit.cosc1295.ui;
 
 import edu.rmit.cosc1295.carehome.CareHome;
+import edu.rmit.cosc1295.carehome.Staff;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,12 +43,33 @@ public class LoginController {
 
     @FXML
     void onLogin(ActionEvent event) {
-        String id = idField.getText();
-        String pass = passwordField.getText();
+        String id = idField.getText().trim();
+        String pass = passwordField.getText().trim();
         String role = roleChoice.getValue();
 
-        if (id == null || id.isBlank() || pass == null || pass.isBlank()) {
+        if (id.isEmpty() || pass.isEmpty()) {
             showAlert("Please enter ID and password!");
+            return;
+        }
+
+        // Check the account, does it exist
+        Staff found = null;
+        for (Staff s : model.getStaffList()) {
+            if (s.getId().equals(id) && s.getPassword().equals(pass)) {
+                found = s;
+                break;
+            }
+        }
+
+        // Can't find the account
+        if (found == null) {
+            showAlert("Invalid ID or password.");
+            return;
+        }
+
+        // Check the role
+        if (!found.getClass().getSimpleName().equalsIgnoreCase(role)) {
+            showAlert("This ID does not belong to role: " + role);
             return;
         }
 
