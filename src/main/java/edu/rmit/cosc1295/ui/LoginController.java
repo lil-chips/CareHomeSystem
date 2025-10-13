@@ -27,6 +27,10 @@ public class LoginController {
 
     @FXML
     void onLogin(ActionEvent event) {
+        String id = idField.getText();
+        String pass = passwordField.getText();
+        String role = roleChoice.getValue();
+
 
     }
 
