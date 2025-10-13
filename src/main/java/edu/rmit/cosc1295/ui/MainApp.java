@@ -1,6 +1,8 @@
 package edu.rmit.cosc1295.ui;
 
 import edu.rmit.cosc1295.carehome.CareHome;
+import edu.rmit.cosc1295.carehome.Manager;
+import edu.rmit.cosc1295.carehome.Nurse;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,9 +12,23 @@ import javafx.stage.*;
  * Entry point of the app
  */
 public class MainApp extends Application {
+
+    private CareHome model;
+    private String loggedInId;
+    private String loggedInRole;
+
     @Override
     public void start(Stage stage) throws Exception{
-        CareHome app = new CareHome();
+        model = CareHome.loadFromFile("SavedData.ser");
+        if (model == null) {
+            model = new CareHome();
+
+            Manager manager1 = new Manager("manager1", "Edward", "0722");
+            Nurse nurse1 = new Nurse("nurse1", "Qin", "1234");
+            model.addStaff(manager1, nurse1);
+
+            System.out.println("No data found. Created new CareHome instance.");
+        }
 
         // Load the FXML file
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/login.fxml"));
@@ -21,13 +37,19 @@ public class MainApp extends Application {
         // Get the controller object that is linked to login.fxml
         LoginController controller = loader.getController();
         // Give the controller access to the CareHome model
-        controller.setModel(app);
+        controller.setModel(model);
 
         // Configure and show the stage
         stage.setTitle("CareHome System - Login");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+
+        // Save on exit
+        stage.setOnCloseRequest(event -> {
+            model.saveToFile("SavedData.ser");
+            System.out.println("Data saved to SavedData.ser");
+        });
     }
 
     // Launch JavaFX app

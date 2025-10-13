@@ -34,6 +34,13 @@ public class LoginController {
     private CareHome model;
 
     @FXML
+    public void initialize() {
+        // Initialize the role choices
+        roleChoice.getItems().addAll("Manager", "Doctor", "Nurse");
+        roleChoice.setValue("Manager"); // default value
+    }
+
+    @FXML
     void onLogin(ActionEvent event) {
         String id = idField.getText();
         String pass = passwordField.getText();

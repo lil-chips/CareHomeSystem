@@ -51,7 +51,6 @@ public class DashboardController {
 
     @FXML
     void onOpenStaffList(ActionEvent event) {
-        System.out.println("🔥 Button clicked!");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/staff_list.fxml"));
             Scene staffScene = new Scene(loader.load(), 600, 400);
