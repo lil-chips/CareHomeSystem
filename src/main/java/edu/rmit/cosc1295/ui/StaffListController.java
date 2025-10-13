@@ -27,8 +27,8 @@ public class StaffListController {
     private CareHome model;
 
     /**
-     *
-     * @param model
+     * Called from DashboardController to reuse the same CareHome data here.
+     * @param model the CareHome object we got from the main app
      */
 
     public void setModel(CareHome model) {
