@@ -146,5 +146,29 @@ public class DashboardController {
         }
     }
 
+    @FXML
+    void onAddPrescription(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/AddPrescription.fxml"));
+            Scene scene = new Scene(loader.load(), 550, 350);
+
+            AddPrescriptionController controller = loader.getController();
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
+
+            // Switch the scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Add Prescription");
+            stage.show();
+
+            System.out.println("Switched to AddPrescription.fxml");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }
