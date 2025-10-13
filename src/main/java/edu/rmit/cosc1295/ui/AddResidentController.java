@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 
+
 import java.awt.*;
 
 public class AddResidentController {
@@ -82,6 +83,26 @@ public class AddResidentController {
             return;
         }
 
+        try {
+            // Create a new resident and assign to the selected bed
+            Resident newResident = new Resident(name, gender, bedId);
+            model.addResidentToBed(newResident, bedId);
+
+            // Record this action in the system log
+            CareHome.createLog("Added new resident " + name + " to bed " + bedId);
+
+            // Inform the user that everything worked
+            showAlert("Resident added successfully!");
+            System.out.println("Resident added: " + name + " (" + gender + ") → Bed " + bedId);
+
+            // Go back to the dashboard page
+            onBack(event);
+
+        } catch (Exception e) {
+            // If something goes wrong, print the error details
+            showAlert("Failed to add resident: " + e.getMessage());
+        }
+    }
 
 
 }
