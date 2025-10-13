@@ -14,9 +14,11 @@
                layoutX="180" layoutY="50"
                style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
-        <Button fx:id="staffBtn"
+        <Button fx:id="staffListBtn"
                 layoutX="80" layoutY="150"
-                prefWidth="150" text="Staff List" />
+                prefWidth="150"
+                text="Staff List"
+                onAction="#onOpenStaffList" />
         <Button fx:id="residentBtn"
                 layoutX="250" layoutY="150"
                 prefWidth="150" text="Residents" />

@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 
@@ -17,6 +18,9 @@ public class DashboardController {
     private CareHome model;
     private String userId;
     private String role;
+
+    @FXML
+    private Button staffListBtn;
 
     /**
      * Receive model and user info from LoginController
@@ -47,22 +51,23 @@ public class DashboardController {
 
     @FXML
     void onOpenStaffList(ActionEvent event) {
+        System.out.println("🔥 Button clicked!");
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("src/main/resources/edu/rmit/cosc1295/ui/staff_list.fxml"));
-            Scene staffListScene = new Scene(loader.load(), 600, 400);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/staff_list.fxml"));
+            Scene staffScene = new Scene(loader.load(), 600, 400);
 
             // Pass the model and user info to the staff list controller
             StaffListController controller = loader.getController();
             controller.setData(model, userId, role);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(staffListScene);
+            stage.setScene(staffScene);
             stage.setTitle("CareHome - Staff List");
             stage.show();
 
             System.out.println("Opened Staff List screen!");
-
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
