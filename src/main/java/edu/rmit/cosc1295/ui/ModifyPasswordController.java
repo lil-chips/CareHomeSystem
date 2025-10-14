@@ -1,6 +1,7 @@
 package edu.rmit.cosc1295.ui;
 
 import edu.rmit.cosc1295.carehome.CareHome;
+import edu.rmit.cosc1295.carehome.Manager;
 import edu.rmit.cosc1295.carehome.Staff;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -68,7 +69,25 @@ public class ModifyPasswordController {
             showAlert("Please select a staff and enter a new password.");
             return;
         }
+        try {
+            String staffId = selected.split(" - ")[0];
+            Staff target = model.findStaffById(staffId);
+
+            if (target == null) {
+                showAlert("Staff not found!");
+                return;
+            }
+
+            ((Manager) loggedInStaff).modifyStaffPassword(target, newPassword);
+            CareHome.createLog("Manager " + loggedInStaff.getName() + " changed password for " + target.getName());
+
+            showAlert("Password updated successfully!");
+            onBack(event);
+        } catch (Exception e) {
+            showAlert("Error: " + e.getMessage());
+        }
     }
+
     /**
      * Go back to the dashboard screen.
      * @param event The button click event
@@ -105,4 +124,4 @@ public class ModifyPasswordController {
         a.showAndWait();
     }
 }
-}
+
