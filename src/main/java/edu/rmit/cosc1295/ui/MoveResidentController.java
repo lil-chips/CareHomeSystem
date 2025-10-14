@@ -1,9 +1,6 @@
 package edu.rmit.cosc1295.ui;
 
-import edu.rmit.cosc1295.carehome.Bed;
-import edu.rmit.cosc1295.carehome.CareHome;
-import edu.rmit.cosc1295.carehome.Resident;
-import edu.rmit.cosc1295.carehome.Staff;
+import edu.rmit.cosc1295.carehome.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -77,12 +74,25 @@ public class MoveResidentController {
     @FXML
     void onMove(ActionEvent event) {
         String residentName = residentChoice.getValue();
-        Integer newBe dId = bedChoice.getValue();
+        Integer newBedId = bedChoice.getValue();
 
         if (residentName == null || newBedId == null) {
             showAlert("Please select both a resident and a new bed.");
             return;
         }
+
+        try {
+            model.moveResident((Nurse) loggedInStaff, residentName, newBedId);
+            CareHome.createLog("Nurse " + loggedInStaff.getName() +
+                    " moved " + residentName + " to bed " + newBedId);
+
+            showAlert("Resident moved successfully!");
+            onBack(event);
+
+        } catch (Exception e) {
+            showAlert("Failed to move resident: " + e.getMessage());
+        }
+    }
 
     /**
      * Go back to the dashboard screen.
