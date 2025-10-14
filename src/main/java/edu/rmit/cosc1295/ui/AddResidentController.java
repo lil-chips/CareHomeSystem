@@ -137,7 +137,6 @@ public class AddResidentController {
             stage.show();
 
         } catch (Exception e) {
-            e.printStackTrace();
             showAlert("Failed to return to dashboard: " + e.getMessage());
         }
     }

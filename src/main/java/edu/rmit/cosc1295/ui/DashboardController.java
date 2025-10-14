@@ -22,8 +22,14 @@ public class DashboardController {
     private String role;
     private Staff loggedInStaff;
 
-    @FXML
-    private Button staffListBtn;
+    @FXML private Button staffListBtn;
+    @FXML private Button residentBtn;
+    @FXML private Button addPrescriptionBtn;
+    @FXML private Button addBtn;
+    @FXML private Button logsBtn;
+    @FXML private Button addBedBtn;
+    @FXML private Button moveResidentBtn;
+    @FXML private Button logoutBtn;
 
     /**
      * Receive model and user info from LoginController
@@ -67,7 +73,7 @@ public class DashboardController {
             stage.show();
             System.out.println("Logout success!");
         } catch (Exception e) {
-            e.printStackTrace();
+            showAlert("Failed to return: " + e.getMessage());
         }
 
     }
@@ -89,7 +95,7 @@ public class DashboardController {
 
             System.out.println("Opened Staff List screen!");
         } catch (Exception e) {
-            e.printStackTrace();
+            showAlert("Failed to return: " + e.getMessage());
         }
     }
 
@@ -114,7 +120,7 @@ public class DashboardController {
             stage.setTitle("CareHome - Add Resident");
             stage.show();
         } catch (Exception e) {
-            e.printStackTrace();
+            showAlert("Failed to return: " + e.getMessage());
         }
     }
 
@@ -142,7 +148,7 @@ public class DashboardController {
             System.out.println("Switched to AddBed.fxml");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            showAlert("Failed to return: " + e.getMessage());
         }
     }
 
@@ -171,7 +177,7 @@ public class DashboardController {
             System.out.println("Switched to AddPrescription.fxml");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            showAlert("Failed to return: " + e.getMessage());
         }
     }
 
@@ -200,7 +206,7 @@ public class DashboardController {
             System.out.println("Switched to MoveResident.fxml");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            showAlert("Failed to return: " + e.getMessage());
         }
     }
 
@@ -231,8 +237,20 @@ public class DashboardController {
             System.out.println("Switched to ResidentList.fxml");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            showAlert("Failed to return: " + e.getMessage());
         }
+    }
+
+    /**
+     * Helper function to show pop-up messages.
+     * @param msg The message text
+     */
+
+    private void showAlert(String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 
 

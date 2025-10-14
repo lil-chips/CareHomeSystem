@@ -4,10 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import edu.rmit.cosc1295.carehome.CareHome;
 import edu.rmit.cosc1295.carehome.Staff;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
@@ -120,7 +117,19 @@ public class StaffListController {
 
         } catch (Exception e) {
             //print the error details in the console
-            e.printStackTrace();
+            showAlert("Failed to return to dashboard: " + e.getMessage());
         }
+    }
+
+    /**
+     * Helper function that shows an information pop-up message.
+     * @param msg The message to display in the alert box
+     */
+
+    private void showAlert(String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null); // We don’t need a title
+        alert.setContentText(msg); // Show our message
+        alert.showAndWait();       // Wait until the user closes it
     }
 }

@@ -52,9 +52,9 @@ public class MoveResidentController {
         }
         // Default selections
         if (!residentChoice.getItems().isEmpty())
-            residentChoice.setValue(residentChoice.getItems().get(0));
+            residentChoice.setValue(residentChoice.getItems().getFirst());
         if (!bedChoice.getItems().isEmpty())
-            bedChoice.setValue(bedChoice.getItems().get(0));
+            bedChoice.setValue(bedChoice.getItems().getFirst());
     }
 
     /**
