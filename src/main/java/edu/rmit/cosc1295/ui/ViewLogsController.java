@@ -63,4 +63,4 @@ public class ViewLogsController {
         a.showAndWait();
     }
 }
-}
+

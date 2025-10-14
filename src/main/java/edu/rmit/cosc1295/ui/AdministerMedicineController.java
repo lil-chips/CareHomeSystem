@@ -66,6 +66,15 @@ public class AdministerMedicineController {
             showAlert("Please fill in all fields.");
             return;
         }
+
+        try {
+            CareHome.createLog("Nurse " + loggedInStaff.getName() +
+                    " administered " + medicine + " (" + dose + ") to " + residentName + " at " + time);
+            showAlert("Record saved successfully!");
+            onBack(event);
+        } catch (Exception e) {
+            showAlert("Error: " + e.getMessage());
+        }
     }
 
     /**
