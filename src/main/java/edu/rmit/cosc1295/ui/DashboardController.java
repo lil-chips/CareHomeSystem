@@ -330,6 +330,34 @@ public class DashboardController {
     }
 
     /**
+     * When the user clicks "View Logs" on the dashboard,
+     * this button opens the ViewLogs page.
+     * It allows staff to check all system actions recorded in the logs.
+     *
+     * @param event The button click event
+     */
+
+    @FXML
+    void onViewLogs(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/ViewLogs.fxml"));
+            Scene scene = new Scene(loader.load(), 600, 400);
+
+            ViewLogsController controller = loader.getController();
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - View Logs");
+            stage.show();
+            System.out.println("Switched to ViewLogs.fxml");
+        } catch (Exception e) {
+            showAlert("Failed to open View Logs: " + e.getMessage());
+        }
+    }
+
+    /**
      * Helper function to show pop-up messages.
      * @param msg The message text
      */
