@@ -146,6 +146,12 @@ public class DashboardController {
         }
     }
 
+    /**
+     * When the doctor clicks on "Add Prescription" on the dashboard,
+     * this opens the AddPrescription page.
+     * @param event The button click event
+     */
+
     @FXML
     void onAddPrescription(ActionEvent event) {
         try {
@@ -168,6 +174,36 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * When the nurse clicks "Move Resident" on the dashboard,
+     * this opens the MoveResident page.
+     * @param event The button click event
+     */
+
+    @FXML
+    void onMoveResident(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/MoveResident.fxml"));
+            Scene scene = new Scene(loader.load(), 500, 320);
+
+            MoveResidentController controller = loader.getController();
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
+
+            // Switch the scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Move Resident");
+            stage.show();
+
+            System.out.println("Switched to MoveResident.fxml");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
