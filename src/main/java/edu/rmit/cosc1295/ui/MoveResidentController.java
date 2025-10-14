@@ -53,6 +53,20 @@ public class MoveResidentController {
                 bedChoice.getItems().add(b.getBedId());
             }
         }
+        // Default selections
+        if (!residentChoice.getItems().isEmpty())
+            residentChoice.setValue(residentChoice.getItems().get(0));
+        if (!bedChoice.getItems().isEmpty())
+            bedChoice.setValue(bedChoice.getItems().get(0));
+    }
+
+    /**
+     * Save info about who is logged in.
+     * @param staff The logged-in nurse
+     */
+
+    public void setLoggedInStaff(Staff staff) {
+        this.loggedInStaff = staff;
     }
 
     /**
