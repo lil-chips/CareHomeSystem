@@ -1,6 +1,7 @@
 package edu.rmit.cosc1295.ui;
 
 import edu.rmit.cosc1295.carehome.CareHome;
+import edu.rmit.cosc1295.carehome.Resident;
 import edu.rmit.cosc1295.carehome.Staff;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,6 +29,22 @@ public class AdministerMedicineController {
 
     private CareHome model;
     private Staff loggedInStaff;
+
+    /**
+     * Called by Dashboard to share the data model.
+     * It also fills the resident dropdown list.
+     * @param model The shared CareHome model
+     */
+
+    public void setModel(CareHome model) {
+        this.model = model;
+        residentChoice.getItems().clear();
+        for (Resident r : model.getResidents()) {
+            residentChoice.getItems().add(r.getName());
+        }
+        if (!residentChoice.getItems().isEmpty())
+            residentChoice.setValue(residentChoice.getItems().get(0));
+    }
 
     public void setLoggedInStaff(Staff staff) {
         this.loggedInStaff = staff;
@@ -68,4 +85,3 @@ public class AdministerMedicineController {
     }
 }
 
-}
