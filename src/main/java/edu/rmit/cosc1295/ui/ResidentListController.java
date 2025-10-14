@@ -58,15 +58,17 @@ public class ResidentListController {
         residentTable.setItems(data);
 
         // Set up each column to show the correct value
-        // This means: the name column shows r.getName()
+        // For the "Name" column, show each resident’s name
         nameCol.setCellValueFactory(cellData -> {
             return new javafx.beans.property.SimpleStringProperty(cellData.getValue().getName());
         });
 
+        // For the "Gender" column, show each resident’s gender
         genderCol.setCellValueFactory(cellData -> {
             return new javafx.beans.property.SimpleStringProperty(cellData.getValue().getGender());
         });
 
+        // For the "Bed ID" column, show the bed number (which is an Integer)
         bedCol.setCellValueFactory(cellData -> {
             // Use SimpleObjectProperty because bedId is an Integer, not String
             return new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().getBedId());
