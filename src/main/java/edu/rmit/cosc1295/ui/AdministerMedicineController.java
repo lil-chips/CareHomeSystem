@@ -9,17 +9,21 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * Shows all log entries stored in the CareHome system.
+ * Used by nurses to record medicine administration.
  */
 
-public class ViewLogsController {
+public class AdministerMedicineController {
 
-    @FXML private ListView<String> logList;
-    @FXML private Button refreshBtn;
+    @FXML private ChoiceBox<String> residentChoice;
+    @FXML private TextField medicineField;
+    @FXML private TextField doseField;
+    @FXML private TextField timeField;
+    @FXML private Button recordBtn;
     @FXML private Button backBtn;
 
     private CareHome model;
@@ -63,4 +67,5 @@ public class ViewLogsController {
         a.showAndWait();
     }
 }
+
 }

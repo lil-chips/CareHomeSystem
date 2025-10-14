@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.rmit.cosc1295.ui.ViewLogsController">
 
+    <children>
+        <Label layoutX="246.0" layoutY="33.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="System Logs" />
+
+        <ListView fx:id="logList" layoutX="50" layoutY="80" prefHeight="260" prefWidth="500" />
+
+        <Button fx:id="refreshBtn" layoutX="250" layoutY="350" onAction="#onRefresh" prefWidth="100" text="Refresh" />
+
+        <Button fx:id="backBtn" layoutX="20" layoutY="20" onAction="#onBack" prefWidth="80" text="Back" />
+    </children>
 </AnchorPane>
