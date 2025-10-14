@@ -8,9 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
-import java.awt.*;
 
 /**
  * Controller for MoveResident.fxml
@@ -24,6 +23,12 @@ public class MoveResidentController {
 
     @FXML
     private ChoiceBox<Integer> bedChoice;
+
+    @FXML
+    private Button moveBtn;
+
+    @FXML
+    private Button backBtn;
 
     private CareHome model;
     private Staff loggedInStaff;
