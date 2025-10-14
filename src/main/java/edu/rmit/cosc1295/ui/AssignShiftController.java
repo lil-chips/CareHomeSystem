@@ -1,6 +1,8 @@
 package edu.rmit.cosc1295.ui;
 
 import edu.rmit.cosc1295.carehome.CareHome;
+import edu.rmit.cosc1295.carehome.Doctor;
+import edu.rmit.cosc1295.carehome.Nurse;
 import edu.rmit.cosc1295.carehome.Staff;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,6 +36,25 @@ public class AssignShiftController {
     }
 
     /**
+     * Called by DashboardController to inject shared data.
+     * @param model The CareHome data model
+     */
+
+    public void setModel(CareHome model) {
+        this.model = model;
+
+        // Fill staff list (Doctor + Nurse only)
+        staffChoice.getItems().clear();
+        for (Staff s : model.getStaffList()) {
+            if (s instanceof Doctor || s instanceof Nurse) {
+                staffChoice.getItems().add(s.getId() + " - " + s.getName());
+            }
+        }
+        if (!staffChoice.getItems().isEmpty())
+            staffChoice.setValue(staffChoice.getItems().getFirst());
+    }
+
+    /**
      * Called by DashboardController to know which Manager is logged in.
      * @param staff The logged-in Manager
      */
@@ -41,6 +62,8 @@ public class AssignShiftController {
     public void setLoggedInStaff(Staff staff) {
         this.loggedInStaff = staff;
     }
+
+
 
     /**
      * Go back to the dashboard screen.
@@ -78,5 +101,4 @@ public class AssignShiftController {
         alert.setContentText(msg);
         alert.showAndWait();
     }
-}
 }
