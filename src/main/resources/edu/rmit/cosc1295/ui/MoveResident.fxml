@@ -5,19 +5,18 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="320" prefWidth="500" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="edu.rmit.cosc1295.ui.MoveResidentController">
+<AnchorPane prefHeight="320" prefWidth="500" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25"
+            fx:controller="edu.rmit.cosc1295.ui.MoveResidentController">
 
-    <children>
-        <Label layoutX="238.0" layoutY="46.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Move Resident" />
+    <Label layoutX="238.0" layoutY="46.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Move Resident"/>
 
-        <Label layoutX="100" layoutY="120" text="Resident:" />
-        <ChoiceBox fx:id="residentChoice" layoutX="200" layoutY="115" prefWidth="200" />
+    <Label layoutX="100" layoutY="120" text="Resident:"/>
+    <ChoiceBox fx:id="residentChoice" layoutX="200" layoutY="115" prefWidth="200"/>
 
-        <Label layoutX="100" layoutY="160" text="New Bed:" />
-        <ChoiceBox fx:id="bedChoice" layoutX="200" layoutY="155" prefWidth="200" />
+    <Label layoutX="100" layoutY="160" text="New Bed:"/>
+    <ChoiceBox fx:id="bedChoice" layoutX="200" layoutY="155" prefWidth="200"/>
 
-        <Button fx:id="moveBtn" layoutX="200" layoutY="210" onAction="#onMove" prefWidth="200" text="Move" />
+    <Button fx:id="moveBtn" layoutX="200" layoutY="210" onAction="#onMove" prefWidth="200" text="Move"/>
 
-        <Button fx:id="backBtn" layoutX="20" layoutY="20" onAction="#onBack" prefWidth="80" text="Back" />
-    </children>
+    <Button fx:id="backBtn" layoutX="20" layoutY="20" onAction="#onBack" prefWidth="80" text="Back"/>
 </AnchorPane>

@@ -25,12 +25,15 @@ public class DashboardController {
     @FXML private Button staffListBtn;
     @FXML private Button residentBtn;
     @FXML private Button addPrescriptionBtn;
-    @FXML private Button addBtn;
-    @FXML private Button logsBtn;
+    @FXML private Button addResidentBtn;
+    @FXML private Button viewLogsBtn;
     @FXML private Button addBedBtn;
     @FXML private Button moveResidentBtn;
     @FXML private Button logoutBtn;
     @FXML private Button assignShiftBtn;
+    @FXML private Button administerMedBtn;
+    @FXML private Button modifyPasswordBtn;
+    @FXML private Button viewResidentsBtn;
 
     /**
      * Receive model and user info from LoginController
