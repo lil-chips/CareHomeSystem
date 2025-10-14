@@ -56,6 +56,20 @@ public class ModifyPasswordController {
     }
 
     /**
+     * When the manager clicks “Update Password” button.
+     * @param event The button click event
+     */
+    @FXML
+    void onUpdatePassword(ActionEvent event) {
+        String selected = staffChoice.getValue();
+        String newPassword = newPassField.getText();
+
+        if (selected == null || newPassword.isBlank()) {
+            showAlert("Please select a staff and enter a new password.");
+            return;
+        }
+    }
+    /**
      * Go back to the dashboard screen.
      * @param event The button click event
      */
