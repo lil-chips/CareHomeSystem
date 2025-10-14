@@ -28,6 +28,25 @@ public class ModifyPasswordController {
     private Staff loggedInStaff;
 
     /**
+     * Called by Dashboard to share the data model.
+     * It also fills the staff dropdown list.
+     * @param model The shared CareHome model
+     */
+
+    public void setModel(CareHome model) {
+        this.model = model;
+
+        // Fill all staff members into dropdown
+        staffChoice.getItems().clear();
+        for (Staff s : model.getStaffList()) {
+            staffChoice.getItems().add(s.getId() + " - " + s.getName());
+        }
+
+        if (!staffChoice.getItems().isEmpty())
+            staffChoice.setValue(staffChoice.getItems().get(0));
+    }
+
+    /**
      * Called by Dashboard to record which manager is logged in.
      * @param staff The logged-in manager
      */
