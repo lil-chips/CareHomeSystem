@@ -257,7 +257,7 @@ public class DashboardController {
     void onAssignShift(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/AssignShift.fxml"));
-            Scene scene = new Scene(loader.load(), 500, 350);
+            Scene scene = new Scene(loader.load(), 600, 400);
 
             AssignShiftController controller = loader.getController();
             controller.setModel(model);
@@ -285,7 +285,7 @@ public class DashboardController {
     void onModifyPassword(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/ModifyPassword.fxml"));
-            Scene scene = new Scene(loader.load(), 400, 250);
+            Scene scene = new Scene(loader.load(), 600, 400);
 
             ModifyPasswordController controller = loader.getController();
             controller.setModel(model);
@@ -298,6 +298,34 @@ public class DashboardController {
             System.out.println("Switched to ModifyPassword.fxml");
         } catch (Exception e) {
             showAlert("Failed to open Modify Password: " + e.getMessage());
+        }
+    }
+
+    /**
+     * When the nurse clicks "Administer Medicine" on the dashboard,
+     * this button opens the AdministerMedicine page.
+     * It is used to record when a medicine has been given to a patient.
+     *
+     * @param event The button click event
+     */
+
+    @FXML
+    void onAdministerMedicine(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/AdministerMedicine.fxml"));
+            Scene scene = new Scene(loader.load(), 600, 400);
+
+            AdministerMedicineController controller = loader.getController();
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Administer Medicine");
+            stage.show();
+            System.out.println("Switched to AdministerMedicine.fxml");
+        } catch (Exception e) {
+            showAlert("Failed to open Administer Medicine: " + e.getMessage());
         }
     }
 
