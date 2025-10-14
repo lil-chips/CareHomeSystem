@@ -10,10 +10,11 @@
         <Label fx:id="welcomeLabel" layoutX="180" layoutY="50" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Welcome!" />
 
         <Button fx:id="staffListBtn" layoutX="23.0" layoutY="194.0" onAction="#onOpenStaffList" prefWidth="150" text="Staff List" />
-        <Button fx:id="residentBtn" layoutX="23.0" layoutY="82.0" prefWidth="150" text="Residents" />
+        <Button fx:id="residentBtn" layoutX="210.0" layoutY="95.0" prefWidth="150" text="Residents" />
         <Button fx:id="addPrescriptionBtn" layoutX="23.0" layoutY="246.0" onAction="#onAddPrescription" prefHeight="10.0" prefWidth="150.0" text="Add Prescription" />
-        <Button fx:id="addBtn" layoutX="23.0" layoutY="114.0" onAction="#onAddResident" prefHeight="26.0" prefWidth="150.0" text="Add Resident" />
+        <Button fx:id="addBtn" layoutX="23.0" layoutY="131.0" onAction="#onAddResident" prefHeight="26.0" prefWidth="150.0" text="Add Resident" />
         <Button fx:id="logsBtn" layoutX="473.0" layoutY="82.0" prefWidth="100" text="Logs" />
+        <Button fx:id="addBedBtn" layoutX="23.0" layoutY="95.0" onAction="#onAddBed" prefWidth="150" text="Add Bed" />
 
         <Button fx:id="logoutBtn" layoutX="250" layoutY="300" onAction="#onLogout" text="Logout" />
     </children>
