@@ -63,7 +63,23 @@ public class AssignShiftController {
         this.loggedInStaff = staff;
     }
 
+    /**
+     * Handle the Assign Shift button click.
+     * @param event The button click event
+     */
+    @FXML
+    void onAssignShift(ActionEvent event) {
+        try {
+            String staffInfo = staffChoice.getValue();
+            String day = dayChoice.getValue();
+            String time = timeChoice.getValue();
 
+            if (staffInfo == null || day == null || time == null) {
+                showAlert("Please select all fields before assigning.");
+                return;
+            }
+        }
+    }
 
     /**
      * Go back to the dashboard screen.
