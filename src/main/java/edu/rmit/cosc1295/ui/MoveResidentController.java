@@ -70,6 +70,21 @@ public class MoveResidentController {
     }
 
     /**
+     * Called when the nurse clicks the "Move" button.
+     * @param event Button click event
+     */
+
+    @FXML
+    void onMove(ActionEvent event) {
+        String residentName = residentChoice.getValue();
+        Integer newBe dId = bedChoice.getValue();
+
+        if (residentName == null || newBedId == null) {
+            showAlert("Please select both a resident and a new bed.");
+            return;
+        }
+
+    /**
      * Go back to the dashboard screen.
      * @param event The button click event
      */
