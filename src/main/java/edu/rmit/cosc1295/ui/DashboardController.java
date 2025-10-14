@@ -205,6 +205,36 @@ public class DashboardController {
     }
 
 
+    /**
+     * When the user clicks "Residents" on the dashboard,
+     * open the resident list page to view all current residents.
+     *
+     * @param event The button click event
+     */
+
+    @FXML
+    void onOpenResidents(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/ResidentList.fxml"));
+            Scene scene = new Scene(loader.load(), 600, 400);
+
+            ResidentListController controller = loader.getController();
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
+
+            // Switch the scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Residents");
+            stage.show();
+
+            System.out.println("Switched to ResidentList.fxml");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }
