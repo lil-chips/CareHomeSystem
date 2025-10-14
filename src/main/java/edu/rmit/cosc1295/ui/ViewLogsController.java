@@ -2,6 +2,8 @@ package edu.rmit.cosc1295.ui;
 
 import edu.rmit.cosc1295.carehome.CareHome;
 import edu.rmit.cosc1295.carehome.Staff;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,8 +27,31 @@ public class ViewLogsController {
     private CareHome model;
     private Staff loggedInStaff;
 
+    /**
+     * Get shared model and load logs
+     */
+
+    public void setModel(CareHome model) {
+        this.model = model;
+        refreshLogs();
+    }
+
     public void setLoggedInStaff(Staff staff) {
         this.loggedInStaff = staff;
+    }
+
+    /**
+     * Refresh the log list on screen
+     */
+
+    @FXML
+    void onRefresh(ActionEvent event) {
+        refreshLogs();
+    }
+
+    private void refreshLogs() {
+        ObservableList<String> logs = FXCollections.observableArrayList(CareHome.getLogs());
+        logList.setItems(logs);
     }
 
     /**
