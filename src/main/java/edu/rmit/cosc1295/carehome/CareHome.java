@@ -1375,5 +1375,26 @@ public class CareHome implements Serializable {
                 " (" + dose + ", " + time + ") to " + residentName);
     }
 
+    /**
+     * Find a staff member by their ID.
+     * This helps controllers locate the correct staff object.
+     * @param id The ID of the staff to find
+     * @return The Staff object if found, or null if not found
+     */
+
+    public Staff findStaffById(String id) {
+        if (id == null || id.isBlank()) {
+            return null;
+        }
+
+        for (Staff s : staffList) {
+            if (s.getId().equalsIgnoreCase(id)) {
+                return s;
+            }
+        }
+        return null; // not found
+    }
+
+
 
 }

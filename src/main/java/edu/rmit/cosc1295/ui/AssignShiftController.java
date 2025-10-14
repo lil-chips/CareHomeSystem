@@ -1,9 +1,6 @@
 package edu.rmit.cosc1295.ui;
 
-import edu.rmit.cosc1295.carehome.CareHome;
-import edu.rmit.cosc1295.carehome.Doctor;
-import edu.rmit.cosc1295.carehome.Nurse;
-import edu.rmit.cosc1295.carehome.Staff;
+import edu.rmit.cosc1295.carehome.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -78,6 +75,10 @@ public class AssignShiftController {
                 showAlert("Please select all fields before assigning.");
                 return;
             }
+            // Get staff ID from string like "n1 - Lucy"
+            String staffId = staffInfo.split(" - ")[0];
+            Staff selected = model.findStaffById(staffId);
+
         }
     }
 
