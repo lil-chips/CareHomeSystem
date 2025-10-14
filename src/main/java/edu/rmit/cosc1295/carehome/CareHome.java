@@ -3,6 +3,8 @@ package edu.rmit.cosc1295.carehome;
 import javax.print.Doc;
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -152,6 +154,20 @@ public class CareHome implements Serializable {
         createLog(showlog);
     }
 
+    /**
+     * Moves a resident to a new bed.
+     * This action can only be performed by a nurse who is working today.
+     *
+     * @param nurse        The nurse performing the move action
+     * @param residentName The name of the resident being moved
+     * @param newBedId     The ID of the new bed to move the resident into
+     *
+     * @throws UnauthorizedException  if the staff is not a nurse
+     * @throws IllegalArgumentException if resident name or bed ID is invalid
+     * @throws NotWorkingException     if the nurse is not scheduled to work today
+     * @throws BedOccupiedException    if the new bed is already occupied
+     */
+
     public void moveResident(Nurse nurse, String residentName, int newBedId)
             throws UnauthorizedException, IllegalArgumentException, NotWorkingException {
         if (nurse == null) {
@@ -175,7 +191,7 @@ public class CareHome implements Serializable {
         // Find the resident
         Resident target = null;
         for (Resident r : residents) {
-            if (r.getName() != null && r.getName().equalsIgnoreCase(residentName)) {
+            if (r.getName().equalsIgnoreCase(residentName)) {
                 target = r;
                 break;
             }
@@ -198,6 +214,10 @@ public class CareHome implements Serializable {
         if (!targetBed.bedAvailable()) {
             throw new BedOccupiedException("Bed ID " + newBedId + " is not available");
         }
+        if (target.getBedId() != null && target.getBedId() == newBedId) {
+            throw new IllegalArgumentException("Resident is already in bed " + newBedId);
+        }
+
 
         // Release old bed
         Integer oldBedId = target.getBedId();
@@ -215,8 +235,10 @@ public class CareHome implements Serializable {
         target.setBedId(newBedId);
 
         // Record
-        createLog("Nurse " + nurse.getName() + " moved resident "
-        + target.getName() + " to bed " + newBedId);
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        createLog("[" + timestamp + "] Nurse " + nurse.getName() +
+                " moved resident " + target.getName() + " to bed " + newBedId);
+
     }
 
 
