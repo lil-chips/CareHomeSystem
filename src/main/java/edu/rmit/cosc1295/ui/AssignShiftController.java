@@ -79,6 +79,19 @@ public class AssignShiftController {
             String staffId = staffInfo.split(" - ")[0];
             Staff selected = model.findStaffById(staffId);
 
+            if (selected == null) {
+                showAlert("Staff not found!");
+                return;
+            }
+
+            Shift shift = new Shift(day, time); // 建立班表物件
+            // Assign the shift
+            model.assignShift((Manager) loggedInStaff, selected, shift);
+
+            showAlert("Shift assigned successfully!");
+            onBack(event);
+        } catch (Exception e) {
+            showAlert("Error: " + e.getMessage());
         }
     }
 
