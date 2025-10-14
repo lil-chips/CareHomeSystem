@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400" prefWidth="600" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="edu.rmit.cosc1295.ui.ResidentListController">
 
+    <children>
+        <Label layoutX="243.0" layoutY="33.0" prefHeight="26.0" prefWidth="115.0" style="-fx-font-size:20px; -fx-font-weight:bold;" text="Resident List" />
+
+        <TableView fx:id="residentTable" layoutX="50" layoutY="80" prefHeight="250" prefWidth="500">
+            <columns>
+                <TableColumn fx:id="nameCol" prefWidth="150" text="Name" />
+                <TableColumn fx:id="genderCol" prefWidth="113.0" text="Gender" />
+                <TableColumn fx:id="bedCol" prefWidth="136.0" text="Bed ID" />
+            </columns>
+        </TableView>
+
+        <Button fx:id="backBtn" layoutX="20" layoutY="20" onAction="#onBack" prefWidth="80" text="Back" />
+    </children>
 </AnchorPane>
