@@ -10,12 +10,13 @@
         <Label fx:id="welcomeLabel" layoutX="23.0" layoutY="14.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Welcome!" />
 
         <Button fx:id="staffListBtn" layoutX="225.0" layoutY="95.0" onAction="#onOpenStaffList" prefWidth="150" text="Staff List" />
-        <Button fx:id="residentBtn" layoutX="23.0" layoutY="200.0" prefWidth="150" text="Residents" onAction="#onOpenResidents"/>
+        <Button fx:id="residentBtn" layoutX="23.0" layoutY="200.0" onAction="#onOpenResidents" prefWidth="150" text="Residents" />
         <Button fx:id="addPrescriptionBtn" layoutX="436.0" layoutY="194.0" onAction="#onAddPrescription" prefHeight="10.0" prefWidth="150.0" text="Add Prescription" />
         <Button fx:id="addBtn" layoutX="23.0" layoutY="144.0" onAction="#onAddResident" prefHeight="26.0" prefWidth="150.0" text="Add Resident" />
         <Button fx:id="logsBtn" layoutX="461.0" layoutY="232.0" prefWidth="100" text="Logs" />
         <Button fx:id="addBedBtn" layoutX="23.0" layoutY="95.0" onAction="#onAddBed" prefWidth="150" text="Add Bed" />
         <Button fx:id="moveResidentBtn" layoutX="23.0" layoutY="258.0" onAction="#onMoveResident" prefWidth="150" text="Move Resident" />
+        <Button fx:id="assignShiftBtn" layoutX="225.0" layoutY="144.0" onAction="#onAssignShift" prefWidth="150" text="Assign Shift" />
         <Button fx:id="logoutBtn" layoutX="523.0" layoutY="14.0" onAction="#onLogout" text="Logout" />
     </children>
 </AnchorPane>

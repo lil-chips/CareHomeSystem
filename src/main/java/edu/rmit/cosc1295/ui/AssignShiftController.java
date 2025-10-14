@@ -84,7 +84,7 @@ public class AssignShiftController {
                 return;
             }
 
-            Shift shift = new Shift(day, time); // 建立班表物件
+            Shift shift = new Shift(day, time);
             // Assign the shift
             model.assignShift((Manager) loggedInStaff, selected, shift);
 

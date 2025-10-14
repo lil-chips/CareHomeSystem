@@ -30,6 +30,7 @@ public class DashboardController {
     @FXML private Button addBedBtn;
     @FXML private Button moveResidentBtn;
     @FXML private Button logoutBtn;
+    @FXML private Button assignShiftBtn;
 
     /**
      * Receive model and user info from LoginController
@@ -238,6 +239,26 @@ public class DashboardController {
 
         } catch (Exception e) {
             showAlert("Failed to return: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void onAssignShift(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/AssignShift.fxml"));
+            Scene scene = new Scene(loader.load(), 500, 350);
+
+            AssignShiftController controller = loader.getController();
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Assign Shift");
+            stage.show();
+
+        } catch (Exception e) {
+            showAlert("Failed to open Assign Shift: " + e.getMessage());
         }
     }
 

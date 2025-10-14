@@ -1137,6 +1137,17 @@ public class CareHome implements Serializable {
         if (s == null || newShift == null) {
             throw new IllegalArgumentException(("Staff or shift can't be null"));
         }
+        if (s.getShifts() == null) {
+            throw new IllegalStateException("Shift list not initialized for staff: " + s.getName());
+        }
+
+        // Prevent duplicate shifts
+        for (Shift shift : s.getShifts()) {
+            if (shift.getDay().equalsIgnoreCase(newShift.getDay())
+                    && shift.getTime().equalsIgnoreCase(newShift.getTime())) {
+                throw new IllegalArgumentException("This shift already exists for " + s.getName());
+            }
+        }
 
         // Calculate total hours in that day
         int totalHours = 0;

@@ -18,17 +18,10 @@ import javafx.stage.Stage;
 
 public class MoveResidentController {
 
-    @FXML
-    private ChoiceBox<String> residentChoice;
-
-    @FXML
-    private ChoiceBox<Integer> bedChoice;
-
-    @FXML
-    private Button moveBtn;
-
-    @FXML
-    private Button backBtn;
+    @FXML private ChoiceBox<String> residentChoice;
+    @FXML private ChoiceBox<Integer> bedChoice;
+    @FXML private Button moveBtn;
+    @FXML private Button backBtn;
 
     private CareHome model;
     private Staff loggedInStaff;
@@ -55,11 +48,12 @@ public class MoveResidentController {
                 bedChoice.getItems().add(b.getBedId());
             }
         }
+
         // Default selections
         if (!residentChoice.getItems().isEmpty())
-            residentChoice.setValue(residentChoice.getItems().getFirst());
+            residentChoice.setValue(residentChoice.getItems().get(0));
         if (!bedChoice.getItems().isEmpty())
-            bedChoice.setValue(bedChoice.getItems().getFirst());
+            bedChoice.setValue(bedChoice.getItems().get(0));
     }
 
     /**
@@ -78,6 +72,11 @@ public class MoveResidentController {
 
     @FXML
     void onMove(ActionEvent event) {
+        if (!(loggedInStaff instanceof Nurse)) {
+            showAlert("Only nurses can move residents.");
+            return;
+        }
+
         String residentName = residentChoice.getValue();
         Integer newBedId = bedChoice.getValue();
 
@@ -94,6 +93,8 @@ public class MoveResidentController {
             showAlert("Resident moved successfully!");
             onBack(event);
 
+        } catch (NotWorkingException e) {
+            showAlert("!!! " + e.getMessage());
         } catch (Exception e) {
             showAlert("Failed to move resident: " + e.getMessage());
         }
@@ -131,6 +132,7 @@ public class MoveResidentController {
 
     private void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("CareHome System");
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();
