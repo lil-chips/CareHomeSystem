@@ -60,7 +60,8 @@ public class AddBedController {
     }
 
     /**
-     * Go back to dashboard
+     * Go back to the dashboard screen.
+     * @param event The button click event
      */
 
     @FXML
