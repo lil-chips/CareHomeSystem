@@ -51,6 +51,24 @@ public class AdministerMedicineController {
     }
 
     /**
+     * When nurse clicks “Record Administration”.
+     * @param event Button click event
+     */
+
+    @FXML
+    void onRecord(ActionEvent event) {
+        String residentName = residentChoice.getValue();
+        String medicine = medicineField.getText();
+        String dose = doseField.getText();
+        String time = timeField.getText();
+
+        if (residentName == null || medicine.isBlank() || dose.isBlank() || time.isBlank()) {
+            showAlert("Please fill in all fields.");
+            return;
+        }
+    }
+
+    /**
      * Go back to the dashboard screen.
      * @param event The button click event
      */
