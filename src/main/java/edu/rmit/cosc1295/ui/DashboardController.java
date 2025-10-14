@@ -245,6 +245,14 @@ public class DashboardController {
         }
     }
 
+    /**
+     * When the manager clicks "Assign Shift" on the dashboard,
+     * this button will open the AssignShift page.
+     * It lets the manager assign or edit staff working shifts.
+     *
+     * @param event The button click event
+     */
+
     @FXML
     void onAssignShift(ActionEvent event) {
         try {
@@ -262,6 +270,34 @@ public class DashboardController {
 
         } catch (Exception e) {
             showAlert("Failed to open Assign Shift: " + e.getMessage());
+        }
+    }
+
+    /**
+     * When the manager clicks "Modify Password" on the dashboard,
+     * this button opens the ModifyPassword page.
+     * It allows the manager to update any staff member's login password.
+     *
+     * @param event The button click event
+     */
+
+    @FXML
+    void onModifyPassword(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/ModifyPassword.fxml"));
+            Scene scene = new Scene(loader.load(), 400, 250);
+
+            ModifyPasswordController controller = loader.getController();
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Modify Password");
+            stage.show();
+            System.out.println("Switched to ModifyPassword.fxml");
+        } catch (Exception e) {
+            showAlert("Failed to open Modify Password: " + e.getMessage());
         }
     }
 
