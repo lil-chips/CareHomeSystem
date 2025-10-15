@@ -1133,7 +1133,7 @@ public class CareHome implements Serializable {
      * @return the Bed object if found, otherwise null
      */
 
-    private Bed findBedById(int bedId) {
+    public Bed findBedById(int bedId) {
         for (Bed b : beds) {
             if (b.getBedId() == bedId) {
                 return b; // If found then return bed object

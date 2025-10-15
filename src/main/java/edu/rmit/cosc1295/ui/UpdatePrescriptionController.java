@@ -1,6 +1,8 @@
 package edu.rmit.cosc1295.ui;
 
 import edu.rmit.cosc1295.carehome.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -92,6 +94,42 @@ public class UpdatePrescriptionController {
     }
 
     /**
+     * Handles the "Load Prescriptions" button click event.
+     * @param event the button click event
+     */
+
+    @FXML
+    void onLoadPrescriptions(ActionEvent event) {
+
+        // Get the selected bed ID from the dropdown list
+        Integer bedId = bedChoice.getValue();
+
+        // Check if the user actually selected a bed
+        if (bedId == null) {
+            showAlert("Please select a bed first.");
+            return;
+        }
+
+        // Find the bed in the model
+        Bed bed = model.findBedById(bedId);
+
+        // Validate that the bed exists and has a resident assigned
+        if (bed == null || bed.getResident() == null) {
+            showAlert("No resident found in this bed.");
+            return;
+        }
+
+        // Save the resident for later use
+        selectedResident = bed.getResident();
+
+        // Get all prescriptions belonging to this resident
+        ObservableList<Prescription> data = FXCollections.observableArrayList(selectedResident.getPrescriptions());
+
+        // Display the prescriptions in the table
+        presTable.setItems(data);
+    }
+
+    /**
      * Go back to the dashboard screen.
      * @param event The button click event
      */
@@ -127,4 +165,4 @@ public class UpdatePrescriptionController {
     }
 }
 
-}
+
