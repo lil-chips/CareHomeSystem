@@ -130,6 +130,60 @@ public class UpdatePrescriptionController {
     }
 
     /**
+     * Handles the "Update" button click event on the Update Prescription screen.
+     * @param event the button click event
+     */
+
+    @FXML
+    void onUpdatePrescription(ActionEvent event) {
+        try {
+            // Only doctors are allowed to perform this action
+            if (!(loggedInStaff instanceof Doctor)) {
+                showAlert("Only doctors can update prescriptions!");
+                return;
+            }
+
+            // Make sure a resident and a prescription have been selected
+            if (selectedResident == null || selectedIndex < 0) {
+                showAlert("Please select a prescription to update.");
+                return;
+            }
+
+            // Read and clean input values from text fields
+            String newMed = medicineField.getText().trim();
+            String newDose = doseField.getText().trim();
+            String newTime = timeField.getText().trim();
+
+            // Ensure all fields are filled before updating
+            if (newMed.isEmpty() || newDose.isEmpty() || newTime.isEmpty()) {
+                showAlert("All fields must be filled.");
+                return;
+            }
+
+            // Call the backend function in CareHome to update the prescription
+            model.docUpdatePres(
+                    (Doctor) loggedInStaff,
+                    selectedResident.getBedId(),
+                    selectedIndex,
+                    newMed, newDose, newTime
+            );
+
+            // Refresh the table to show the updated data
+            presTable.setItems(FXCollections.observableArrayList(
+                    selectedResident.getPrescriptions()
+            ));
+
+            // Show a confirmation message
+            showAlert("Prescription updated successfully!");
+
+        } catch (Exception e) {
+            // Display any unexpected errors that occur during the process
+            showAlert("Error: " + e.getMessage());
+        }
+    }
+
+
+    /**
      * Go back to the dashboard screen.
      * @param event The button click event
      */
