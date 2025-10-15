@@ -1414,6 +1414,10 @@ public class CareHome implements Serializable {
      */
 
     public void addPrescription(Doctor doctor, String residentName, String medicine, String dose, String time) {
+        if (doctor == null) {
+            throw new UnauthorizedException("Only doctor can add prescriptions");
+        }
+
         Resident resident = findResidentByName(residentName);
         if (resident == null) {
             throw new IllegalArgumentException("Resident not found: " + residentName);
