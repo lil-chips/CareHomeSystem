@@ -462,6 +462,11 @@ public class DashboardController {
         }
     }
 
+    /**
+     * When Doctor clicks "Delete Prescription", this opens the DeletePrescription page.
+     * @param event The button click event
+     */
+
     @FXML
     void onDeletePrescription(ActionEvent event) {
         try {
@@ -483,6 +488,30 @@ public class DashboardController {
         }
     }
 
+    /**
+     * When Doctor clicks "Update Prescription", this opens the UpdatePrescription page.
+     * @param event The button click event
+     */
+
+    @FXML
+    void onUpdatePrescription(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/edu/rmit/cosc1295/ui/UpdatePrescription.fxml"));
+            Scene scene = new Scene(loader.load(), 600, 500);
+
+            UpdatePrescriptionController controller = loader.getController();
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Update Prescription");
+            stage.show();
+        } catch (Exception e) {
+            showAlert("Failed to open Update Prescription: " + e.getMessage());
+        }
+    }
 
     /**
      * Helper function to show pop-up messages.
