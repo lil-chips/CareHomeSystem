@@ -36,6 +36,7 @@ public class DashboardController {
     @FXML private Button modifyPasswordBtn;
     @FXML private Button viewResidentsBtn;
     @FXML private Button addStaffBtn;
+    @FXML private Button deletePrescriptionBtn;
 
     @FXML
     public void initialize() {
@@ -460,6 +461,28 @@ public class DashboardController {
             showAlert("Failed to open Add Staff: " + e.getMessage());
         }
     }
+
+    @FXML
+    void onDeletePrescription(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/edu/rmit/cosc1295/ui/DeletePrescription.fxml"));
+            Scene scene = new Scene(loader.load(), 500, 350);
+
+            DeletePrescriptionController controller = loader.getController();
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Delete Prescription");
+            stage.show();
+
+        } catch (Exception e) {
+            showAlert("Failed to open Delete Prescription: " + e.getMessage());
+        }
+    }
+
 
     /**
      * Helper function to show pop-up messages.

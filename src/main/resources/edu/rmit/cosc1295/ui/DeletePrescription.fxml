@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="edu.rmit.cosc1295.ui.DeletePrescriptionController"
+            prefWidth="500" prefHeight="350">
+
+    <Label text="Delete Prescription" layoutX="160" layoutY="25"
+           style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+    <Label text="Bed ID:" layoutX="60" layoutY="90"/>
+    <ChoiceBox fx:id="bedChoice" layoutX="150" layoutY="90" prefWidth="250"/>
+
+    <Label text="Prescription Index:" layoutX="60" layoutY="140"/>
+    <TextField fx:id="indexField" layoutX="200" layoutY="140" prefWidth="200"
+               promptText="0 for first prescription"/>
+
+    <Button fx:id="deleteBtn" text="Delete" layoutX="150" layoutY="220"
+            onAction="#onDeletePrescription" prefWidth="80"/>
+
+    <Button fx:id="backBtn" text="Back" layoutX="270" layoutY="220"
+            onAction="#onBack" prefWidth="80"/>
+</AnchorPane>

@@ -22,5 +22,6 @@
         <Button fx:id="assignShiftBtn" layoutX="429.0" layoutY="200.0" onAction="#onAssignShift" prefWidth="150" text="Assign Shift" />
         <Button fx:id="addStaffBtn" layoutX="429.0" layoutY="95.0" onAction="#onAddStaff" prefWidth="150" text="Add Staff" />
         <Button fx:id="logoutBtn" layoutX="523.0" layoutY="14.0" onAction="#onLogout" text="Logout" />
+        <Button fx:id="deletePrescriptionBtn" text="Delete Prescription" layoutX="350" layoutY="280" onAction="#onDeletePrescription"/>
     </children>
 </AnchorPane>
