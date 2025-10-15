@@ -79,13 +79,43 @@ public class ResidentListController {
             return new javafx.beans.property.SimpleStringProperty(sb.toString());
         });
 
-
+        // Double-click on a row to open the details page
+        residentTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && !residentTable.getSelectionModel().isEmpty()) {
+                Resident selected = residentTable.getSelectionModel().getSelectedItem();
+                openResidentDetails(selected, event);
+            }
+        });
     }
-
-
 
     public void setLoggedInStaff(Staff staff) {
         this.loggedInStaff = staff;
+    }
+
+    /**
+     * Opens the ViewResidentDetails.fxml for the selected resident.
+     */
+
+    private void openResidentDetails(Resident resident, javafx.scene.input.MouseEvent event) {
+        try {
+            if (resident == null) {
+                showAlert("Please select a resident to view.");
+                return;
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/ViewResidentDetails.fxml"));
+            Scene scene = new Scene(loader.load(), 600, 400);
+
+            ViewResidentDetailsController controller = loader.getController();
+            controller.setData(model, resident, loggedInStaff);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Resident Details");
+            stage.show();
+        } catch (Exception e) {
+            showAlert("Failed to open resident details: " + e.getMessage());
+        }
     }
 
     /**
