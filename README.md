@@ -16,3 +16,13 @@ perform different actions. These actions are:
 11. Deleting or updating prescription
 12. Modifying staff password
 13. Viewing system logs
+
+## How to Run the program
+### Requirements
+1. Java 21+
+2. Maven installed 
+3. SQLite JDBC
+
+### Run Command
+-> mvn clean javafx:run
+(After starting the system, it will automatically connect to the database and build the necessary tables.)
