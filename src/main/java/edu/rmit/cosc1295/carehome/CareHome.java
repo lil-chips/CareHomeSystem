@@ -334,8 +334,9 @@ public class CareHome implements Serializable {
         }
 
         // Create log
-        String log = "Manager " + manager.getName() + " (" + manager.getId() + ") added new bed ID: " + bed.getBedId();
-        CareHome.createLog(log);
+        String showlog = "Manager " + manager.getName() + " (" + manager.getId() + ") added new bed ID: " + bed.getBedId();
+        CareHome.createLog(showlog);
+        System.out.println(showlog);
     }
 
 
@@ -1426,8 +1427,23 @@ public class CareHome implements Serializable {
         Prescription p = new Prescription(doctor.getId(), medicine, dose, time);
         resident.addPrescription(p);
 
-        createLog("Doctor " + doctor.getName() + " prescribed " + medicine +
-                " (" + dose + ", " + time + ") to " + residentName);
+        // Write into database
+        try {
+            // simple ID = position + 1
+            int residentId = residents.indexOf(resident) + 1;
+            CareHomeDatabase.insertPrescription(residentId, doctor.getId(), medicine, dose, time);
+            System.out.println("Prescription saved into database for resident " + residentName);
+        } catch (Exception e) {
+            System.out.println("Failed to insert prescription: " + e.getMessage());
+        }
+
+        // Log the action
+        String showlog = "Doctor " + doctor.getName() + " prescribed " + medicine +
+                " (" + dose + ", " + time + ") to " + residentName;
+        CareHome.createLog(showlog);
+
+        // Print confirmation
+        System.out.println(showlog);
     }
 
     /**
