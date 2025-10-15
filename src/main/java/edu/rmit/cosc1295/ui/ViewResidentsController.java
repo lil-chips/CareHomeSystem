@@ -11,11 +11,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 /**
  * Displays a table of all residents and their details.
@@ -30,14 +29,53 @@ public class ViewResidentsController {
     @FXML private TableColumn<Resident, String> prescriptionCol;
     @FXML private Button backBtn;
 
+    @FXML private Label nameLabel;
+    @FXML private Label genderLabel;
+    @FXML private Label bedLabel;
+
+    // This table shows all prescriptions
+    @FXML private TableView<Prescription> prescriptionTable;
+    @FXML private TableColumn<Prescription, String> doctorCol;
+    @FXML private TableColumn<Prescription, String> medicineCol;
+    @FXML private TableColumn<Prescription, String> doseCol;
+    @FXML private TableColumn<Prescription, String> timeCol;
+
     private CareHome model;
     private Resident selectedResident;
     private Staff loggedInStaff;
+
 
     public void setData(CareHome model, Resident resident, Staff staff) {
         this.model = model;
         this.selectedResident = resident;
         this.loggedInStaff = staff;
+
+        // Display resident basic info
+        nameLabel.setText(resident.getName());
+        genderLabel.setText(resident.getGender());
+        bedLabel.setText(String.valueOf(resident.getBedId()));
+
+        // Get the resident's prescriptions
+        ArrayList<Prescription> list = resident.getPrescriptions();
+
+        // Convert to a format that TableView understands
+        ObservableList<Prescription> data = FXCollections.observableArrayList(list);
+
+        // Tell TableView which column shows which data
+        doctorCol.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleStringProperty(c.getValue().getDoctorId()));
+
+        medicineCol.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleStringProperty(c.getValue().getMedicine()));
+
+        doseCol.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleStringProperty(c.getValue().getDose()));
+
+        timeCol.setCellValueFactory(c ->
+                new javafx.beans.property.SimpleStringProperty(c.getValue().getTime()));
+
+        // Put the data into the table
+        prescriptionTable.setItems(data);
     }
 
     /**
@@ -107,7 +145,7 @@ public class ViewResidentsController {
 
     private void openResidentDetails(Resident resident, javafx.scene.input.MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/ViewResidentDetails.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/ViewResidents.fxml"));
             Scene scene = new Scene(loader.load(), 600, 400);
 
             ViewResidentsController controller = loader.getController();

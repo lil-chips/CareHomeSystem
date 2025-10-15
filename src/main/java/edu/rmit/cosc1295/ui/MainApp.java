@@ -1,9 +1,6 @@
 package edu.rmit.cosc1295.ui;
 
-import edu.rmit.cosc1295.carehome.CareHome;
-import edu.rmit.cosc1295.carehome.CareHomeDatabase;
-import edu.rmit.cosc1295.carehome.Manager;
-import edu.rmit.cosc1295.carehome.Nurse;
+import edu.rmit.cosc1295.carehome.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -27,6 +24,7 @@ public class MainApp extends Application {
 
             Manager manager1 = new Manager("manager1", "Edward", "0722");
             Nurse nurse1 = new Nurse("nurse1", "Qin", "1234");
+            Doctor doctor1 = new Doctor("doctor1", "Eric", "0000");
             model.addStaff(manager1, nurse1);
             model.addStaff(manager1, manager1);
 

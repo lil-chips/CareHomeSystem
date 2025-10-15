@@ -34,6 +34,7 @@ public class DashboardController {
     @FXML private Button administerMedBtn;
     @FXML private Button modifyPasswordBtn;
     @FXML private Button viewResidentsBtn;
+    @FXML private Button addStaffBtn;
 
     @FXML
     public void initialize() {
@@ -49,6 +50,7 @@ public class DashboardController {
         if (addPrescriptionBtn != null) addPrescriptionBtn.setVisible(false);
         if (moveResidentBtn != null) moveResidentBtn.setVisible(false);
         if (administerMedBtn != null) administerMedBtn.setVisible(false);
+        if (addStaffBtn != null) addStaffBtn.setVisible(false);
     }
 
     /**
@@ -100,12 +102,14 @@ public class DashboardController {
         administerMedBtn.setVisible(false);
         staffListBtn.setVisible(false);
         residentBtn.setVisible(false);
+        addStaffBtn.setVisible(false);
 
         if (loggedInStaff == null) return;
         // Show only what this role should have access to
         String role = loggedInStaff.getClass().getSimpleName();
         switch (role) {
             case "Manager" -> {
+                addStaffBtn.setVisible(true);
                 addResidentBtn.setVisible(true);
                 addBedBtn.setVisible(true);
                 assignShiftBtn.setVisible(true);
