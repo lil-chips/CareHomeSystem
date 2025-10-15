@@ -2,6 +2,7 @@ package edu.rmit.cosc1295.ui;
 
 import edu.rmit.cosc1295.carehome.Bed;
 import edu.rmit.cosc1295.carehome.CareHome;
+import edu.rmit.cosc1295.carehome.Doctor;
 import edu.rmit.cosc1295.carehome.Staff;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -58,6 +59,41 @@ public class DeletePrescriptionController {
 
     public void setLoggedInStaff(Staff staff) {
         this.loggedInStaff = staff;
+    }
+
+    /**
+     * Called when "Delete" is clicked.
+     */
+
+    @FXML
+    void onDeletePrescription(ActionEvent event) {
+        try {
+            if (!(loggedInStaff instanceof Doctor)) {
+                showAlert("Only doctors can delete prescriptions!");
+                return;
+            }
+
+            Integer bedId = bedChoice.getValue();
+            String indexText = indexField.getText().trim();
+
+            if (bedId == null || indexText.isEmpty()) {
+                showAlert("Please select a bed and enter prescription index.");
+                return;
+            }
+
+            int index = Integer.parseInt(indexText);
+
+            // Call backend logic
+            model.docDeletePres((Doctor) loggedInStaff, bedId, index);
+
+            showAlert("Prescription deleted successfully!");
+            onBack(event);
+
+        } catch (NumberFormatException e) {
+            showAlert("Index must be a number (0 for first prescription).");
+        } catch (Exception e) {
+            showAlert("Failed to delete prescription: " + e.getMessage());
+        }
     }
 
     /**
