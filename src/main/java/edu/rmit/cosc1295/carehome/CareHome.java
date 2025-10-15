@@ -303,18 +303,22 @@ public class CareHome implements Serializable {
 
 
     /**
-     * Add new bed to the list
-     * @param bed The bed to be added
+     * Add new bed to the system and database
+     * @param manager The manager performing this action
+     * @param bed The new bed to be added
      */
 
-    public void addBed(Bed bed) {
+    public void addBed(Manager manager, Bed bed) {
+        if (manager == null) {
+            throw new UnauthorizedException("Only manager can add beds");
+        }
+
+        // Check if bed already exists
         for (Bed value : beds) {
             if (value.getBedId() == bed.getBedId()) {
-                throw new IllegalArgumentException("Bed id already exists: " + bed.getBedId());
+                throw new IllegalArgumentException("Bed ID already exists: " + bed.getBedId());
             }
         }
-        beds.add(bed);
-        System.out.println("Added BedNo. " + bed.getBedId());
     }
 
 
