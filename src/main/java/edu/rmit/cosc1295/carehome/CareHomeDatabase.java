@@ -63,7 +63,7 @@ public class CareHomeDatabase {
                     bed_id INTEGER PRIMARY KEY,
                     is_available INTEGER NOT NULL,
                     resident_id INTEGER,
-                    FOREIGN KEY (resident_id) REFERENCES resident(id)
+                    FOREIGN KEY (resident_id) REFERENCES resident(id) ON DELETE SET NULL
                 );
             """;
 
@@ -75,7 +75,7 @@ public class CareHomeDatabase {
                     medicine TEXT NOT NULL,
                     dose TEXT NOT NULL,
                     time TEXT NOT NULL,
-                    FOREIGN KEY (resident_id) REFERENCES resident(id),
+                    FOREIGN KEY (resident_id) REFERENCES resident(id) ON DELETE CASCADE,
                     FOREIGN KEY (doctor_id) REFERENCES staff(id)
                 );
             """;
@@ -249,7 +249,9 @@ public class CareHomeDatabase {
             pre.executeUpdate();
 
             // Print confirmation message
-            System.out.println("Prescription added to database: " + medicine + " (" + dose + ")");
+            System.out.println("Prescription added → ResidentID: " + residentId +
+                    ", Doctor: " + doctorId +
+                    ", " + medicine + " (" + dose + ") at " + time);
 
         } catch (SQLException e) {
             // Catch database related errors
@@ -265,7 +267,7 @@ public class CareHomeDatabase {
      */
 
     public static void insertBed(int bedId, boolean isAvailable, Integer residentId) {
-        String sql = "INSERT INTO bed (bed_id, is_available, resident_id) VALUES (?, ?, ?)";
+        String sql = "INSERT OR IGNORE INTO bed (bed_id, is_available, resident_id) VALUES (?, ?, ?)";
 
         // Use try-with-resources to automatically close the connection and statement
         try (Connection conn = connect();
@@ -283,23 +285,17 @@ public class CareHomeDatabase {
                 pre.setNull(3, Types.INTEGER);
 
             // Execute the SQL command to insert the new record into the database
-            pre.executeUpdate();
+            int rows = pre.executeUpdate();
 
-            // Print confirmation message
-            String message = "Bed inserted into database: ID:" + bedId + ", Available=" + isAvailable;
-
-            // If there is a resident assigned
-            if (residentId != null) {
-                message += ", ResidentID=" + residentId;
+            if (rows > 0) {
+                System.out.println("Bed inserted into database: ID " + bedId +
+                        ", Available=" + isAvailable +
+                        (residentId != null ? ", ResidentID=" + residentId : ", (no resident)"));
             } else {
-                message += ", (no resident)";
+                System.out.println("Bed already exists, skipped: ID " + bedId);
             }
 
-            // Print confirmation
-            System.out.println(message);
-
         } catch (SQLException e) {
-            // Catch database related errors
             System.out.println("Failed to insert bed: " + e.getMessage());
         }
     }
