@@ -38,8 +38,6 @@ public class DashboardController {
     @FXML private Button addStaffBtn;
     @FXML private Button deletePrescriptionBtn;
     @FXML private Button updatePrescriptionBtn;
-    @FXML private Button viewAdminRecordsBtn;
-    @FXML private Button viewShiftsBtn;
 
     @FXML
     public void initialize() {
@@ -58,8 +56,6 @@ public class DashboardController {
         if (addStaffBtn != null) addStaffBtn.setVisible(false);
         if (deletePrescriptionBtn != null) deletePrescriptionBtn.setVisible(false);
         if (updatePrescriptionBtn != null) updatePrescriptionBtn.setVisible(false);
-        if (viewAdminRecordsBtn != null) viewAdminRecordsBtn.setVisible(false);
-        if (viewShiftsBtn != null) viewShiftsBtn.setVisible(false);
 
         // If user already logged in, restore their UI
         if (loggedInStaff != null) {
@@ -122,8 +118,6 @@ public class DashboardController {
         addStaffBtn.setVisible(false);
         deletePrescriptionBtn.setVisible(false);
         updatePrescriptionBtn.setVisible(false);
-        viewAdminRecordsBtn.setVisible(false);
-        viewShiftsBtn.setVisible(false);
 
         if (loggedInStaff == null) return;
         // Show only what this role should have access to
@@ -139,8 +133,6 @@ public class DashboardController {
                 residentBtn.setVisible(true);
                 viewLogsBtn.setVisible(true);
                 viewResidentsBtn.setVisible(true);
-                viewAdminRecordsBtn.setVisible(true);
-                viewShiftsBtn.setVisible(true);
             }
             case "Doctor" -> {
                 addPrescriptionBtn.setVisible(true);
