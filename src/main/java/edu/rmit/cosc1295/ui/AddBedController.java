@@ -46,14 +46,18 @@ public class AddBedController {
         try {
             int bedId = Integer.parseInt(bedIdText);
             Bed newBed = new Bed(bedId);
-            model.addBed(newBed);
-            CareHome.createLog(loggedInStaff.getName() + " added new bed " + bedId);
+            model.addBed((Manager) loggedInStaff, newBed);
+
+            CareHome.createLog("Manager " + loggedInStaff.getName() + " added new bed " + bedId);
+            System.out.println("Bed " + bedId + " added successfully by " + loggedInStaff.getName());
 
             showAlert("Bed added successfully!");
             onBack(event);
 
         } catch (NumberFormatException e) {
             showAlert("Bed ID must be a number!");
+        } catch (UnauthorizedException e) {
+            showAlert("Only manager can add beds!");
         } catch (Exception e) {
             showAlert("Failed to add bed: " + e.getMessage());
         }

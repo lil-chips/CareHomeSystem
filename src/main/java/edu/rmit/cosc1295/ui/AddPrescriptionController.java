@@ -77,12 +77,18 @@ public class AddPrescriptionController {
 
         try {
             model.addPrescription((Doctor) loggedInStaff, residentName, medicine, dose, time);
+
+            // Log + show in console
             CareHome.createLog("Doctor " + loggedInStaff.getName() +
-                    " prescribed " + medicine + " to " + residentName);
+                    " prescribed " + medicine + " (" + dose + ", " + time + ") to " + residentName);
+            System.out.println("Prescription added for " + residentName);
 
             showAlert("Prescription added successfully!");
             onBack(event);
-        } catch (Exception e) {
+
+        } catch (UnauthorizedException e) {
+            showAlert("Only doctor can add prescriptions!");
+        }catch (Exception e) {
             showAlert("Failed to add prescription: " + e.getMessage());
         }
     }
