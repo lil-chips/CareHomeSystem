@@ -37,6 +37,7 @@ public class DashboardController {
     @FXML private Button viewResidentsBtn;
     @FXML private Button addStaffBtn;
     @FXML private Button deletePrescriptionBtn;
+    @FXML private Button updatePrescriptionBtn;
 
     @FXML
     public void initialize() {
@@ -53,6 +54,8 @@ public class DashboardController {
         if (moveResidentBtn != null) moveResidentBtn.setVisible(false);
         if (administerMedBtn != null) administerMedBtn.setVisible(false);
         if (addStaffBtn != null) addStaffBtn.setVisible(false);
+        if (deletePrescriptionBtn != null) deletePrescriptionBtn.setVisible(false);
+        if (updatePrescriptionBtn != null) updatePrescriptionBtn.setVisible(false);
     }
 
     /**
@@ -105,6 +108,8 @@ public class DashboardController {
         staffListBtn.setVisible(false);
         residentBtn.setVisible(false);
         addStaffBtn.setVisible(false);
+        deletePrescriptionBtn.setVisible(false);
+        updatePrescriptionBtn.setVisible(false);
 
         if (loggedInStaff == null) return;
         // Show only what this role should have access to
@@ -126,6 +131,8 @@ public class DashboardController {
                 administerMedBtn.setVisible(true);
                 residentBtn.setVisible(true);
                 viewResidentsBtn.setVisible(true);
+                deletePrescriptionBtn.setVisible(true);
+                updatePrescriptionBtn.setVisible(true);
             }
             case "Nurse"  -> {
                 moveResidentBtn.setVisible(true);
