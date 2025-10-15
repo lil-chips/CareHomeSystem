@@ -41,6 +41,7 @@ public class StaffListController {
     private CareHome model;
     private String userId;
     private String role;
+    private Staff loggedInStaff;
 
     /**
      * Called from DashboardController to reuse the same CareHome data here.
@@ -53,6 +54,15 @@ public class StaffListController {
     }
 
     /**
+     * Save info about who is logged in.
+     * @param staff The logged-in nurse
+     */
+
+    public void setLoggedInStaff(Staff staff) {
+        this.loggedInStaff = staff;
+    }
+
+    /**
      * Get data from the previous scene (Dashboard)
      * Used to access the same CareHome object and know who logged in
      */
@@ -62,14 +72,20 @@ public class StaffListController {
         this.userId = userId;
         this.role = role;
 
-        // Just a display on top
-        titleLabel.setText("Staff List - Logged in as " + role + " (" + userId + ")");
+        if (titleLabel != null) {
+            titleLabel.setText("Staff List - Logged in as " + role + " (" + userId + ")");
+        }
+
+        // Make sure table shows data if we came through this path
+        loadStaffData();
     }
 
     /**
      * Load all staff into the table
      */
     private void loadStaffData() {
+        if (model == null || staffTable == null) return;
+
         ArrayList<Staff> list = model.getStaffList(); // already exists in your CareHome class
         ObservableList<Staff> observableList = FXCollections.observableArrayList(list);
 
@@ -105,6 +121,9 @@ public class StaffListController {
 
             // Get the current window (stage) from the button event
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
 
             // Switch the screen from login to dashboard
             stage.setScene(dashboardScene);

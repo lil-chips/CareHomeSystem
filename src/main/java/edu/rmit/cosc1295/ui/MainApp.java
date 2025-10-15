@@ -1,6 +1,7 @@
 package edu.rmit.cosc1295.ui;
 
 import edu.rmit.cosc1295.carehome.CareHome;
+import edu.rmit.cosc1295.carehome.CareHomeDatabase;
 import edu.rmit.cosc1295.carehome.Manager;
 import edu.rmit.cosc1295.carehome.Nurse;
 import javafx.application.Application;
@@ -19,6 +20,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
+        CareHomeDatabase.createTables();
         model = CareHome.loadFromFile("SavedData.ser");
         if (model == null) {
             model = new CareHome();

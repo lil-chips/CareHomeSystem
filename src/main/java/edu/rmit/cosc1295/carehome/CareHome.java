@@ -346,15 +346,10 @@ public class CareHome implements Serializable {
     public void assignResidentToBed(Staff s, Resident resident, int bedId) {
 
         // Only nurse or doctor can assign a resident to a bed
-        if (!(s instanceof Nurse || s instanceof Doctor)) {
-            throw new UnauthorizedException("Only nurse or doctors can assign a resident to a bed");
+        if (!(s instanceof Manager)) {
+            throw new UnauthorizedException("Only manager can assign a resident to a bed");
         }
 
-        // Check is the doc or nurse on duty today
-        String today = java.time.LocalDate.now().getDayOfWeek().toString();
-        if (!isWorking(s, today)) {
-            throw new NotWorkingException(s.getName() + " is not working today (" + today + ")");
-        }
 
         // Find the target bed
         Bed targetbed = findBedById(bedId);
@@ -370,30 +365,21 @@ public class CareHome implements Serializable {
             throw new IllegalStateException("The bed " + bedId + " is occupied!");
         }
 
-        // Find the resident by name
-        Resident re = findResidentByName(resident.getName());
-        if (re == null) {
-            throw new IllegalArgumentException("Can't find the resident named: " + resident);
-        }
-
-        // Resident has a bed or not
-        if (re.getBedId() != null) {
-            throw new IllegalStateException("The resident already has a bed: " + re.getBedId());
-        }
 
         // Assign and update
-        targetbed.assignResident(re);
+        resident.setBedId(bedId);
+        targetbed.assignResident(resident);
         targetbed.setAvailable(false);
-        re.setBedId(bedId);
+        residents.add(resident);
 
         // Create log message + print to console
-        String showlog = "Manager " + s.getName() + " (" + s.getId() + ") assigned resident " + re.getName() +
+        String showlog = "Manager " + s.getName() + " (" + s.getId() + ") assigned new resident " + resident.getName() +
                 " to bed " + bedId;
         System.out.println(showlog);
         CareHome.createLog(showlog);
 
         // Save the updated resident into the database
-        CareHomeDatabase.insertResident(re.getName(), re.getGender(), bedId);
+        CareHomeDatabase.insertResident(resident.getName(), resident.getGender(), bedId);
     }
 
 

@@ -18,7 +18,14 @@ public class Shift implements Serializable {
 
     public Shift (String day, String time) {
         this.day = day;
-        this.time = time;
+        // Normalize the time
+        if (time.equalsIgnoreCase("Morning")) {
+            this.time = "08:00-16:00";
+        } else if (time.equalsIgnoreCase("Afternoon")) {
+            this.time = "14:00-22:00";
+        } else {
+            this.time = time;
+        }
     }
 
 

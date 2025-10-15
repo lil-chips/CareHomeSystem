@@ -93,7 +93,7 @@ public class AddResidentController {
         try {
             // Create a new resident and assign to the selected bed
             Resident newResident = new Resident(name, gender, bedId);
-            model.assignResidentToBed(loggedInStaff, newResident, bedId);
+            model.assignResidentToBed((Manager) loggedInStaff, newResident, bedId);
 
             // Record this action in the system log
             CareHome.createLog(loggedInStaff.getName() + " added new resident " + name + " to bed " + bedId);
@@ -126,8 +126,7 @@ public class AddResidentController {
             // Pass data back to DashboardController
             DashboardController controller = loader.getController();
             controller.setModel(model);
-            if (loggedInStaff != null)
-                controller.setLoggedInStaff(loggedInStaff);
+            controller.setLoggedInStaff(loggedInStaff);
 
             // Replace current scene with dashboard
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

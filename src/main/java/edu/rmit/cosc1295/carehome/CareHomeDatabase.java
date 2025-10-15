@@ -63,7 +63,7 @@ public class CareHomeDatabase {
                     bed_id INTEGER PRIMARY KEY,
                     is_available INTEGER NOT NULL,
                     resident_id INTEGER,
-                    FOREIGN KEY (resident_id) REFERENCES residents(id)
+                    FOREIGN KEY (resident_id) REFERENCES resident(id)
                 );
             """;
 
@@ -75,7 +75,7 @@ public class CareHomeDatabase {
                     medicine TEXT NOT NULL,
                     dose TEXT NOT NULL,
                     time TEXT NOT NULL,
-                    FOREIGN KEY (resident_id) REFERENCES residents(id),
+                    FOREIGN KEY (resident_id) REFERENCES resident(id),
                     FOREIGN KEY (doctor_id) REFERENCES staff(id)
                 );
             """;
@@ -311,7 +311,7 @@ public class CareHomeDatabase {
      * @param residentId the ID of the resident in bed
      */
     public static void updateBed(int bedId, boolean isAvailable, Integer residentId) {
-        String sql = "UPDATE bed SET is available = ?, resident_id = ? WHERE bed_id = ?";
+        String sql = "UPDATE bed SET is_available = ?, resident_id = ? WHERE bed_id = ?";
 
         // Use try-with-resources to automatically close the connection and statement
         try (Connection conn = connect();

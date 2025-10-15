@@ -97,11 +97,13 @@ public class ViewResidentsController {
     @FXML
     void onBack(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/Dashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
             Scene scene = new Scene(loader.load(), 600, 400);
+
             DashboardController controller = loader.getController();
             controller.setModel(model);
             controller.setLoggedInStaff(loggedInStaff);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("CareHome - Dashboard");

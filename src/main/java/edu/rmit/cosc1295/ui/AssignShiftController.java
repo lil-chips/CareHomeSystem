@@ -29,7 +29,7 @@ public class AssignShiftController {
     @FXML
     public void initialize() {
         dayChoice.getItems().addAll("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-        timeChoice.getItems().addAll("Morning", "Afternoon", "Night");
+        timeChoice.getItems().addAll("Morning", "Afternoon");
     }
 
     /**
@@ -103,7 +103,7 @@ public class AssignShiftController {
     @FXML
     void onBack(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/Dashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
             Scene scene = new Scene(loader.load(), 600, 400);
 
             DashboardController controller = loader.getController();

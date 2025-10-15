@@ -43,6 +43,13 @@ public class LoginController {
 
     @FXML
     void onLogin(ActionEvent event) {
+
+        // Show alert if model is null instead of NullPointer
+        if (model == null) {
+            showAlert("System model not loaded. Please restart the app.");
+            return;
+        }
+
         String id = idField.getText().trim();
         String pass = passwordField.getText().trim();
         String role = roleChoice.getValue();

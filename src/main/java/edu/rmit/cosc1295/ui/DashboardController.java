@@ -63,27 +63,69 @@ public class DashboardController {
 
     public void setLoggedInStaff(Staff staff) {
         this.loggedInStaff = staff;
-        welcomeLabel.setText("Welcome, " + staff.getName() + " (" + staff.getClass().getSimpleName() + ")");
 
-        // Role-based UI control
-        String role = staff.getClass().getSimpleName();
+        if (welcomeLabel != null && staff != null) {
+            welcomeLabel.setText("Welcome, " + staff.getName() + " (" + staff.getClass().getSimpleName() + ")");
+        }
+        // Apply button visibility rules
+        applyRoleVisibility();
+    }
 
+    private void applyRoleVisibility() {
         // Hide everything first
         addPrescriptionBtn.setVisible(false);
+        addResidentBtn.setVisible(false);
+        viewResidentsBtn.setVisible(false);
         moveResidentBtn.setVisible(false);
         addBedBtn.setVisible(false);
         assignShiftBtn.setVisible(false);
         modifyPasswordBtn.setVisible(false);
         viewLogsBtn.setVisible(false);
         administerMedBtn.setVisible(false);
+        staffListBtn.setVisible(false);
+        residentBtn.setVisible(false);
 
+        if (loggedInStaff == null) return;
+        // Show only what this role should have access to
+        String role = loggedInStaff.getClass().getSimpleName();
+        switch (role) {
+            case "Manager" -> {
+                addResidentBtn.setVisible(true);
+                addBedBtn.setVisible(true);
+                assignShiftBtn.setVisible(true);
+                modifyPasswordBtn.setVisible(true);
+                staffListBtn.setVisible(true);
+                residentBtn.setVisible(true);
+                viewLogsBtn.setVisible(true);
+                viewResidentsBtn.setVisible(true);
+            }
+            case "Doctor" -> {
+                addPrescriptionBtn.setVisible(true);
+                administerMedBtn.setVisible(true);
+                residentBtn.setVisible(true);
+                viewResidentsBtn.setVisible(true);
+            }
+            case "Nurse"  -> {
+                moveResidentBtn.setVisible(true);
+                administerMedBtn.setVisible(true);
+                residentBtn.setVisible(true);
+                viewResidentsBtn.setVisible(true);
+            }
+        }
     }
+
 
     @FXML
     void onLogout(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/login.fxml"));
             Scene loginScene = new Scene(loader.load(), 600, 400);
+
+            // Send model back to LoginController
+            // Otherwise, can't login to other roles
+            LoginController controller = loader.getController();
+            controller.setModel(model);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(loginScene);
             stage.setTitle("CareHome - Login");
