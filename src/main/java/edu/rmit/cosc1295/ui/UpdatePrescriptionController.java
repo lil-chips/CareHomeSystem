@@ -1,9 +1,6 @@
 package edu.rmit.cosc1295.ui;
 
-import edu.rmit.cosc1295.carehome.CareHome;
-import edu.rmit.cosc1295.carehome.Prescription;
-import edu.rmit.cosc1295.carehome.Resident;
-import edu.rmit.cosc1295.carehome.Staff;
+import edu.rmit.cosc1295.carehome.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -74,6 +71,24 @@ public class UpdatePrescriptionController {
                 timeField.setText(selectedPrescription.getTime());
             }
         });
+    }
+
+    /**
+     * Called from DashboardController to reuse the same CareHome data here.
+     * @param model the CareHome object we got from the main app
+     */
+
+    public void setModel(CareHome model) {
+        this.model = model;
+        for (Bed b : model.getBeds()) {
+            if (!b.bedAvailable()) bedChoice.getItems().add(b.getBedId());
+        }
+        if (!bedChoice.getItems().isEmpty())
+            bedChoice.setValue(bedChoice.getItems().getFirst());
+    }
+
+    public void setLoggedInStaff(Staff staff) {
+        this.loggedInStaff = staff;
     }
 
     /**
