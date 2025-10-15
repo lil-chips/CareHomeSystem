@@ -1,6 +1,7 @@
 package edu.rmit.cosc1295.ui;
 
 import edu.rmit.cosc1295.carehome.CareHome;
+import edu.rmit.cosc1295.carehome.Prescription;
 import edu.rmit.cosc1295.carehome.Resident;
 import edu.rmit.cosc1295.carehome.Staff;
 import javafx.collections.FXCollections;
@@ -17,20 +18,13 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 public class ResidentListController {
-    @FXML
-    private TableView<Resident> residentTable;
 
-    @FXML
-    private TableColumn<Resident, String> nameCol;
-
-    @FXML
-    private TableColumn<Resident, String> genderCol;
-
-    @FXML
-    private TableColumn<Resident, Integer> bedCol;
-
-    @FXML
-    private Button backBtn;
+    @FXML private TableView<Resident> residentTable;
+    @FXML private TableColumn<Resident, String> nameCol;
+    @FXML private TableColumn<Resident, String> genderCol;
+    @FXML private TableColumn<Resident, Integer> bedCol;
+    @FXML private TableColumn<Resident, String> prescriptionCol;
+    @FXML private Button backBtn;
 
     private CareHome model;
     private Staff loggedInStaff;
@@ -46,13 +40,15 @@ public class ResidentListController {
     public void setModel(CareHome model) {
         this.model = model;
 
-        // Create a list that JavaFX can use in the table
-        ObservableList<Resident> data = FXCollections.observableArrayList();
-
-        // Loop through every resident and add them to the list
-        for (Resident r : model.getResidents()) {
-            data.add(r);
+        // If model or list is empty, stop here
+        if (model == null || model.getResidents() == null) {
+            showAlert("No resident data found.");
+            return;
         }
+
+        // Convert list to ObservableList for TableView
+        ObservableList<Resident> data = FXCollections.observableArrayList(model.getResidents());
+        residentTable.setItems(data);
 
         // Put the list into the table
         residentTable.setItems(data);
@@ -73,6 +69,17 @@ public class ResidentListController {
             // Use SimpleObjectProperty because bedId is an Integer, not String
             return new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().getBedId());
         });
+
+        // Column: Prescriptions summary
+        prescriptionCol.setCellValueFactory(c -> {
+            StringBuilder sb = new StringBuilder();
+            for (Prescription p : c.getValue().getPrescriptions()) {
+                sb.append(p.getMedicine()).append(" (").append(p.getDose()).append("), ");
+            }
+            return new javafx.beans.property.SimpleStringProperty(sb.toString());
+        });
+
+
     }
 
 

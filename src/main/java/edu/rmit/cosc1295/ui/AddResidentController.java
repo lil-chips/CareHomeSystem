@@ -35,7 +35,7 @@ public class AddResidentController {
     @FXML
     public void initialize() {
         // Fill gender options
-        genderChoice.getItems().addAll("Male", "Female", "Other");
+        genderChoice.getItems().addAll("Male", "Female");
         genderChoice.setValue("Male");
     }
 

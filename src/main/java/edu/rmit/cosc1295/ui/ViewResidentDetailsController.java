@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * Displays a table of all residents and their details.
  */
 
-public class ViewResidentsController {
+public class ViewResidentDetailsController {
 
     @FXML private TableView<Resident> residentTable;
     @FXML private TableColumn<Resident, String> nameCol;
@@ -145,10 +145,10 @@ public class ViewResidentsController {
 
     private void openResidentDetails(Resident resident, javafx.scene.input.MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/ViewResidents.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/ViewResidentDetails.fxml"));
             Scene scene = new Scene(loader.load(), 600, 400);
 
-            ViewResidentsController controller = loader.getController();
+            ViewResidentDetailsController controller = loader.getController();
             controller.setData(model, resident, loggedInStaff);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
