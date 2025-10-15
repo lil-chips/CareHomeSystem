@@ -1,6 +1,7 @@
 package edu.rmit.cosc1295.ui;
 
 import edu.rmit.cosc1295.carehome.CareHome;
+import edu.rmit.cosc1295.carehome.Manager;
 import edu.rmit.cosc1295.carehome.Staff;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -440,6 +441,10 @@ public class DashboardController {
     @FXML
     void onAddStaff(ActionEvent event) {
         try {
+            if (!(loggedInStaff instanceof Manager)) {
+                showAlert("Only managers are allowed to add new staff.");
+                return;
+            }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/AddStaff.fxml"));
             Scene scene = new Scene(loader.load(), 500, 350);
 
