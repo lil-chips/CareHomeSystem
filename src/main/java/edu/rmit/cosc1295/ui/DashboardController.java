@@ -358,6 +358,28 @@ public class DashboardController {
     }
 
     /**
+     * Passes the logged-in staff member to the dashboard and update the welcome message
+     * @param staff Who logged in
+     */
+
+    public void setLoggedInStaff(Staff staff) {
+        this.loggedInStaff = staff;
+        welcomeLabel.setText("Welcome, " + staff.getName() + " (" + staff.getClass().getSimpleName() + ")");
+
+        // --- Role-based UI control ---
+        String role = staff.getClass().getSimpleName();
+
+        // Hide everything first (safety first)
+        addPrescriptionBtn.setVisible(false);
+        moveResidentBtn.setVisible(false);
+        addBedBtn.setVisible(false);
+        assignShiftBtn.setVisible(false);
+        modifyPasswordBtn.setVisible(false);
+        viewLogsBtn.setVisible(false);
+        administerMedBtn.setVisible(false);
+    }
+
+    /**
      * Helper function to show pop-up messages.
      * @param msg The message text
      */
