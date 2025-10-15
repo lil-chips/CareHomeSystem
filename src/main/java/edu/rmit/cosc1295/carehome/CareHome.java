@@ -319,6 +319,23 @@ public class CareHome implements Serializable {
                 throw new IllegalArgumentException("Bed ID already exists: " + bed.getBedId());
             }
         }
+
+        // Add to in-memory list
+        beds.add(bed);
+        System.out.println("Added Bed No. " + bed.getBedId());
+
+        // Save into database
+        try {
+            // true = available, null = no resident yet
+            CareHomeDatabase.insertBed(bed.getBedId(), true, null);
+            System.out.println("Bed saved into database successfully!");
+        } catch (Exception e) {
+            System.out.println("Failed to save bed into database: " + e.getMessage());
+        }
+
+        // Create log
+        String log = "Manager " + manager.getName() + " (" + manager.getId() + ") added new bed ID: " + bed.getBedId();
+        CareHome.createLog(log);
     }
 
 
