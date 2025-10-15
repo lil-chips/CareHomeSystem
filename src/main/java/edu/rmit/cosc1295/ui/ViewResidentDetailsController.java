@@ -22,13 +22,6 @@ import java.util.ArrayList;
 
 public class ViewResidentDetailsController {
 
-    @FXML private TableView<Resident> residentTable;
-    @FXML private TableColumn<Resident, String> nameCol;
-    @FXML private TableColumn<Resident, String> genderCol;
-    @FXML private TableColumn<Resident, Integer> bedCol;
-    @FXML private TableColumn<Resident, String> prescriptionCol;
-    @FXML private Button backBtn;
-
     @FXML private Label nameLabel;
     @FXML private Label genderLabel;
     @FXML private Label bedLabel;
@@ -40,10 +33,40 @@ public class ViewResidentDetailsController {
     @FXML private TableColumn<Prescription, String> doseCol;
     @FXML private TableColumn<Prescription, String> timeCol;
 
+    @FXML private Button backBtn;
+
     private CareHome model;
     private Resident selectedResident;
     private Staff loggedInStaff;
 
+    /**
+     * Initialize the table columns.
+     * This runs automatically when the FXML is loaded.
+     */
+
+    @FXML
+    public void initialize() {
+
+        // Doctor ID column show doctor
+        doctorCol.setCellValueFactory(
+                new javafx.scene.control.cell.PropertyValueFactory<>("doctorId")
+        );
+
+        // Medicine column show medicine name
+        medicineCol.setCellValueFactory(
+                new javafx.scene.control.cell.PropertyValueFactory<>("medicine")
+        );
+
+        // Dose column show dosage
+        doseCol.setCellValueFactory(
+                new javafx.scene.control.cell.PropertyValueFactory<>("dose")
+        );
+
+        // Time column show time
+        timeCol.setCellValueFactory(
+                new javafx.scene.control.cell.PropertyValueFactory<>("time")
+        );
+    }
 
     public void setData(CareHome model, Resident resident, Staff staff) {
         this.model = model;
