@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="500" prefWidth="600" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="edu.rmit.cosc1295.ui.UpdatePrescriptionController">
+
+    <Label layoutX="190" layoutY="25" style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Update Prescription" />
+
+    <!-- Choose bed -->
+    <Label layoutX="50" layoutY="80" text="Bed ID:" />
+    <ChoiceBox fx:id="bedChoice" layoutX="120" layoutY="75" prefWidth="150" />
+
+    <Button fx:id="loadBtn" layoutX="290" layoutY="75" onAction="#onLoadPrescriptions" prefWidth="180" text="Load Prescriptions" />
+
+    <!-- Table -->
+    <TableView fx:id="presTable" layoutX="50" layoutY="120" prefHeight="200" prefWidth="500">
+        <columns>
+            <TableColumn fx:id="doctorCol" prefWidth="100" text="Doctor ID" />
+            <TableColumn fx:id="medicineCol" prefWidth="140" text="Medicine" />
+            <TableColumn fx:id="doseCol" prefWidth="120" text="Dose" />
+            <TableColumn fx:id="timeCol" prefWidth="120" text="Time" />
+        </columns>
+    </TableView>
+
+    <!-- Editable fields -->
+    <Label layoutX="50" layoutY="340" text="New Medicine:" />
+    <TextField fx:id="medicineField" layoutX="170" layoutY="335" prefWidth="200" />
+
+    <Label layoutX="50" layoutY="380" text="New Dose:" />
+    <TextField fx:id="doseField" layoutX="170" layoutY="375" prefWidth="200" />
+
+    <Label layoutX="50" layoutY="420" text="New Time:" />
+    <TextField fx:id="timeField" layoutX="170" layoutY="415" prefWidth="200" />
+
+    <Button fx:id="updateBtn" layoutX="452.0" layoutY="344.0" onAction="#onUpdatePrescription" prefWidth="90" text="Update" />
+
+    <Button fx:id="backBtn" layoutX="452.0" layoutY="397.0" onAction="#onBack" prefWidth="90" text="Back" />
+</AnchorPane>
