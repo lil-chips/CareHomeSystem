@@ -27,6 +27,9 @@ public class UpdatePrescriptionController {
     @FXML private TextField medicineField;
     @FXML private TextField doseField;
     @FXML private TextField timeField;
+    @FXML private Button updateBtn;
+    @FXML private Button backBtn;
+    @FXML private Button loadBtn;
 
     private CareHome model;
     private Staff loggedInStaff;

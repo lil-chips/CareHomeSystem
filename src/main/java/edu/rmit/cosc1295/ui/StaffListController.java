@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import edu.rmit.cosc1295.carehome.CareHome;
 import edu.rmit.cosc1295.carehome.Staff;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.Scene;
 import javafx.scene.Node;
@@ -112,18 +113,18 @@ public class StaffListController {
         try {
             // Load the FXML file for the dashboard screen
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
-
-            // Create a new Scene using that FXML file (set width and height)
-            Scene dashboardScene = new Scene(loader.load(), 600, 400);
+            Parent root = loader.load();
 
             // Get the controller class (DashboardController) linked to dashboard.fxml
             DashboardController controller = loader.getController();
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
+
+            // Create a new Scene using that FXML file (set width and height)
+            Scene dashboardScene = new Scene(root, 600, 400);
 
             // Get the current window (stage) from the button event
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            controller.setModel(model);
-            controller.setLoggedInStaff(loggedInStaff);
 
             // Switch the screen from login to dashboard
             stage.setScene(dashboardScene);

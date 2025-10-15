@@ -56,6 +56,11 @@ public class DashboardController {
         if (addStaffBtn != null) addStaffBtn.setVisible(false);
         if (deletePrescriptionBtn != null) deletePrescriptionBtn.setVisible(false);
         if (updatePrescriptionBtn != null) updatePrescriptionBtn.setVisible(false);
+
+        // If user already logged in, restore their UI
+        if (loggedInStaff != null) {
+            applyRoleVisibility();
+        }
     }
 
     /**
@@ -87,12 +92,15 @@ public class DashboardController {
     public void setLoggedInStaff(Staff staff) {
         this.loggedInStaff = staff;
 
+        System.out.println("setLoggedInStaff called with: " + staff);
+
         if (welcomeLabel != null && staff != null) {
             welcomeLabel.setText("Welcome, " + staff.getName() + " (" + staff.getClass().getSimpleName() + ")");
         }
         // Apply button visibility rules
         applyRoleVisibility();
     }
+
 
     private void applyRoleVisibility() {
         // Hide everything first
@@ -175,6 +183,7 @@ public class DashboardController {
             // Pass the model and user info to the staff list controller
             StaffListController controller = loader.getController();
             controller.setData(model, userId, role);
+            controller.setLoggedInStaff(loggedInStaff);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(staffScene);

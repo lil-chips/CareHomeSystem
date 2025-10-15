@@ -23,9 +23,6 @@ public class MainApp extends Application {
             model = new CareHome();
 
             Manager manager1 = new Manager("manager1", "Edward", "0722");
-            Nurse nurse1 = new Nurse("nurse1", "Qin", "1234");
-            Doctor doctor1 = new Doctor("doctor1", "Eric", "0000");
-            model.addStaff(manager1, nurse1);
             model.addStaff(manager1, manager1);
 
             System.out.println("No data found. Created new CareHome instance.");
