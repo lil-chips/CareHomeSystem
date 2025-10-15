@@ -1,4 +1,115 @@
 package edu.rmit.cosc1295.ui;
 
+import edu.rmit.cosc1295.carehome.CareHome;
+import edu.rmit.cosc1295.carehome.Prescription;
+import edu.rmit.cosc1295.carehome.Resident;
+import edu.rmit.cosc1295.carehome.Staff;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+
+/**
+ * Doctor selects a bed, views all prescriptions,
+ * clicks one to edit its fields.
+ */
+
 public class UpdatePrescriptionController {
+    @FXML private ChoiceBox<Integer> bedChoice;
+    @FXML private TableView<Prescription> presTable;
+    @FXML private TableColumn<Prescription, String> doctorCol;
+    @FXML private TableColumn<Prescription, String> medicineCol;
+    @FXML private TableColumn<Prescription, String> doseCol;
+    @FXML private TableColumn<Prescription, String> timeCol;
+
+    @FXML private TextField medicineField;
+    @FXML private TextField doseField;
+    @FXML private TextField timeField;
+
+    private CareHome model;
+    private Staff loggedInStaff;
+    private Resident selectedResident;
+    private int selectedIndex = -1;
+
+    @FXML
+    public void initialize() {
+
+        // Doctor ID column show doctor
+        doctorCol.setCellValueFactory(
+                new javafx.scene.control.cell.PropertyValueFactory<>("doctorId")
+        );
+
+        // Medicine column show medicine name
+        medicineCol.setCellValueFactory(
+                new javafx.scene.control.cell.PropertyValueFactory<>("medicine")
+        );
+
+        // Dose column show dosage
+        doseCol.setCellValueFactory(
+                new javafx.scene.control.cell.PropertyValueFactory<>("dose")
+        );
+
+        // Time column show time
+        timeCol.setCellValueFactory(
+                new javafx.scene.control.cell.PropertyValueFactory<>("time")
+        );
+
+        // When the user clicks on a row in the table,
+        // display the data of that prescription in the text fields below
+        presTable.setOnMouseClicked(event -> {
+            // Check if a row is actually selected
+            if (presTable.getSelectionModel().getSelectedItem() != null) {
+                // Get the selected prescription
+                Prescription selectedPrescription = presTable.getSelectionModel().getSelectedItem();
+
+                // Save which row index is currently selected
+                selectedIndex = presTable.getSelectionModel().getSelectedIndex();
+
+                // Show the existing values in the text fields
+                medicineField.setText(selectedPrescription.getMedicine());
+                doseField.setText(selectedPrescription.getDose());
+                timeField.setText(selectedPrescription.getTime());
+            }
+        });
+    }
+
+    /**
+     * Go back to the dashboard screen.
+     * @param event The button click event
+     */
+
+    @FXML
+    void onBack(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
+            Scene scene = new Scene(loader.load(), 600, 400);
+            DashboardController controller = loader.getController();
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Dashboard");
+            stage.show();
+        } catch (Exception e) {
+            showAlert("Failed to go back: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Helper function to show pop-up messages.
+     * @param msg The message text
+     */
+
+    private void showAlert(String msg) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setHeaderText(null);
+        a.setContentText(msg);
+        a.showAndWait();
+    }
+}
+
 }
