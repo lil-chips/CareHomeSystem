@@ -73,10 +73,21 @@ public class ViewResidentDetailsController {
         this.selectedResident = resident;
         this.loggedInStaff = staff;
 
+        if (resident == null) {
+            showAlert("Resident not found!");
+            return;
+        }
+
         // Display resident basic info
         nameLabel.setText(resident.getName());
         genderLabel.setText(resident.getGender());
-        bedLabel.setText(String.valueOf(resident.getBedId()));
+
+        // If not assign to a bed yet show "Not assigned"
+        if (resident.getBedId() != null) {
+            bedLabel.setText(String.valueOf(resident.getBedId()));
+        } else {
+            bedLabel.setText("Not assigned");
+        }
 
         // Get the resident's prescriptions
         ArrayList<Prescription> list = resident.getPrescriptions();
@@ -84,105 +95,19 @@ public class ViewResidentDetailsController {
         // Convert to a format that TableView understands
         ObservableList<Prescription> data = FXCollections.observableArrayList(list);
 
-        // Tell TableView which column shows which data
-        doctorCol.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleStringProperty(c.getValue().getDoctorId()));
-
-        medicineCol.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleStringProperty(c.getValue().getMedicine()));
-
-        doseCol.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleStringProperty(c.getValue().getDose()));
-
-        timeCol.setCellValueFactory(c ->
-                new javafx.beans.property.SimpleStringProperty(c.getValue().getTime()));
-
-        // Put the data into the table
+        // Put the data inside the table
         prescriptionTable.setItems(data);
+
+        if (list.isEmpty()) {
+            showAlert("This resident has no prescriptions yet!");
+        }
     }
 
-    /**
-     * Get the shared CareHome data and show all residents in the table.
-     * @param model The CareHome object that stores all residents
-     */
-
-    public void setModel(CareHome model) {
-        this.model = model;
-
-        // Load resident data into the table
-        // Convert the resident list from CareHome into an ObservableList
-        ObservableList<Resident> data = FXCollections.observableArrayList(model.getResidents());
-
-        // Put this data into our table
-        residentTable.setItems(data);
-
-        // For the "Name" column, show each resident’s name
-        nameCol.setCellValueFactory(cellData -> {
-            String name = cellData.getValue().getName(); // get the name from Resident
-            return new javafx.beans.property.SimpleStringProperty(name);
-        });
-
-        // For the "Gender" column, show each resident’s gender
-        genderCol.setCellValueFactory(cellData -> {
-            String gender = cellData.getValue().getGender();
-            return new javafx.beans.property.SimpleStringProperty(gender);
-        });
-
-        // For the "Bed ID" column, show the bed number (which is an Integer)
-        bedCol.setCellValueFactory(cellData -> {
-            Integer bedId = cellData.getValue().getBedId();
-            return new javafx.beans.property.SimpleObjectProperty<>(bedId);
-        });
-
-        // Combine all prescriptions into one string
-        // If a resident has multiple prescriptions, we put them together in one line.
-        prescriptionCol.setCellValueFactory(cellData -> {
-            Resident resident = cellData.getValue(); // get this resident
-            StringBuilder sb = new StringBuilder();  // used to build a long string
-
-            // Go through all prescriptions for this resident
-            for (Prescription p : resident.getPrescriptions()) {
-                sb.append(p.getMedicine()).append(" (").append(p.getDose()).append("), ");
-            }
-
-            // Convert the string into a form that TableView can display
-            return new javafx.beans.property.SimpleStringProperty(sb.toString());
-        });
-
-        // Add listener to open detail view when a resident is double-clicked
-        residentTable.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2 && !residentTable.getSelectionModel().isEmpty()) {
-                Resident selected = residentTable.getSelectionModel().getSelectedItem();
-                openResidentDetails(selected, event);
-            }
-        });
-    }
 
     public void setLoggedInStaff(Staff staff) {
         this.loggedInStaff = staff;
     }
 
-    /**
-     * Double-click event → opens ViewResidentDetails screen
-     */
-
-    private void openResidentDetails(Resident resident, javafx.scene.input.MouseEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/ViewResidentDetails.fxml"));
-            Scene scene = new Scene(loader.load(), 600, 400);
-
-            ViewResidentDetailsController controller = loader.getController();
-            controller.setData(model, resident, loggedInStaff);
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle("CareHome - Resident Details");
-            stage.show();
-
-        } catch (Exception e) {
-            showAlert("Failed to open details: " + e.getMessage());
-        }
-    }
 
     /**
      * Go back to the dashboard screen.

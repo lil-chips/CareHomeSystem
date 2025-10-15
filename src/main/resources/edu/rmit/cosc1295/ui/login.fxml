@@ -8,23 +8,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400" prefWidth="600" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="edu.rmit.cosc1295.ui.LoginController">
+<AnchorPane prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.rmit.cosc1295.ui.LoginController">
 
 
-        <Label layoutX="210.0" layoutY="38.0" prefHeight="53.0" prefWidth="181.0" style="-fx-font-size: 22px; -fx-font-weight: bold;" text="CareHome Login">
+        <Label layoutX="210.0" layoutY="37.0" prefHeight="53.0" prefWidth="181.0" style="-fx-font-size: 22px; -fx-font-weight: bold;" text="CareHome Login">
       <font>
          <Font size="16.0" />
       </font></Label>
 
-        <Label layoutX="150" layoutY="140" text="Staff ID:" />
-        <TextField fx:id="idField" layoutX="250" layoutY="135" prefWidth="200" />
+        <Label layoutX="110.0" layoutY="141.0" text="Staff ID:" />
+        <TextField fx:id="idField" layoutX="201.0" layoutY="136.0" prefWidth="200" />
 
-        <Label layoutX="150" layoutY="180" text="Password:" />
-        <PasswordField fx:id="passwordField" layoutX="250" layoutY="175" prefWidth="200" />
+        <Label layoutX="110.0" layoutY="181.0" text="Password:" />
+        <PasswordField fx:id="passwordField" layoutX="201.0" layoutY="176.0" prefWidth="200" />
 
-        <Label layoutX="150" layoutY="220" text="Role:" />
-        <ChoiceBox fx:id="roleChoice" layoutX="250" layoutY="215" prefWidth="200" />
+        <Label layoutX="110.0" layoutY="221.0" text="Role:" />
+        <ChoiceBox fx:id="roleChoice" layoutX="201.0" layoutY="216.0" prefWidth="200" />
 
-        <Button fx:id="loginBtn" layoutX="250" layoutY="270" onAction="#onLogin" prefWidth="200" text="Login" />
+        <Button fx:id="loginBtn" layoutX="201.0" layoutY="288.0" onAction="#onLogin" prefWidth="200" text="Login" />
 
 </AnchorPane>

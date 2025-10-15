@@ -29,7 +29,9 @@ public class AssignShiftController {
     @FXML
     public void initialize() {
         dayChoice.getItems().addAll("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-        timeChoice.getItems().addAll("Morning", "Afternoon");
+
+        // Time list will depend on the selected staff type (Doctor/Nurse)
+        timeChoice.getItems().clear();
     }
 
     /**
@@ -47,8 +49,40 @@ public class AssignShiftController {
                 staffChoice.getItems().add(s.getId() + " - " + s.getName());
             }
         }
-        if (!staffChoice.getItems().isEmpty())
+        // If we have staff, pre-select the first one
+        if (!staffChoice.getItems().isEmpty()) {
             staffChoice.setValue(staffChoice.getItems().getFirst());
+        }
+
+        // When user selects a staff, show the correct time choices
+        staffChoice.setOnAction(e -> updateTimeChoices());
+    }
+
+    /**
+     * When staff selection changes, update time options.
+     */
+
+    private void updateTimeChoices() {
+        timeChoice.getItems().clear(); // clear previous options
+
+        if (staffChoice.getValue() == null) return;
+
+        // Get staff ID from "d1 - Alice"
+        String staffId = staffChoice.getValue().split(" - ")[0];
+        Staff selected = model.findStaffById(staffId);
+
+        if (selected == null) return;
+
+        // Doctor can only work 1hr
+        if (selected instanceof Doctor) {
+            timeChoice.getItems().add("1hr");
+            timeChoice.setValue("1hr");
+        }
+        // Nurse can work Morning or Afternoon
+        else if (selected instanceof Nurse) {
+            timeChoice.getItems().addAll("Morning", "Afternoon");
+            timeChoice.setValue("Morning");
+        }
     }
 
     /**
@@ -64,6 +98,7 @@ public class AssignShiftController {
      * Handle the Assign Shift button click.
      * @param event The button click event
      */
+
     @FXML
     void onAssignShift(ActionEvent event) {
         try {

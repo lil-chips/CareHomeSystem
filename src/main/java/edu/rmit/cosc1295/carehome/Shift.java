@@ -23,11 +23,14 @@ public class Shift implements Serializable {
             this.time = "08:00-16:00";
         } else if (time.equalsIgnoreCase("Afternoon")) {
             this.time = "14:00-22:00";
-        } else {
+        }
+        else if (time.equalsIgnoreCase("1hr") || time.equalsIgnoreCase("1h")) {
+            this.time = "1hr";
+        }
+        else {
             this.time = time;
         }
     }
-
 
     /**
      * Get the day of the shift
@@ -38,7 +41,6 @@ public class Shift implements Serializable {
         return day;
     }
 
-
     /**
      * Get the time range of the shift
      * @return The time of the shift
@@ -47,7 +49,6 @@ public class Shift implements Serializable {
     public String getTime() {
         return time;
     }
-
 
     /**
      * Get a string representation of the shift
@@ -125,7 +126,7 @@ public class Shift implements Serializable {
         else if (time.contains("14:00-22:00")) {
             hours = 8;
         }
-        else if (time.contains("1hr") || time.contains("1h")) {
+        else if (time.equalsIgnoreCase("1hr") || time.equalsIgnoreCase("1h")) {
             hours = 1;
         }
         else {

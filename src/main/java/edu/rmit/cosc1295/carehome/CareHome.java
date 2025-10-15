@@ -1157,9 +1157,30 @@ public class CareHome implements Serializable {
         // Add shift duration into totalHours
         totalHours += newShift.getDuration();
 
-        // If over 8 hrs shows error message
-        if (totalHours > 8) {
-            throw new IllegalArgumentException("Working hours can't be over 8 hours per day: now is " + totalHours + "hours");
+        // Doctor: at most 1 hour a day
+        if (s instanceof Doctor) {
+            if (!newShift.getTime().equalsIgnoreCase("1hr") && !newShift.getTime().equalsIgnoreCase("1h")) {
+                throw new IllegalArgumentException("Doctor shifts must be 1hr only.");
+            }
+            if (totalHours > 1) {
+                throw new IllegalArgumentException("Doctor can only work 1 hour per day (now: " + totalHours + ")");
+            }
+        }
+        // Nurse: at most 8 hours a day
+        else if (s instanceof Nurse) {
+            if (!(newShift.getTime().equalsIgnoreCase("08:00-16:00")
+                    || newShift.getTime().equalsIgnoreCase("14:00-22:00")
+                    || newShift.getTime().equalsIgnoreCase("Morning")
+                    || newShift.getTime().equalsIgnoreCase("Afternoon"))) {
+                throw new IllegalArgumentException("Nurse shifts must be Morning or Afternoon only.");
+            }
+            if (totalHours > 8) {
+                throw new IllegalArgumentException("Nurse can't work over 8 hours per day (now: " + totalHours + ")");
+            }
+        }
+        // Other role like manager shouldn't have shift
+        else {
+            throw new IllegalArgumentException("Only doctors and nurses can have shifts.");
         }
 
         // Add shift to staff object
