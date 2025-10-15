@@ -433,6 +433,30 @@ public class DashboardController {
     }
 
     /**
+     * When Manager clicks "Add Staff", this opens the AddStaff page.
+     * @param event The button click event
+     */
+
+    @FXML
+    void onAddStaff(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/AddStaff.fxml"));
+            Scene scene = new Scene(loader.load(), 500, 350);
+
+            AddStaffController controller = loader.getController();
+            controller.setModel(model);
+            controller.setLoggedInStaff(loggedInStaff);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Add Staff");
+            stage.show();
+        } catch (Exception e) {
+            showAlert("Failed to open Add Staff: " + e.getMessage());
+        }
+    }
+
+    /**
      * Helper function to show pop-up messages.
      * @param msg The message text
      */
