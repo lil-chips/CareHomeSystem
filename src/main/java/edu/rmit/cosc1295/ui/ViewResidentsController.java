@@ -31,7 +31,14 @@ public class ViewResidentsController {
     @FXML private Button backBtn;
 
     private CareHome model;
+    private Resident selectedResident;
     private Staff loggedInStaff;
+
+    public void setData(CareHome model, Resident resident, Staff staff) {
+        this.model = model;
+        this.selectedResident = resident;
+        this.loggedInStaff = staff;
+    }
 
     /**
      * Get the shared CareHome data and show all residents in the table.
