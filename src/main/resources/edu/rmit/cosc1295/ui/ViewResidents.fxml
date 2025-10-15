@@ -7,23 +7,35 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.rmit.cosc1295.ui.ViewResidentsController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="edu.rmit.cosc1295.ui.ViewResidentsController"
+            prefWidth="600" prefHeight="400">
 
-    <children>
-        <Label layoutX="231.0" layoutY="30.0" prefHeight="33.0" prefWidth="139.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Resident Details">
-         <font>
-            <Font size="14.0" />
-         </font></Label>
+    <Label text="Resident Details" layoutX="230" layoutY="20"
+           style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
-        <TableView fx:id="residentTable" layoutX="50" layoutY="80" prefHeight="250" prefWidth="500">
-            <columns>
-                <TableColumn fx:id="nameCol" prefWidth="150" text="Name" />
-                <TableColumn fx:id="genderCol" prefWidth="100" text="Gender" />
-                <TableColumn fx:id="bedCol" prefWidth="100" text="Bed ID" />
-                <TableColumn fx:id="prescriptionCol" prefWidth="150" text="Prescriptions" />
-            </columns>
-        </TableView>
+    <Button fx:id="backBtn" text="Back" layoutX="20" layoutY="20"
+            onAction="#onBack"/>
 
-        <Button fx:id="backBtn" layoutX="20" layoutY="20" onAction="#onBack" prefWidth="80" text="Back" />
-    </children>
+    <!-- Resident basic info -->
+    <Label text="Name:" layoutX="60" layoutY="80"/>
+    <Label fx:id="nameLabel" layoutX="130" layoutY="80" />
+
+    <Label text="Gender:" layoutX="60" layoutY="110"/>
+    <Label fx:id="genderLabel" layoutX="130" layoutY="110" />
+
+    <Label text="Bed ID:" layoutX="60" layoutY="140"/>
+    <Label fx:id="bedLabel" layoutX="130" layoutY="140" />
+
+    <!-- Prescriptions table -->
+    <TableView fx:id="prescriptionTable" layoutX="60" layoutY="190"
+               prefWidth="480" prefHeight="160">
+
+        <columns>
+            <TableColumn fx:id="doctorCol" text="Doctor ID" prefWidth="120"/>
+            <TableColumn fx:id="medicineCol" text="Medicine" prefWidth="120"/>
+            <TableColumn fx:id="doseCol" text="Dose" prefWidth="120"/>
+            <TableColumn fx:id="timeCol" text="Time" prefWidth="120"/>
+        </columns>
+    </TableView>
 </AnchorPane>

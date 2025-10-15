@@ -74,19 +74,46 @@ public class ViewResidentsController {
 
             // Go through all prescriptions for this resident
             for (Prescription p : resident.getPrescriptions()) {
-                sb.append(p.getMedicine())
-                        .append(" (")
-                        .append(p.getDose())
-                        .append("), ");
+                sb.append(p.getMedicine()).append(" (").append(p.getDose()).append("), ");
             }
 
             // Convert the string into a form that TableView can display
             return new javafx.beans.property.SimpleStringProperty(sb.toString());
         });
+
+        // Add listener to open detail view when a resident is double-clicked
+        residentTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && !residentTable.getSelectionModel().isEmpty()) {
+                Resident selected = residentTable.getSelectionModel().getSelectedItem();
+                openResidentDetails(selected, event);
+            }
+        });
     }
 
     public void setLoggedInStaff(Staff staff) {
         this.loggedInStaff = staff;
+    }
+
+    /**
+     * Double-click event → opens ViewResidentDetails screen
+     */
+
+    private void openResidentDetails(Resident resident, javafx.scene.input.MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/ViewResidentDetails.fxml"));
+            Scene scene = new Scene(loader.load(), 600, 400);
+
+            ViewResidentsController controller = loader.getController();
+            controller.setData(model, resident, loggedInStaff);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("CareHome - Resident Details");
+            stage.show();
+
+        } catch (Exception e) {
+            showAlert("Failed to open details: " + e.getMessage());
+        }
     }
 
     /**

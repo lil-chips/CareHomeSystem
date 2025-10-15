@@ -35,6 +35,22 @@ public class DashboardController {
     @FXML private Button modifyPasswordBtn;
     @FXML private Button viewResidentsBtn;
 
+    @FXML
+    public void initialize() {
+        // Hide all buttons by default (prevents flashing before role is applied)
+        if (staffListBtn != null) staffListBtn.setVisible(false);
+        if (residentBtn != null) residentBtn.setVisible(false);
+        if (addResidentBtn != null) addResidentBtn.setVisible(false);
+        if (viewResidentsBtn != null) viewResidentsBtn.setVisible(false);
+        if (addBedBtn != null) addBedBtn.setVisible(false);
+        if (assignShiftBtn != null) assignShiftBtn.setVisible(false);
+        if (modifyPasswordBtn != null) modifyPasswordBtn.setVisible(false);
+        if (viewLogsBtn != null) viewLogsBtn.setVisible(false);
+        if (addPrescriptionBtn != null) addPrescriptionBtn.setVisible(false);
+        if (moveResidentBtn != null) moveResidentBtn.setVisible(false);
+        if (administerMedBtn != null) administerMedBtn.setVisible(false);
+    }
+
     /**
      * Receive model and user info from LoginController
      */
