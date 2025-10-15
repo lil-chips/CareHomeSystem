@@ -1,5 +1,7 @@
 package edu.rmit.cosc1295.carehome;
 
+import javafx.scene.control.Alert;
+
 import javax.print.Doc;
 import java.io.*;
 import java.time.LocalDate;
@@ -74,16 +76,26 @@ public class CareHome implements Serializable {
         System.out.println("Manager " + manager.getName() + " added a new staff: "
                 + newStaff.getId() + " - " + newStaff.getName());
 
+        // Save into database
+        try {
+            CareHomeDatabase.insertStaff(newStaff.getId(), newStaff.getName(),
+                    newStaff.getClass().getSimpleName(), newStaff.getPassword()
+            );
+            System.out.println("Staff saved into database successfully.");
+        } catch (Exception e) {
+            System.out.println("Failed to save staff into DB: " + e.getMessage());
+        }
+
         // Create log message
         String showlog = "Manager " + manager.getName() + " add a new staff " + newStaff.getName() + "("
                 + newStaff.getId() + ")";
         createLog(showlog);
 
-        // Determine role from class type
-        String role = newStaff.getClass().getSimpleName();
-
-        // Save the new staff member into database
-        CareHomeDatabase.insertStaff(newStaff.getId(), newStaff.getName(), role, newStaff.getPassword());
+        // Show successful message
+        showAlert("Staff added successfully!\n\n"
+                + "Name: " + newStaff.getName() + "\n"
+                + "Role: " + newStaff.getClass().getSimpleName() + "\n"
+                + "ID: " + newStaff.getId());
     }
 
 
@@ -1392,6 +1404,17 @@ public class CareHome implements Serializable {
         return null; // not found
     }
 
+    /**
+     * Helper function to show pop-up messages.
+     * @param msg The message text
+     */
+
+    private void showAlert(String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
 
 
 }
