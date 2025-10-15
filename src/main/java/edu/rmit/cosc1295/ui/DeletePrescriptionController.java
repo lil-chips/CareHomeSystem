@@ -1,5 +1,6 @@
 package edu.rmit.cosc1295.ui;
 
+import edu.rmit.cosc1295.carehome.Bed;
 import edu.rmit.cosc1295.carehome.CareHome;
 import edu.rmit.cosc1295.carehome.Staff;
 import javafx.event.ActionEvent;
@@ -26,6 +27,28 @@ public class DeletePrescriptionController {
 
     private CareHome model;
     private Staff loggedInStaff;
+
+    /**
+     * Let the dashboard receive the shared CareHome model
+     * Gives the controller access to all system data
+     * @param model The shared CareHome object that holds all data
+     */
+
+    public void setModel(CareHome model) {
+        this.model = model;
+
+        // Fill all existing bed IDs
+        for (Bed b : model.getBeds()) {
+            if (!b.bedAvailable()) {
+                // show only occupied beds
+                bedChoice.getItems().add(b.getBedId());
+            }
+        }
+
+        if (!bedChoice.getItems().isEmpty()) {
+            bedChoice.setValue(bedChoice.getItems().getFirst());
+        }
+    }
 
     /**
      * Called from Dashboard to know who is logged in
