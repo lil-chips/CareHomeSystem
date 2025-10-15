@@ -24,5 +24,7 @@
         <Button fx:id="logoutBtn" layoutX="523.0" layoutY="14.0" onAction="#onLogout" text="Logout" />
         <Button fx:id="deletePrescriptionBtn" layoutX="225.0" layoutY="258.0" onAction="#onDeletePrescription" prefHeight="26.0" prefWidth="150.0" text="Delete Prescription" />
         <Button fx:id="updatePrescriptionBtn" layoutX="225.0" layoutY="200.0" onAction="#onUpdatePrescription" prefHeight="26.0" prefWidth="150.0" text="Update Prescription" />
+        <Button fx:id="viewAdminRecordsBtn" text="View Admin Records" layoutX="50" layoutY="350" onAction="#onViewAdminRecords"/>
+        <Button fx:id="viewShiftsBtn" text="View Shifts" layoutX="250" layoutY="350" onAction="#onViewShifts"/>
     </children>
 </AnchorPane>
