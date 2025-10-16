@@ -15,8 +15,6 @@ public class Resident implements Serializable {
 
     protected ArrayList<Prescription> prescriptions = new ArrayList<>();
 
-
-    // Not assign to bed yet
     /**
      * Construct with resident's name and gender, bed not assigned yet.
      * @param name Name of resident
@@ -29,10 +27,9 @@ public class Resident implements Serializable {
         this.bedId = null; // New resident might not hava a bed yet
     }
 
-
-    // Assigned to bed already
     /**
      * Construct with resident's name, gender and bed ID
+     * Assigned to bed already
      * @param name Name of resident
      * @param gender Gender of resident
      * @param bedId ID of bed
@@ -44,7 +41,6 @@ public class Resident implements Serializable {
         this.bedId = bedId;
     }
 
-
     /**
      * Get the name of resident
      * @return the name of resident
@@ -53,7 +49,6 @@ public class Resident implements Serializable {
     public String getName() {
         return name;
     }
-
 
     /**
      * Get the gender of resident
@@ -64,7 +59,6 @@ public class Resident implements Serializable {
         return gender;
     }
 
-
     /**
      * Get the bed ID
      * @return bed ID
@@ -73,7 +67,6 @@ public class Resident implements Serializable {
     public Integer getBedId() {
         return bedId;
     }
-
 
     /**
      * Set or Change resident's bed id
@@ -87,17 +80,15 @@ public class Resident implements Serializable {
         this.bedId = bedId;
     }
 
-
     /**
      * Add a new prescription into the list
      * @param p the prescription object to be added for this resident.
-     *          must not be null; contains doctor name, medicine name, dose and time
+     * must not be null; contains doctor name, medicine name, dose and time
      */
 
     public void addPrescription(Prescription p) {
         this.prescriptions.add(p);
     }
-
 
     /**
      * Update prescription
@@ -117,7 +108,6 @@ public class Resident implements Serializable {
         this.prescriptions.set(i, nP);
     }
 
-
     /**
      * Return all the prescriptions
      * @return A list contains all prescriptions for this resident.
@@ -125,22 +115,6 @@ public class Resident implements Serializable {
 
     public ArrayList<Prescription> getPrescriptions() {
         return prescriptions;
-    }
-
-
-    /**
-     * Print all prescriptions of this resident to the console.
-     * If there is no prescriptions, show a message instead.
-     */
-
-    public void printAllPres() {
-        if (this.prescriptions.isEmpty()) {
-            System.out.println(this.name + " doesn't have any prescription");
-        } else {
-            for (int i = 0; i < this.prescriptions.size(); i++) {
-                System.out.println((i + 1) + ". " + this.prescriptions.get(i));
-            }
-        }
     }
 
     /**
