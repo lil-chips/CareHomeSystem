@@ -104,8 +104,9 @@ public class StaffListController {
     }
 
     /**
-     * Go back to the main Dashboard screen
-     * @param event the button click event
+     * Called when the user clicks the "Back" button.
+     * This method switches the current scene back to the dashboard.
+     * @param event The button click event used to get the current window
      */
 
     @FXML
@@ -136,7 +137,7 @@ public class StaffListController {
             stage.show();
 
         } catch (Exception e) {
-            //print the error details in the console
+            // Handle any loading or transition errors
             showAlert("Failed to return to dashboard: " + e.getMessage());
         }
     }

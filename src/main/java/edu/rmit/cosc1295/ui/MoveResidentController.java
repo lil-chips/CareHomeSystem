@@ -101,26 +101,31 @@ public class MoveResidentController {
     }
 
     /**
-     * Go back to the dashboard screen.
-     * @param event The button click event
+     * Called when the user clicks the "Back" button.
+     * This method switches the current scene back to the dashboard.
+     * @param event The button click event used to get the current window
      */
 
     @FXML
     void onBack(ActionEvent event) {
         try {
+            // Load the Dashboard FXML layout
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
             Scene scene = new Scene(loader.load(), 600, 400);
 
+            // Pass data back to DashboardController
             DashboardController controller = loader.getController();
             controller.setModel(model);
             controller.setLoggedInStaff(loggedInStaff);
 
+            // Replace current scene with dashboard
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("CareHome - Dashboard");
             stage.show();
 
         } catch (Exception e) {
+            // Handle any loading or transition errors
             showAlert("Failed to return: " + e.getMessage());
         }
     }
