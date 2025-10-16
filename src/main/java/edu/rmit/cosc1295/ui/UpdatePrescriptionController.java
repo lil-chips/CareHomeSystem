@@ -80,19 +80,30 @@ public class UpdatePrescriptionController {
 
     /**
      * Called from DashboardController to reuse the same CareHome data here.
-     * @param model the CareHome object we got from the main app
+     * @param model the shared CareHome instance from the main application
      */
 
     public void setModel(CareHome model) {
+        // Store the shared CareHome instance for consistent data access
         this.model = model;
+
+        // Populate the dropdown with only occupied beds
         for (Bed b : model.getBeds()) {
+            // Include only non-available beds
             if (!b.bedAvailable()) bedChoice.getItems().add(b.getBedId());
         }
+        // If there are occupied beds, pre-select the first one
         if (!bedChoice.getItems().isEmpty())
             bedChoice.setValue(bedChoice.getItems().getFirst());
     }
 
+    /**
+     * Sets the currently logged-in staff member
+     * @param staff the Staff object representing the logged-in user
+     */
+
     public void setLoggedInStaff(Staff staff) {
+        // Store reference to the staff member currently logged into the system
         this.loggedInStaff = staff;
     }
 
@@ -180,7 +191,7 @@ public class UpdatePrescriptionController {
             showAlert("Prescription updated successfully!");
 
         } catch (Exception e) {
-            // Display any unexpected errors that occur during the process
+            // Catch-all for unexpected errors
             showAlert("Error: " + e.getMessage());
         }
     }

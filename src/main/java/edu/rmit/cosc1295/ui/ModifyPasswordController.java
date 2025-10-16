@@ -81,9 +81,13 @@ public class ModifyPasswordController {
             ((Manager) loggedInStaff).modifyStaffPassword(target, newPassword);
             CareHome.createLog("Manager " + loggedInStaff.getName() + " changed password for " + target.getName());
 
+            // Notify the user of successful recording
             showAlert("Password updated successfully!");
+
+            // Go back to the dashboard page
             onBack(event);
         } catch (Exception e) {
+            // Catch-all for unexpected errors
             showAlert("Error: " + e.getMessage());
         }
     }

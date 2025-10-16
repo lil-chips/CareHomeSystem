@@ -90,12 +90,16 @@ public class MoveResidentController {
             CareHome.createLog("Nurse " + loggedInStaff.getName() +
                     " moved " + residentName + " to bed " + newBedId);
 
+            // Notify the user of successful recording
             showAlert("Resident moved successfully!");
-            onBack(event);
 
+            // Go back to the dashboard page
+            onBack(event);
         } catch (NotWorkingException e) {
+
             showAlert("!!! " + e.getMessage());
         } catch (Exception e) {
+            // Catch-all for unexpected errors
             showAlert("Failed to move resident: " + e.getMessage());
         }
     }

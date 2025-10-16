@@ -114,6 +114,7 @@ public class ResidentListController {
             stage.setTitle("CareHome - Resident Details");
             stage.show();
         } catch (Exception e) {
+            // Catch-all for unexpected errors
             showAlert("Failed to open resident details: " + e.getMessage());
         }
     }
