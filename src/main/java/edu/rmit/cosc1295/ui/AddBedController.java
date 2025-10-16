@@ -18,47 +18,72 @@ public class AddBedController {
 
     @FXML
     private TextField bedIdField;
-
     private CareHome model;
     private Staff loggedInStaff;
+
+    /**
+     * Sets the shared CareHome model for this controller.
+     * @param model the shared CareHome system model
+     */
 
     public void setModel(CareHome model) {
         this.model = model;
     }
+
+    /**
+     * Sets the currently logged-in staff member.
+     * @param staff the Staff object representing the logged-in user
+     */
 
     public void setLoggedInStaff(Staff staff) {
         this.loggedInStaff = staff;
     }
 
     /**
-     * Called when the user clicks "Add Bed"
+     * Handles the "Add Bed" button click event from the user interface.
+     * @param event the button click event that triggered this action
      */
 
     @FXML
     void onAddBed(ActionEvent event) {
+        // Retrieve and trim user input from the text field
         String bedIdText = bedIdField.getText().trim();
 
         if (bedIdText.isEmpty()) {
+            // check if input is empty
             showAlert("Please enter a Bed ID!");
             return;
         }
 
         try {
+            // Convert input to integer
             int bedId = Integer.parseInt(bedIdText);
+
+            // Create a new Bed object with the given ID
             Bed newBed = new Bed(bedId);
+
+            // Add the new bed through the CareHome model, must be a manager
             model.addBed((Manager) loggedInStaff, newBed);
 
+            // Log the action for system tracking
             CareHome.createLog("Manager " + loggedInStaff.getName() + " added new bed " + bedId);
+            // Console output for debugging
             System.out.println("Bed " + bedId + " added successfully by " + loggedInStaff.getName());
 
+            // Show success alert to the user
             showAlert("Bed added successfully!");
+
+            // Return to the dashboard screen
             onBack(event);
 
         } catch (NumberFormatException e) {
+            // Handle non-numeric input for bed ID
             showAlert("Bed ID must be a number!");
         } catch (UnauthorizedException e) {
+            // Handle unauthorized attempts, only manager allowed
             showAlert("Only manager can add beds!");
         } catch (Exception e) {
+            // Catch-all for any unexpected error
             showAlert("Failed to add bed: " + e.getMessage());
         }
     }
