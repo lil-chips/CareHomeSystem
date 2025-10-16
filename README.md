@@ -55,3 +55,8 @@ Authorized operations: Can move residents, check resident details and administer
 11. Administer Medicine -> Record when a patient has taken the prescribed medicine.
 12. View Residents -> View resident details and their prescriptions.
 13. Move Residents -> Move one resident to another bed.
+
+## Logs
+All the actions happens in the system will be recorded with timestamp, staff ID and description.
+This can help us to track all the activities.
+
