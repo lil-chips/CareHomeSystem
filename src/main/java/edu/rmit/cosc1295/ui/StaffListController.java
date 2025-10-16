@@ -69,10 +69,12 @@ public class StaffListController {
      */
 
     public void setData(CareHome model, String userId, String role) {
+        // Store the references for later use in this controller
         this.model = model;
         this.userId = userId;
         this.role = role;
 
+        // If the title label exists, show the current user's role and ID
         if (titleLabel != null) {
             titleLabel.setText("Staff List - Logged in as " + role + " (" + userId + ")");
         }
@@ -82,24 +84,32 @@ public class StaffListController {
     }
 
     /**
-     * Load all staff into the table
+     * Loads all staff data from the shared CareHome model
      */
+
     private void loadStaffData() {
+        // Ensure both the model and table exist
         if (model == null || staffTable == null) return;
 
+        // Retrieve the staff list from the CareHome model
         ArrayList<Staff> list = model.getStaffList(); // already exists in your CareHome class
+
+        // Convert ArrayList into ObservableList for JavaFX binding
         ObservableList<Staff> observableList = FXCollections.observableArrayList(list);
 
+        // Map table columns to Staff attributes using PropertyValueFactory
+        // These property names must match getter methods in Staff class (getId(), getName())
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        // Show each staff member's role
+        // Dynamically display each staff member's role (class name)
         roleCol.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleStringProperty(
                         cellData.getValue().getClass().getSimpleName()
                 )
         );
 
+        // Bind the populated data to the TableView
         staffTable.setItems(observableList);
     }
 

@@ -98,21 +98,26 @@ public class ResidentListController {
 
     private void openResidentDetails(Resident resident, javafx.scene.input.MouseEvent event) {
         try {
+            // Ensure a valid resident is selected
             if (resident == null) {
                 showAlert("Please select a resident to view.");
                 return;
             }
 
+            // Load the Resident Details FXML layout
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/ViewResidentDetails.fxml"));
             Scene scene = new Scene(loader.load(), 600, 400);
 
+            // Pass shared model and current user info to the new controller
             ViewResidentDetailsController controller = loader.getController();
             controller.setData(model, resident, loggedInStaff);
 
+            // Replace the current scene with the new Resident Details screen
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("CareHome - Resident Details");
             stage.show();
+
         } catch (Exception e) {
             // Catch-all for unexpected errors
             showAlert("Failed to open resident details: " + e.getMessage());

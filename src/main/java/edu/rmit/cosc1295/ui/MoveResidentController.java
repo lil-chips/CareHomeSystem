@@ -33,15 +33,16 @@ public class MoveResidentController {
      */
 
     public void setModel(CareHome model) {
+        // Store reference to the shared model
         this.model = model;
 
-        // Fill resident names
-        residentChoice.getItems().clear();
+        // Populate resident dropdown with all resident names
+        residentChoice.getItems().clear(); // Clear any previous data
         for (Resident r : model.getResidents()) {
             residentChoice.getItems().add(r.getName());
         }
 
-        // Fill only empty beds
+        // Populate bed dropdown with only empty beds
         bedChoice.getItems().clear();
         for (Bed b : model.getBeds()) {
             if (b.bedAvailable()) {
@@ -49,11 +50,12 @@ public class MoveResidentController {
             }
         }
 
-        // Default selections
+        // Set default selections if lists are not empty
         if (!residentChoice.getItems().isEmpty())
             residentChoice.setValue(residentChoice.getItems().get(0));
         if (!bedChoice.getItems().isEmpty())
             bedChoice.setValue(bedChoice.getItems().get(0));
+
     }
 
     /**
@@ -72,21 +74,27 @@ public class MoveResidentController {
 
     @FXML
     void onMove(ActionEvent event) {
+        // Only nurses can perform this action
         if (!(loggedInStaff instanceof Nurse)) {
             showAlert("Only nurses can move residents.");
             return;
         }
 
+        // Get user selections from the dropdowns
         String residentName = residentChoice.getValue();
         Integer newBedId = bedChoice.getValue();
 
+        // Both resident and new bed must be selected
         if (residentName == null || newBedId == null) {
             showAlert("Please select both a resident and a new bed.");
             return;
         }
 
         try {
+            // Perform the move operation via the model
             model.moveResident((Nurse) loggedInStaff, residentName, newBedId);
+
+            // Log the move for auditing purposes
             CareHome.createLog("Nurse " + loggedInStaff.getName() +
                     " moved " + residentName + " to bed " + newBedId);
 
@@ -95,8 +103,9 @@ public class MoveResidentController {
 
             // Go back to the dashboard page
             onBack(event);
-        } catch (NotWorkingException e) {
 
+        } catch (NotWorkingException e) {
+            // If nurse is not currently working show error message
             showAlert("!!! " + e.getMessage());
         } catch (Exception e) {
             // Catch-all for unexpected errors
