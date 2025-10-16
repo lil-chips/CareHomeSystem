@@ -1,13 +1,12 @@
 package edu.rmit.cosc1295.carehome;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Nurse extends Staff {
 
-    // Inherits from Staff
     /**
      * Construct them with id, name and password
+     * Inherits from Staff
      * @param id ID of nurse
      * @param name Name of nurse
      * @param password password of nurse
@@ -17,19 +16,21 @@ public class Nurse extends Staff {
         super(id, name, password);
     }
 
-
     /**
      * Ask CareHome to move a resident to another bed
      * Only nurses can do this
-     *
      * @param careHome the CareHome that manages data
      * @param residentName name of resident
      * @param newBedId ID of bed
      */
 
     public void moveResident(CareHome careHome, String residentName, int newBedId) {
+
+        // Ask the CareHome system to move the specified resident to a new bed.
+        // 'this' = the nurse performing the move action
         careHome.moveResident(this, residentName, newBedId);
 
+        // Print a message in console
         System.out.println("Nurse " + name + " requested to move "
                 + residentName + " to bed " + newBedId + ".");
 
@@ -47,12 +48,14 @@ public class Nurse extends Staff {
 
     /**
      * Add new shift to nurse
-     * @param shift
+     * @param shift the shift object representing the new work shift
      */
 
     public void addShift(Shift shift) {
         // Calculate total hours already assigned on that day
         int totalHours = 0;
+
+        // Run through all assigned shifts and sum up hours for the same day
         for (Shift s : nurseShifts) {
             if (s.getDay().equals(shift.getDay())) {
                 totalHours += s.getShiftDuration();
@@ -67,6 +70,7 @@ public class Nurse extends Staff {
             throw new NotWorkingException("Nurse " + getName() + " can't work more than 8 hours per day");
         }
 
+        // Store shifts into list
         nurseShifts.add(shift);
 
         // Create log message
@@ -81,29 +85,6 @@ public class Nurse extends Staff {
 
     public ArrayList<Shift> getShifts() {
         return nurseShifts;
-    }
-
-    /**
-     * Check if this nurse is compliant with working hour rules.
-     * @return true if all daily hours ≤ 8, false if any day exceeds limit
-     */
-
-    public boolean isCompliant() {
-        HashMap<String, Integer> shiftMap = new HashMap<>();
-
-        for (Shift shift : nurseShifts) {
-            String whichDay = shift.getDay();
-            int workingTime = shift.getShiftDuration();  // shift hours
-            int totalHours = shiftMap.getOrDefault(whichDay, 0) + workingTime;
-
-            // Over 8 hours will against the rule
-            if (totalHours > 8) {
-                return false;
-            }
-
-            shiftMap.put(whichDay, totalHours);
-        }
-        return true;
     }
 }
 
