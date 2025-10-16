@@ -503,4 +503,89 @@ public class CareHomeDatabase {
             System.out.println("Failed to clean staff table: " + e.getMessage());
         }
     }
+
+    /**
+     * Initialize the database by creating all required tables if they do not exist.
+     * This is used for testing and first-time setup.
+     */
+
+    public static void initializeDatabase() {
+        String url = "jdbc:sqlite:/Users/edwardedward/Desktop/CareHomeSystem/care_home.db";
+
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement()) {
+
+            // Create staff table
+            stmt.execute("""
+            CREATE TABLE IF NOT EXISTS staff (
+                id TEXT PRIMARY KEY,
+                name TEXT NOT NULL,
+                role TEXT NOT NULL,
+                password TEXT NOT NULL
+            )
+        """);
+
+            // Create resident table
+            stmt.execute("""
+            CREATE TABLE IF NOT EXISTS resident (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                gender TEXT,
+                bed_id INTEGER
+            )
+        """);
+
+            // Create bed table
+            stmt.execute("""
+            CREATE TABLE IF NOT EXISTS bed (
+                bed_id INTEGER PRIMARY KEY,
+                is_available INTEGER NOT NULL,
+                resident_id INTEGER,
+                FOREIGN KEY (resident_id) REFERENCES resident(id) ON DELETE SET NULL
+            );
+        """);
+
+            // Create prescription table
+            stmt.execute("""
+            CREATE TABLE IF NOT EXISTS prescription (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                resident_id INTEGER NOT NULL,
+                doctor_id TEXT NOT NULL,
+                medicine TEXT NOT NULL,
+                dose TEXT NOT NULL,
+                time TEXT NOT NULL,
+                FOREIGN KEY (resident_id) REFERENCES resident(id) ON DELETE CASCADE,
+                FOREIGN KEY (doctor_id) REFERENCES staff(id)
+            );
+        """);
+
+            // Create logs table
+            stmt.execute("""
+            CREATE TABLE IF NOT EXISTS logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                timestamp TEXT NOT NULL,
+                staff_id TEXT,
+                action TEXT NOT NULL,
+                FOREIGN KEY (staff_id) REFERENCES staff(id)
+            );
+        """);
+
+            // Create shift table
+            stmt.execute("""
+            CREATE TABLE IF NOT EXISTS shift (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                staff_id TEXT NOT NULL,
+                day TEXT NOT NULL,
+                time TEXT NOT NULL,
+                FOREIGN KEY (staff_id) REFERENCES staff(id)
+            );
+        """);
+
+            System.out.println("Database initialized with all required tables.");
+
+        } catch (SQLException e) {
+            System.out.println("Failed to initialize database: " + e.getMessage());
+        }
+    }
+
 }

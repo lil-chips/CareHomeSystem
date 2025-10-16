@@ -2,7 +2,27 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import edu.rmit.cosc1295.carehome.*;
 
+import java.io.File;
+
 public class CareHomeTest {
+
+    @BeforeAll
+    static void enableTestMode() {
+        System.setProperty("test.mode", "true");
+    }
+
+    @BeforeEach
+    void resetDatabase() {
+        File dbFile = new File("/Users/edwardedward/Desktop/CareHomeSystem/care_home.db");
+        if (dbFile.exists()) {
+            dbFile.delete();
+            System.out.println("Database reset for clean test (deleted successfully).");
+        }
+
+        // Recreate tables for next test
+        CareHomeDatabase.initializeDatabase();
+        System.out.println("Rebuilt database structure for test.");
+    }
 
     // Duplicate staff ID throw error
     @Test
