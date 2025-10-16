@@ -24,7 +24,6 @@ public class Prescription implements Serializable {
         this.time = time;
     }
 
-
     /**
      * Get the ID of doctor
      * @return the ID of doctor
@@ -33,7 +32,6 @@ public class Prescription implements Serializable {
     public String getDoctorId() {
         return this.doctorId;
     }
-
 
     /**
      * Get the name of medicine
@@ -44,7 +42,6 @@ public class Prescription implements Serializable {
         return this.medicine;
     }
 
-
     /**
      * Get the amount of dose
      * @return the amount of dose
@@ -53,7 +50,6 @@ public class Prescription implements Serializable {
     public String getDose() {
         return this.dose;
     }
-
 
     /**
      * Get the specific time to take medicine
@@ -64,6 +60,11 @@ public class Prescription implements Serializable {
         return this.time;
     }
 
+    /**
+     * Returns a string representation of the prescription, including the
+     * medicine name, dose, and time to take it.
+     * @return a formatted string describing this prescription
+     */
 
     @Override
     public String toString() {
