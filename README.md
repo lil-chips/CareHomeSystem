@@ -32,11 +32,26 @@ The system provides three roles to login, after login you will see different fun
 
 ### For example:
 Manager -> ID: manager1, Password: 0722
-Authorized operations: Manage all the staff and residents, but can't add/update/delete prescription, 
-can't administer medicines.
+Authorized operations: Managers have the highest level of access. Manage all the staff, residents, shifts, beds 
+and view system logs but can't add/update/delete prescription, can't administer medicines.
 
 Nurse -> ID: nurse1, Password: 1111
 Authorized operations: Can prescribe, update/delete prescription, administer medicines and check resident details.
 
 Doctor -> ID: doctor1, Password: 1111
 Authorized operations: Can move residents, check resident details and administer medicines.
+
+## Functions
+1. Add Staff -> Add new doctors or nurses to the system.
+2. Add Resident -> Register new residents and assign them to beds.
+3. Add Prescription -> Write new prescriptions for residents.
+4. Update Prescription -> Modify medicine name, dosage and time.
+5. Delete Prescription -> Delete old prescriptions.
+6. Add Bed -> Add new beds in the nursing home.
+7. Assign Shift -> Assign working shifts to doctors and nurses.
+8. Modify Password -> Reset a staff's login password.
+9. View Staff List -> Check all staff and their details.
+10. View Logs -> View all the system activity logs (actions, time, staff IDs).
+11. Administer Medicine -> Record when a patient has taken the prescribed medicine.
+12. View Residents -> View resident details and their prescriptions.
+13. Move Residents -> Move one resident to another bed.
