@@ -145,7 +145,7 @@ public class AddResidentController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null); // We don’t need a title
         alert.setContentText(msg); // Show our message
-        alert.showAndWait();       // Wait until the user closes it
+        alert.showAndWait(); // Wait until the user closes it
     }
 }
 

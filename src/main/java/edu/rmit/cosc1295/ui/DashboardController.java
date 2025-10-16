@@ -505,40 +505,45 @@ public class DashboardController {
     }
 
     /**
-     * When Doctor clicks "Update Prescription", this opens the UpdatePrescription page.
-     * @param event The button click event
+     * Called when the user clicks the "Back" button.
+     * This method switches the current scene back to the dashboard.
+     * @param event The button click event used to get the current window
      */
 
     @FXML
     void onUpdatePrescription(ActionEvent event) {
         try {
+            // Load the Dashboard FXML layout
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/edu/rmit/cosc1295/ui/UpdatePrescription.fxml"));
             Scene scene = new Scene(loader.load(), 600, 500);
 
+            // Pass data back to DashboardController
             UpdatePrescriptionController controller = loader.getController();
             controller.setModel(model);
             controller.setLoggedInStaff(loggedInStaff);
 
+            // Replace current scene with dashboard
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("CareHome - Update Prescription");
             stage.show();
         } catch (Exception e) {
+            // Handle any loading or transition errors
             showAlert("Failed to open Update Prescription: " + e.getMessage());
         }
     }
 
     /**
-     * Helper function to show pop-up messages.
-     * @param msg The message text
+     * Helper function that shows an information pop-up message.
+     * @param msg The message to display in the alert box
      */
 
     private void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
+        alert.setHeaderText(null); // We don’t need a title
+        alert.setContentText(msg); // Show our message
+        alert.showAndWait(); // Wait until the user closes it
     }
 
 

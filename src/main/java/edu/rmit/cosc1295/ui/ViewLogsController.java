@@ -76,28 +76,69 @@ public class ViewLogsController {
             showAlert("No logs to export.");
             return;
         }
+
+        // Open a FileChooser dialog for the user to select export location
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Export System Logs");
+
+        // Restrict selectable file type to .txt only
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
+                "Text Files", "*.txt"));
+
+        // Suggest a default file name using the current date
+        chooser.setInitialFileName("care_home_logs_" + java.time.LocalDate.now() + ".txt");
+
+        // Show save dialog and get the selected file
+        File file = chooser.showSaveDialog(((Node) event.getSource()).getScene().getWindow());
+
+        // If the user selected a file, proceed with export
+        if (file != null) {
+            try (FileWriter writer = new FileWriter(file)) {
+
+                // Write file header
+                writer.write("~~~~ CareHome System Log Export ~~~~\n");
+                writer.write("Exported at: " + java.time.LocalDateTime.now() + "\n");
+                writer.write("----------------------------------------\n\n");
+
+                // Write each log entry to the file, line by line
+                for (String log : logs) {
+                    writer.write(log + System.lineSeparator());
+                }
+
+                // Notify user that export succeeded
+                showAlert("Logs exported successfully to:\n" + file.getAbsolutePath());
+            } catch (IOException e) {
+                // Handle any I/O errors that occur during writing
+                showAlert("Failed to export logs:\n" + e.getMessage());
+            }
+        }
     }
 
     /**
-     * Go back to the dashboard screen.
-     * @param event The button click event
+     * Called when the user clicks the "Back" button.
+     * This method switches the current scene back to the dashboard.
+     * @param event The button click event used to get the current window
      */
 
     @FXML
     void onBack(ActionEvent event) {
         try {
+            // Load the Dashboard FXML layout
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
             Scene scene = new Scene(loader.load(), 600, 400);
 
+            // Pass data back to DashboardController
             DashboardController controller = loader.getController();
-            controller.setModel(model);
-            controller.setLoggedInStaff(loggedInStaff);
+            controller.setModel(model); // Share the CareHome model instance
+            controller.setLoggedInStaff(loggedInStaff); // Keep the logged-in user info
 
+            // Replace current scene with dashboard
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("CareHome - Dashboard");
             stage.show();
         } catch (Exception e) {
+            // Handle any loading or transition errors
             showAlert("Failed to return: " + e.getMessage());
         }
     }
@@ -109,9 +150,9 @@ public class ViewLogsController {
 
     private void showAlert(String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setHeaderText(null);
-        a.setContentText(msg);
-        a.showAndWait();
+        a.setHeaderText(null); // We don’t need a title
+        a.setContentText(msg); // Show our message
+        a.showAndWait(); // Wait until the user closes it
     }
 }
 

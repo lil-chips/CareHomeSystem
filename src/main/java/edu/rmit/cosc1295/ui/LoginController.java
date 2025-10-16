@@ -101,7 +101,7 @@ public class LoginController {
             System.out.println("Login success! Jumped to dashboard.");
 
         } catch (Exception e){
-            e.printStackTrace();
+            // Handle any loading or transition errors
             showAlert("Failed to load dashboard: " + e.getMessage());
         }
 
@@ -109,11 +109,16 @@ public class LoginController {
         showAlert("Login success!\nRole: " + role + "\nID: " + id);
     }
 
+    /**
+     * Helper function that shows an information pop-up message.
+     * @param msg The message to display in the alert box
+     */
+
     private void showAlert(String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setHeaderText(null);
-        a.setContentText(msg);
-        a.showAndWait();
+        a.setHeaderText(null); // We don’t need a title
+        a.setContentText(msg); // Show our message
+        a.showAndWait(); // Wait until the user closes it
     }
 
     /**

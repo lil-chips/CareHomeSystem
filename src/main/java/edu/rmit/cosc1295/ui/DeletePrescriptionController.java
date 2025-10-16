@@ -105,19 +105,23 @@ public class DeletePrescriptionController {
     @FXML
     void onBack(ActionEvent event) {
         try {
+            // Load the Dashboard FXML layout
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
             Scene scene = new Scene(loader.load(), 600, 400);
 
+            // Pass data back to DashboardController
             DashboardController controller = loader.getController();
             controller.setModel(model);
             controller.setLoggedInStaff(loggedInStaff);
 
+            // Replace current scene with dashboard
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("CareHome - Dashboard");
             stage.show();
         } catch (Exception e) {
+            // Handle any loading or transition errors
             showAlert("Failed to go back: " + e.getMessage());
         }
     }
@@ -129,8 +133,8 @@ public class DeletePrescriptionController {
 
     private void showAlert(String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setHeaderText(null);
-        a.setContentText(msg);
-        a.showAndWait();
+        a.setHeaderText(null); // We don’t need a title
+        a.setContentText(msg); // Show our message
+        a.showAndWait(); // Wait until the user closes it
     }
 }
