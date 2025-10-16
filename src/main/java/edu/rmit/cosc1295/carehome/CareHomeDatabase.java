@@ -1,5 +1,6 @@
 package edu.rmit.cosc1295.carehome;
 
+import java.io.File;
 import java.sql.*;
 
 /**
@@ -9,8 +10,17 @@ import java.sql.*;
 
 public class CareHomeDatabase {
 
-    private static final String DB_URL = "jdbc:sqlite:/Users/edwardedward/Desktop/CareHomeSystem/care_home.db";
+    private static final String DB_FILE_NAME = "care_home.db";
 
+    //
+    public static String getDbPath() {
+        return new File(System.getProperty("user.dir"), DB_FILE_NAME).getAbsolutePath();
+    }
+
+    //
+    public static String getDbUrl() {
+        return "jdbc:sqlite:" + getDbPath();
+    }
 
     /**
      * Connect to SQLite database
@@ -20,10 +30,10 @@ public class CareHomeDatabase {
     public static Connection connect() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(DB_URL);
-            System.out.println("Connected to database: " + DB_URL);
+            conn = DriverManager.getConnection(getDbUrl());
+            System.out.println("Connected to database at: " + getDbPath());
         } catch (SQLException e) {
-            System.out.println("Failed to connect database: " + e.getMessage());
+            System.out.println("Failed to connect: " + e.getMessage());
         }
         return conn;
     }
@@ -31,6 +41,7 @@ public class CareHomeDatabase {
     /**
      * Create all the required tables for the system
      */
+
     public static void createTables() {
         Connection conn = null;
         Statement state = null;
@@ -510,10 +521,13 @@ public class CareHomeDatabase {
      */
 
     public static void initializeDatabase() {
-        String url = "jdbc:sqlite:/Users/edwardedward/Desktop/CareHomeSystem/care_home.db";
+            String dbPath = System.getProperty("user.dir") + File.separator + "care_home.db";
+            String url = "jdbc:sqlite:" + dbPath;
 
-        try (Connection conn = DriverManager.getConnection(url);
-             Statement stmt = conn.createStatement()) {
+            try (Connection conn = DriverManager.getConnection(url);
+                 Statement stmt = conn.createStatement()) {
+
+                System.out.println("Database initialized at: " + dbPath);
 
             // Create staff table
             stmt.execute("""

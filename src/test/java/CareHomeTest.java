@@ -13,10 +13,14 @@ public class CareHomeTest {
 
     @BeforeEach
     void resetDatabase() {
-        File dbFile = new File("/Users/edwardedward/Desktop/CareHomeSystem/care_home.db");
+        String dbPath = System.getProperty("user.dir") + File.separator + "care_home.db";
+        File dbFile = new File(dbPath);
+
         if (dbFile.exists()) {
             dbFile.delete();
             System.out.println("Database reset for clean test (deleted successfully).");
+        } else {
+            System.out.println("No database found, skipping delete.");
         }
 
         // Recreate tables for next test
