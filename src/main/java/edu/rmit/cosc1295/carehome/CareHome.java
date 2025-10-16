@@ -2,7 +2,6 @@ package edu.rmit.cosc1295.carehome;
 
 import javafx.scene.control.Alert;
 
-import javax.print.Doc;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

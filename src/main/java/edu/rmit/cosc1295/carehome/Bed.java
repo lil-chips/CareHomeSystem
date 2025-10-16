@@ -17,7 +17,6 @@ public class Bed implements Serializable {
         this.status = true;
     }
 
-
     /**
      * Get the ID of the bed
      * @return bed ID
@@ -26,7 +25,6 @@ public class Bed implements Serializable {
     public int getBedId() {
         return bedId;
     }
-
 
     /**
      * Check if the bed is available or not
@@ -37,7 +35,6 @@ public class Bed implements Serializable {
         return status;
     }
 
-
     /**
      * Set occupancy status
      * @param status true = available, false = occupied
@@ -46,7 +43,6 @@ public class Bed implements Serializable {
     public void setAvailable(boolean status) {
         this.status = status;
     }
-
 
     /**
      * Get the resident object on this bed
@@ -67,7 +63,6 @@ public class Bed implements Serializable {
         this.status = true; // The bed is empty
     }
 
-
     /**
      * Assign a resident to a bed
      * If someone was already here, will be replaced
@@ -80,21 +75,14 @@ public class Bed implements Serializable {
     }
 
     /**
-     * Check if bed is occupied
-     */
-    public boolean isOccupied() {
-        return !status;
-    }
-
-    /**
      * Print the status of the bed
      */
 
     @Override
     public String toString() {
-        if (this.resident == null) {
+        if (this.resident == null) { // If the bed is empty
             return "Bed " + this.bedId + " is empty";
-        } else {
+        } else { // If the bed has a resident, then print bed + resident name
             return "Bed " + this.bedId + " has resident: " + this.resident.getName();
         }
     }
