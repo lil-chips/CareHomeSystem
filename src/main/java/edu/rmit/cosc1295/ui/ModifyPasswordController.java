@@ -57,28 +57,36 @@ public class ModifyPasswordController {
     }
 
     /**
-     * When the manager clicks “Update Password” button.
+     * When the manager clicks “Modify Password” button.
      * @param event The button click event
      */
+
     @FXML
     void onUpdatePassword(ActionEvent event) {
-        String selected = staffChoice.getValue();
-        String newPassword = newPassField.getText();
+        // Retrieve user inputs from the dropdown and text field
+        String selected = staffChoice.getValue(); // e.g., "D1 - Alice"
+        String newPassword = newPassField.getText(); // entered new password
 
+        // Validate that both fields are filled
         if (selected == null || newPassword.isBlank()) {
             showAlert("Please select a staff and enter a new password.");
             return;
         }
         try {
+            // Extract staff ID from the selected string ("D1 - Alice" → "D1")
             String staffId = selected.split(" - ")[0];
-            Staff target = model.findStaffById(staffId);
 
+            // Find the corresponding Staff object from the model
+            Staff target = model.findStaffById(staffId);
             if (target == null) {
                 showAlert("Staff not found!");
                 return;
             }
 
+            // Perform password update, must be a manager
             ((Manager) loggedInStaff).modifyStaffPassword(target, newPassword);
+
+            // Record the password change in the system log
             CareHome.createLog("Manager " + loggedInStaff.getName() + " changed password for " + target.getName());
 
             // Notify the user of successful recording
