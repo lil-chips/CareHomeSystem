@@ -4,11 +4,10 @@ import java.io.Serializable;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 
 public class Shift implements Serializable {
     private final String day; // Monday~Sunday
-    private final String time; // two shift: 8am~16pm or 2pm~10pm
+    private final String time; // two shift: 8am~4pm or 2pm~10pm
 
     /**
      * Construct a shift with a specific day and time.
@@ -19,11 +18,13 @@ public class Shift implements Serializable {
     public Shift (String day, String time) {
         this.day = day;
         // Normalize the time
+        // Morning = 8:00~16:00 & Afternoon = !4:00~22:00
         if (time.equalsIgnoreCase("Morning")) {
             this.time = "08:00-16:00";
         } else if (time.equalsIgnoreCase("Afternoon")) {
             this.time = "14:00-22:00";
         }
+        // This one is for doctor shift, 1 hour per day
         else if (time.equalsIgnoreCase("1hr") || time.equalsIgnoreCase("1h")) {
             this.time = "1hr";
         }
@@ -68,7 +69,7 @@ public class Shift implements Serializable {
 
     public int getShiftDuration() {
 
-        // If time is null and it doesn't contain "-", send error
+        // If time is null, and it doesn't contain "-", send error
         if (time == null || !time.contains("-")) {
             throw new IllegalArgumentException("Invalid time format: " + time);
         }
@@ -79,11 +80,15 @@ public class Shift implements Serializable {
             throw new IllegalArgumentException("Invalid time format: " + time);
         }
 
+        // Ex. 0 = 08:00, 1 = 16:00
+        // Use trim() to remove leading and trailing spaces from a string
         String beginTime = sep[0].trim();
         String endTime = sep[1].trim();
 
         // Define expected time format: 24-hour "HH:mm"
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        //declares two time-of-day variables
         LocalTime start, end;
 
         try {
@@ -95,6 +100,7 @@ public class Shift implements Serializable {
             throw new IllegalArgumentException("Time must be in HH:MM format (e.g., 05:00-12:00), got: " + time);
         }
 
+        // end time - start time = duration
         int duration = end.getHour() - start.getHour();
 
         // Handle overnight shift (e.g., 21:00 → 05:00)
@@ -117,7 +123,7 @@ public class Shift implements Serializable {
      */
 
     public int getDuration() {
-        int hours = 0;
+        int hours = 0; // start with 0
 
         // Check the shift patterns
         if (time.contains("8:00-16:00") || time.contains("08:00-16:00")) {
@@ -135,13 +141,6 @@ public class Shift implements Serializable {
         }
 
         return hours;
-    }
-
-    // Multiple shift for staff is allowed
-    protected ArrayList<Shift> shifts = new ArrayList<>();
-
-    public ArrayList<Shift> getShifts() {
-        return shifts;
     }
 }
 

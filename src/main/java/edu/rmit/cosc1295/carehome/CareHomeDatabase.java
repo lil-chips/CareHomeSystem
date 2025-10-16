@@ -10,14 +10,23 @@ import java.sql.*;
 
 public class CareHomeDatabase {
 
+    // The database file name used for SQLite
     private static final String DB_FILE_NAME = "care_home.db";
 
-    //
+    /**
+     * Get the absolute file path of the SQLite database.
+     * @return the absolute path to the database file
+     */
+
     public static String getDbPath() {
         return new File(System.getProperty("user.dir"), DB_FILE_NAME).getAbsolutePath();
     }
 
-    //
+    /**
+     * Get the JDBC connection URL for the SQLite database.
+     * @return the full JDBC URL
+     */
+
     public static String getDbUrl() {
         return "jdbc:sqlite:" + getDbPath();
     }
@@ -28,13 +37,18 @@ public class CareHomeDatabase {
      */
 
     public static Connection connect() {
-        Connection conn = null;
+        Connection conn = null; // Declare a variable to hold the connection
         try {
+            // Try to establish a connection using the generated JDBC URL
             conn = DriverManager.getConnection(getDbUrl());
+
+            // Print confirmation message (for debugging)
             System.out.println("Connected to database at: " + getDbPath());
         } catch (SQLException e) {
+            // Handle database connection errors
             System.out.println("Failed to connect: " + e.getMessage());
         }
+        // Return the connection object (or null if failed)
         return conn;
     }
 
@@ -43,12 +57,14 @@ public class CareHomeDatabase {
      */
 
     public static void createTables() {
-        Connection conn = null;
-        Statement state = null;
+        Connection conn = null; // Used to connect to the database
+        Statement state = null; // Used to execute SQL commands
 
         try {
-
+            // Connect to the database
             conn = connect();
+
+            // Create a Statement object for executing SQL
             state = conn.createStatement();
 
             String createStaffTable = """
@@ -122,12 +138,16 @@ public class CareHomeDatabase {
             System.out.println("Successfully created tables!");
 
         } catch (Exception e) {
+            // Handle any SQL errors
             System.out.println("Failed to create tables: " + e.getMessage());
         } finally {
+            // Always close resources to prevent memory leaks
             try {
                 if (state != null) state.close();
                 if (conn != null) conn.close();
-            } catch (Exception ignore) {}
+            } catch (Exception e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+            }
         }
     }
 
@@ -298,6 +318,7 @@ public class CareHomeDatabase {
             // Execute the SQL command to insert the new record into the database
             int rows = pre.executeUpdate();
 
+            // If rows > 0, insertion succeeded; otherwise skip (already exists)
             if (rows > 0) {
                 System.out.println("Bed inserted into database: ID " + bedId +
                         ", Available=" + isAvailable +
@@ -307,6 +328,7 @@ public class CareHomeDatabase {
             }
 
         } catch (SQLException e) {
+            // Handle any SQL or connection error
             System.out.println("Failed to insert bed: " + e.getMessage());
         }
     }
@@ -521,12 +543,17 @@ public class CareHomeDatabase {
      */
 
     public static void initializeDatabase() {
+            // Get the absolute database path (under the project directory)
             String dbPath = System.getProperty("user.dir") + File.separator + "care_home.db";
+
+            // Build the full JDBC connection URL for SQLite
             String url = "jdbc:sqlite:" + dbPath;
 
+            // Use try-with-resources to automatically close the connection and statement
             try (Connection conn = DriverManager.getConnection(url);
                  Statement stmt = conn.createStatement()) {
 
+                // Print confirmation message for debugging/logging
                 System.out.println("Database initialized at: " + dbPath);
 
             // Create staff table
@@ -598,6 +625,7 @@ public class CareHomeDatabase {
             System.out.println("Database initialized with all required tables.");
 
         } catch (SQLException e) {
+                // Print detailed error message if database initialization fails
             System.out.println("Failed to initialize database: " + e.getMessage());
         }
     }
