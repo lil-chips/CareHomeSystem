@@ -60,3 +60,15 @@ Authorized operations: Can move residents, check resident details and administer
 All the actions happens in the system will be recorded with timestamp, staff ID and description.
 This can help us to track all the activities.
 
+## Data Storage
+All the data will be stored in SQLite database (care_home.db).
+The system will auto-create tables for:
+1. Bed
+2. logs
+3. prescription
+4. resident
+5. shift
+6. staff
+
+## Developer
+#### Pei Hua Chang - RMIT University
