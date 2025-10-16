@@ -26,3 +26,17 @@ perform different actions. These actions are:
 ### Run Command
 -> mvn clean javafx:run
 (After starting the system, it will automatically connect to the database and build the necessary tables.)
+
+## Login Roles
+The system provides three roles to login, after login you will see different function buttons for different role.
+
+### For example:
+Manager -> ID: manager1, Password: 0722
+Authorized operations: Manage all the staff and residents, but can't add/update/delete prescription, 
+can't administer medicines.
+
+Nurse -> ID: nurse1, Password: 1111
+Authorized operations: Can prescribe, update/delete prescription, administer medicines and check resident details.
+
+Doctor -> ID: doctor1, Password: 1111
+Authorized operations: Can move residents, check resident details and administer medicines.
