@@ -126,15 +126,15 @@ public class MoveResidentController {
     }
 
     /**
-     * Helper function to show pop-up messages.
-     * @param msg The message text
+     * Helper function that shows an information pop-up message.
+     * @param msg The message to display in the alert box
      */
 
     private void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("CareHome System");
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
+        alert.setHeaderText(null); // We don’t need a title
+        alert.setContentText(msg); // Show our message
+        alert.showAndWait(); // Wait until the user closes it
     }
 }

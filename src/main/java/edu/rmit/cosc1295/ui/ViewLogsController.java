@@ -144,8 +144,8 @@ public class ViewLogsController {
     }
 
     /**
-     * Helper function to show pop-up messages.
-     * @param msg The message text
+     * Helper function that shows an information pop-up message.
+     * @param msg The message to display in the alert box
      */
 
     private void showAlert(String msg) {

@@ -134,15 +134,15 @@ public class ViewResidentDetailsController {
     }
 
     /**
-     * Helper function to show pop-up messages.
-     * @param msg The message text
+     * Helper function that shows an information pop-up message.
+     * @param msg The message to display in the alert box
      */
 
     private void showAlert(String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setHeaderText(null);
-        a.setContentText(msg);
-        a.showAndWait();
+        a.setHeaderText(null); // We don’t need a title
+        a.setContentText(msg); // Show our message
+        a.showAndWait(); // Wait until the user closes it
     }
 }
 
