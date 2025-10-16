@@ -24,33 +24,57 @@ public class AddStaffController {
     private CareHome model;
     private Staff loggedInStaff;
 
+    /**
+     * Initializes the Add Staff screen when it is first loaded.
+     */
+
     @FXML
     public void initialize() {
-        // Provide role options
+        // Populate the role dropdown with available staff roles
         roleChoice.getItems().addAll("Manager", "Doctor", "Nurse");
+
+        // Set a default selection (Nurse)
         roleChoice.setValue("Nurse");
     }
 
+    /**
+     * Sets the shared CareHome model for this controller.
+     * @param model the shared CareHome system model
+     */
+
     public void setModel(CareHome model) {
-        this.model = model;
+        this.model = model; // Assign the shared model reference
     }
+
+    /**
+     * Sets the currently logged-in staff member.
+     * @param staff the Staff object representing the logged-in user
+     */
 
     public void setLoggedInStaff(Staff staff) {
         this.loggedInStaff = staff;
     }
 
+    /**
+     * Handles the "Add Staff" button click event from the user interface.
+     * @param event the button click event that triggered this action
+     */
+
     @FXML
     void onAddStaff(ActionEvent event) {
+        // Retrieve input values from the text fields and dropdown
         String id = idField.getText().trim();
         String name = nameField.getText().trim();
         String password = passwordField.getText().trim();
         String role = roleChoice.getValue();
 
+        // Validate mandatory input fields
         if (id.isEmpty() || name.isEmpty() || password.isEmpty()) {
             showAlert("Please fill in all fields.");
             return;
         }
 
+        // Create the appropriate Staff subclass based on selected role
         try {
             Staff newStaff;
             switch (role) {
@@ -60,13 +84,20 @@ public class AddStaffController {
                 default -> throw new IllegalArgumentException("Unknown role: " + role);
             }
 
+            // Add the new staff to the CareHome system, must be a Manager
             model.addStaff((Manager) loggedInStaff, newStaff);
+
+            // Record this action in the system log
             CareHome.createLog("Manager " + loggedInStaff.getName() + " added new " + role + ": " + name);
 
+            // Show success feedback to the user
             showAlert("Staff added successfully!");
+
+            // Go back to the dashboard page
             onBack(event);
 
         } catch (Exception e) {
+            // Catch-all for unexpected errors
             showAlert("Failed to add staff: " + e.getMessage());
         }
     }

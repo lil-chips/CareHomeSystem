@@ -40,10 +40,13 @@ public class AssignShiftController {
      */
 
     public void setModel(CareHome model) {
+        // Assign the shared CareHome instance for consistent data access
         this.model = model;
 
-        // Fill staff list (Doctor + Nurse only)
+        // Clear previous dropdown entries to avoid duplicates
         staffChoice.getItems().clear();
+
+
         for (Staff s : model.getStaffList()) {
             if (s instanceof Doctor || s instanceof Nurse) {
                 staffChoice.getItems().add(s.getId() + " - " + s.getName());

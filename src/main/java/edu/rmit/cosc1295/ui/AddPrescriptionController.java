@@ -16,17 +16,10 @@ import javafx.stage.Stage;
 
 public class AddPrescriptionController {
 
-    @FXML
-    private ChoiceBox<String> residentChoice;
-
-    @FXML
-    private TextField medicineField;
-
-    @FXML
-    private TextField doseField;
-
-    @FXML
-    private TextField timeField;
+    @FXML private ChoiceBox<String> residentChoice;
+    @FXML private TextField medicineField;
+    @FXML private TextField doseField;
+    @FXML private TextField timeField;
 
     private CareHome model;
     private Staff loggedInStaff;
@@ -38,13 +31,17 @@ public class AddPrescriptionController {
      */
 
     public void setModel(CareHome model) {
+        // Assign the shared CareHome instance
         this.model = model;
 
-        // Populate resident names
+        // Clear any existing items from the dropdown (to avoid duplicates)
         residentChoice.getItems().clear();
+
+        // Populate the dropdown list with resident names from the model
         for (Resident r : model.getResidents()) {
             residentChoice.getItems().add(r.getName());
         }
+        // If there are residents, pre-select the first one
         if (!residentChoice.getItems().isEmpty())
             residentChoice.setValue(residentChoice.getItems().get(0));
     }
@@ -60,35 +57,42 @@ public class AddPrescriptionController {
     }
 
     /**
-     * Called when the user clicks "Add Prescription
+     * Handles the "Add Prescription" button click event from the user interface.
+     * @param event the button click event that triggered this action
      */
 
     @FXML
     void onAddPrescription(ActionEvent event) {
-        String residentName = residentChoice.getValue();
+        // Retrieve user input from the form fields
+        String residentName = residentChoice.getValue(); // selected resident from dropdown
         String medicine = medicineField.getText().trim();
         String dose = doseField.getText().trim();
         String time = timeField.getText().trim();
 
+        // Validate input fields
         if (residentName == null || medicine.isEmpty() || dose.isEmpty() || time.isEmpty()) {
-            showAlert("Please fill all fields.");
+            showAlert("Please fill all fields."); // all fields must be completed
             return;
         }
 
         try {
+            // Attempt to add a new prescription to the CareHome model
             model.addPrescription((Doctor) loggedInStaff, residentName, medicine, dose, time);
 
-            // Log + show in console
+            // Record the action in the system log and console
             CareHome.createLog("Doctor " + loggedInStaff.getName() +
                     " prescribed " + medicine + " (" + dose + ", " + time + ") to " + residentName);
             System.out.println("Prescription added for " + residentName);
 
+            // Notify the user and navigate back to the dashboard
             showAlert("Prescription added successfully!");
             onBack(event);
 
         } catch (UnauthorizedException e) {
+            // Only a doctor can add prescriptions
             showAlert("Only doctor can add prescriptions!");
         }catch (Exception e) {
+            // Catch-all for unexpected errors
             showAlert("Failed to add prescription: " + e.getMessage());
         }
     }

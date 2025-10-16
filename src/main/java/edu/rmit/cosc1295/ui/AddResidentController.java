@@ -131,7 +131,7 @@ public class AddResidentController {
             stage.show();
 
         } catch (Exception e) {
-            // Handle any loading or transition errors
+            // Catch-all for unexpected errors
             showAlert("Failed to return to dashboard: " + e.getMessage());
         }
     }

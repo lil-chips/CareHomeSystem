@@ -37,42 +37,62 @@ public class AdministerMedicineController {
      */
 
     public void setModel(CareHome model) {
+        // Assign the shared CareHome instance for consistent data access
         this.model = model;
+
+        // Clear previous dropdown entries to avoid duplicates
         residentChoice.getItems().clear();
+
+        // Populate dropdown with all resident names from the model
         for (Resident r : model.getResidents()) {
             residentChoice.getItems().add(r.getName());
         }
+        // If residents exist, select the first one by default
         if (!residentChoice.getItems().isEmpty())
             residentChoice.setValue(residentChoice.getItems().get(0));
     }
 
+    /**
+     * Sets the currently logged-in staff member.
+     * @param staff the Staff object representing the logged-in user
+     */
+
     public void setLoggedInStaff(Staff staff) {
+        // Store a reference to the staff currently logged into the system
         this.loggedInStaff = staff;
     }
 
     /**
-     * When nurse clicks “Record Administration”.
-     * @param event Button click event
+     * Handles the "Record" button click event from the user interface.
+     * @param event the button click event that triggered this action
      */
 
     @FXML
     void onRecord(ActionEvent event) {
+        // Retrieve form input values
         String residentName = residentChoice.getValue();
         String medicine = medicineField.getText();
         String dose = doseField.getText();
         String time = timeField.getText();
 
+        // Validate that all fields are filled
         if (residentName == null || medicine.isBlank() || dose.isBlank() || time.isBlank()) {
             showAlert("Please fill in all fields.");
             return;
         }
 
         try {
+            // Record the administration in the system log
             CareHome.createLog("Nurse " + loggedInStaff.getName() +
                     " administered " + medicine + " (" + dose + ") to " + residentName + " at " + time);
+
+            // Notify the user of successful recording
             showAlert("Record saved successfully!");
+
+            // Go back to the dashboard page
             onBack(event);
         } catch (Exception e) {
+            // Catch-all for unexpected errors
             showAlert("Error: " + e.getMessage());
         }
     }
