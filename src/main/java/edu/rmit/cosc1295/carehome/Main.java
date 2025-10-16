@@ -22,6 +22,5 @@ public class Main {
         home.addStaff(manager1, manager1);
 
         home.saveToFile("SavedData.ser");
-        // GUI
     }
 }

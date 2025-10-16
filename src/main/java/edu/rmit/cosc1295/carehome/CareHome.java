@@ -13,8 +13,6 @@ import java.util.Random;
 import java.util.*;
 import java.sql.*;
 
-
-
 public class CareHome implements Serializable {
 
     // Store all the staffs
@@ -28,7 +26,6 @@ public class CareHome implements Serializable {
 
     // Store all the logs (shared across all CareHome instances)
     private static final ArrayList<String> logged = new ArrayList<>();
-
 
     /**
      * Only manager can add new staff member
@@ -75,13 +72,21 @@ public class CareHome implements Serializable {
         System.out.println("Manager " + manager.getName() + " added a new staff: "
                 + newStaff.getId() + " - " + newStaff.getName());
 
-        // Save into database
+        // Save the new staff record into the database
         try {
-            CareHomeDatabase.insertStaff(newStaff.getId(), newStaff.getName(),
-                    newStaff.getClass().getSimpleName(), newStaff.getPassword()
+            // Insert the staff information using CareHomeDatabase helper method
+            CareHomeDatabase.insertStaff(
+                    newStaff.getId(),  // Unique staff ID
+                    newStaff.getName(),  // Staff name
+                    newStaff.getClass().getSimpleName(),  // Role type (Manager, Nurse, Doctor)
+                    newStaff.getPassword()  // Login password
             );
+
+            // Print confirmation message if successful
             System.out.println("Staff saved into database successfully.");
+
         } catch (Exception e) {
+            // Handle any insertion errors
             System.out.println("Failed to save staff into DB: " + e.getMessage());
         }
 
@@ -97,22 +102,6 @@ public class CareHome implements Serializable {
                 + "ID: " + newStaff.getId());
     }
 
-
-    /**
-     * Print all staff in the list
-     */
-
-    public void showStaff() {
-        if (staffList.isEmpty()) {
-            System.out.println("No staff");
-        } else {
-            for (Staff s : staffList) {
-                System.out.println(s.getClass().getSimpleName() + " " + s.getId() + " - " + s.getName());
-            }
-        }
-    }
-
-
     /**
      * Get all staff in the care home, for code facing
      * Give access to staff list
@@ -122,7 +111,6 @@ public class CareHome implements Serializable {
     public ArrayList<Staff> getStaffList() {
         return staffList;
     }
-
 
     /**
      * Allows a Manager to add a new resident
@@ -150,7 +138,7 @@ public class CareHome implements Serializable {
             throw new IllegalArgumentException("Bed ID " + bedId + " is not available");
         }
 
-        // Assign the bed
+        // Assign to the bed
         targetBed.assignResident(resident);
         resident.setBedId(bedId);
         residents.add(resident);
@@ -168,11 +156,9 @@ public class CareHome implements Serializable {
     /**
      * Moves a resident to a new bed.
      * This action can only be performed by a nurse who is working today.
-     *
      * @param nurse        The nurse performing the move action
      * @param residentName The name of the resident being moved
      * @param newBedId     The ID of the new bed to move the resident into
-     *
      * @throws UnauthorizedException  if the staff is not a nurse
      * @throws IllegalArgumentException if resident name or bed ID is invalid
      * @throws NotWorkingException     if the nurse is not scheduled to work today
@@ -181,9 +167,12 @@ public class CareHome implements Serializable {
 
     public void moveResident(Nurse nurse, String residentName, int newBedId)
             throws UnauthorizedException, IllegalArgumentException, NotWorkingException {
+
+        // Must be a nurse to operate
         if (nurse == null) {
             throw new UnauthorizedException("Only nurse can move resident");
         }
+        // Resident must not be null or blank
         if (residentName == null || residentName.isBlank()) {
             throw new IllegalArgumentException("Resident name can't be null or blank");
         }
@@ -195,6 +184,8 @@ public class CareHome implements Serializable {
         // Call your existing method
         boolean working = isWorking(nurse, today);
 
+        // If the nurse is not working on that day
+        // throw error message
         if (!working) {
             if (!isTestEnvironment()) {
                 throw new NotWorkingException("Nurse " + nurse.getName() + " is not scheduled to work on " + today + ".");
@@ -209,36 +200,47 @@ public class CareHome implements Serializable {
                 break;
             }
         }
+
+        // If the resident does not exist
         if (target == null) {
             throw new IllegalArgumentException("Resident " + residentName + " does not exist");
         }
 
-        // Find a new bed
+        // Find the target bed based on the given bed ID
         Bed targetBed = null;
         for (Bed b : beds) {
+            // Compare each bed's ID with the specified newBedId
             if (b.getBedId() == newBedId) {
                 targetBed = b;
-                break;
+                break; // Stop searching once the bed is found
             }
         }
+
+        // Validate the target bed
+        // The bed ID does not exist in the system
         if (targetBed == null) {
             throw new IllegalArgumentException("Bed ID " + newBedId + " does not exist");
         }
+        // The bed exists but is currently occupied
         if (!targetBed.bedAvailable()) {
             throw new BedOccupiedException("Bed ID " + newBedId + " is not available");
         }
+        // The resident is already in the same bed
         if (target.getBedId() != null && target.getBedId() == newBedId) {
             throw new IllegalArgumentException("Resident is already in bed " + newBedId);
         }
 
-
-        // Release old bed
+        // Release the old bed before assigning a new one
+        // Get the current bed ID of the resident
         Integer oldBedId = target.getBedId();
+
+        // If the resident was already assigned to a bed
         if (oldBedId != null) {
             for (Bed b : beds) {
+                // Find the bed that matches the resident's current bed ID
                 if (b.getBedId() == oldBedId) {
                     b.removeResident(); // Set the status to available
-                    break;
+                    break; // Exit loop once found
                 }
             }
         }
@@ -254,32 +256,40 @@ public class CareHome implements Serializable {
 
     }
 
+    /**
+     * Checks whether the current runtime environment is a test environment.
+     * @return true if running in test mode, false otherwise
+     */
+
     private static boolean isTestEnvironment() {
         return System.getProperty("java.class.path").contains("test-classes");
     }
-
 
     /**
      * Print out all the resident's name, gender and bed condition
      */
 
     public void printAllResidents() {
+        // No residents in the system
         if (residents.isEmpty()) {
             System.out.println("No residents");
         } else {
+            // Print details for each resident
             for (Resident resident : residents) {
                 String bedId;
+
+                // Check whether the resident is assigned to a bed
                 if (resident.getBedId() == null) {
                     bedId = "Not assigned to any bed yet";
                 } else {
                     bedId = "BedNo. " + resident.getBedId();
                 }
+                // Print formatted resident information
                 System.out.println(resident.getName() + " (" + resident.getGender() + ") -> "
                         + bedId);
             }
         }
     }
-
 
     /**
      * Find a resident by name, return null if not found
@@ -504,25 +514,31 @@ public class CareHome implements Serializable {
 
 
     /**
-     * Print all nurse shifts
+     * Prints all assigned shifts for every nurse in the care home.
      */
 
     public void printNurseShifts() {
         System.out.println("\n Nurse Shifts ");
 
+        // Run through all staff members in the care home
         for (int i = 0; i < getStaffList().size(); i++) {
             Staff staff = getStaffList().get(i);
 
+            // Check if the staff member is a Nurse
             if (staff instanceof Nurse nurse) {
 
+                // Print nurse name header
                 System.out.println("Shifts for " + nurse.getName() + ":");
 
+                // Get all assigned shifts
                 ArrayList<Shift> shifts = nurse.getShifts();
 
+                // Print each shift's details
                 for (Shift shift : shifts) {
                     System.out.println("  " + shift);
                 }
 
+                // Print total number of shifts for that nurse
                 System.out.println("Total shifts: " + shifts.size());
                 System.out.println("\n");
             }
@@ -537,17 +553,22 @@ public class CareHome implements Serializable {
     public void printDoctorShifts() {
         System.out.println("\n Doctor Shifts ");
 
+        // Loop through all staff members in the care home
         for (Staff staff : staffList) {
             if (staff instanceof Doctor doctor) {
 
+                // Print doctor name header
                 System.out.println("Shifts for " + doctor.getName() + ":");
 
+                // Get all assigned shifts
                 ArrayList<Shift> shifts = doctor.getShifts();
 
+                // Print each shift's details
                 for (Shift shift : shifts) {
                     System.out.println(shift);
                 }
 
+                // Print total number of shifts for that doctor
                 System.out.println("Total shifts: " + shifts.size());
                 System.out.println();
             }
@@ -561,34 +582,45 @@ public class CareHome implements Serializable {
      */
 
     public boolean checkCompliance() {
+        // Loop through all staff members in the care home
         for (Staff staff : staffList) {
+
+            // Check nurse shift hours
             if (staff instanceof Nurse nurse) {
                 ArrayList<Shift> shifts = nurse.getShifts();
 
+                // Map to store <day, total working hours>
                 HashMap<String, Integer> shiftMap = new HashMap<>();
 
+                // Go through each assigned shift
                 for (Shift shift : shifts) {
                     String whichDay = shift.getDay(); // Get the day
                     int workingTime = shift.getDuration(); // Get shift hours
 
+                    // Add this shift's duration to that day's total
                     int hourComb = shiftMap.getOrDefault(whichDay, 0) + workingTime;
 
+                    // Total working hours exceed 8 on the same day, violate the rule
                     if (hourComb > 8) {
                         System.out.println("Nurse " + nurse.getName()
                                 + " works more than 8 hours on " + whichDay);
                         return false;
                     }
 
+                    // Update total hours for this day
                     shiftMap.put(whichDay, hourComb);
                 }
             }
 
+            // Check doctor daily shift count
             if (staff instanceof Doctor doctor) {
                 ArrayList<Shift> shifts = doctor.getShifts();
 
-                // only one shift per day
+                // Use a set to track which days the doctor already works
                 HashSet<String> dayWork = new HashSet<>();
+
                 for (Shift s : shifts) {
+                    // Duplicate day found, violate the rule
                     if (dayWork.contains(s.getDay())) {
                         System.out.println("Doctor " + doctor.getName() +
                                 " works more than one shift on " + s.getDay());
@@ -673,21 +705,26 @@ public class CareHome implements Serializable {
 
 
     /**
-     * Save current CareHome object to file
-     * @param filename path to save
+     * Saves the current CareHome object to a serialized file.
+     * @param filename the path or name of the file where the object will be saved
      */
 
     public void saveToFile(String filename) {
         try {
+            // Use try-with-resources to ensure the output stream is properly closed
             try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filename))) {
+                // Serialize the current CareHome object and write it to file
                 output.writeObject(this);
             }
+
+            // Print confirmation message to console
             System.out.println("Saved to " + filename);
 
-            // Record log
+            // Record the save operation in system log
             CareHome.createLog("System data saved to " + filename);
 
         } catch (IOException ioe) {
+            // Handle any input/output errors that occur during saving
             System.err.println("Failed to save: " + ioe.getMessage());
         }
     }
@@ -709,9 +746,12 @@ public class CareHome implements Serializable {
 
         try {
             CareHome home;
+
+            // Use try-with-resources to safely read serialized object
             try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename))) {
                 home = (CareHome) input.readObject();
             }
+            // Print confirmation message
             System.out.println("Loaded from " + filename);
 
             // Record log
@@ -720,9 +760,11 @@ public class CareHome implements Serializable {
             return home;
 
         } catch (IOException ioe) {
+            // Handle general file I/O issues
             System.err.println("Failed to load due to IO error: " + ioe.getMessage());
             return null;
         } catch (ClassNotFoundException c) {
+            // Handle missing class definitions
             System.err.println("Failed to load due to missing class: " + c.getMessage());
             return null;
         }
@@ -1116,21 +1158,6 @@ public class CareHome implements Serializable {
         return logged;
     }
 
-
-    public Staff login(String id, String password) {
-        for (Staff s : staffList) {
-            if (s.getId().equals(id)) {
-                if (s.getPassword().equals(password)) {
-                    System.out.println("Login successful: " + s.getName() + " (" + s.getClass().getSimpleName() + ")");
-                    return s;
-                } else {
-                    throw new IllegalArgumentException("Invalid password for staff id: " + id);
-                }
-            }
-        }
-        throw new IllegalArgumentException("Staff ID not found: " + id);
-    }
-
     /**
      * Find a bed by its ID.
      * shorten codes to make the code looks clean
@@ -1156,12 +1183,15 @@ public class CareHome implements Serializable {
      */
 
     public void assignShift(Manager m, Staff s, Shift newShift) {
+        // Only manager can assign shifts
         if (m == null) {
             throw new UnauthorizedException("Only manager can assign shifts");
         }
+        // Ensure staff and shift objects are not null
         if (s == null || newShift == null) {
             throw new IllegalArgumentException(("Staff or shift can't be null"));
         }
+        // Ensure the staff's shift list has been initialized
         if (s.getShifts() == null) {
             throw new IllegalStateException("Shift list not initialized for staff: " + s.getName());
         }
@@ -1231,13 +1261,17 @@ public class CareHome implements Serializable {
      */
 
     public boolean isWorking(Staff s, String day) {
+        // Return false immediately if staff or day input is invalid
         if (s == null || day == null) return false;
 
+        // Loop through all assigned shifts for the staff
         for (Shift shift : s.getShifts()) {
+            // Compare the day (case-insensitive)
             if (shift.getDay().equalsIgnoreCase(day)) {
-                return true;
+                return true; // Found a shift matching the given day
             }
         }
+        // No shift found for that day
         return false;
     }
 

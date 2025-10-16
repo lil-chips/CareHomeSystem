@@ -78,7 +78,7 @@ public class Nurse extends Staff {
     }
 
 
-    /**
+/**
      * Get all shifts assigned to the nurse
      * @return A list of shifts (day + time)
      */

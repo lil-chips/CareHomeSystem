@@ -118,6 +118,21 @@ public class Resident implements Serializable {
     }
 
     /**
+     * Print all prescriptions of this resident to the console.
+     * If there is no prescriptions, show a message instead.
+     */
+
+    public void printAllPres() {
+        if (this.prescriptions.isEmpty()) {
+            System.out.println(this.name + " doesn't have any prescription");
+        } else {
+            for (int i = 0; i < this.prescriptions.size(); i++) {
+                System.out.println((i + 1) + ". " + this.prescriptions.get(i));
+            }
+        }
+    }
+
+    /**
      * Show resident summary
      */
     @Override
