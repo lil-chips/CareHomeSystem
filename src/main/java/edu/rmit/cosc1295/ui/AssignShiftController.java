@@ -36,7 +36,7 @@ public class AssignShiftController {
 
     /**
      * Called by DashboardController to inject shared data.
-     * @param model The CareHome data model
+     * @param model the shared CareHome data model
      */
 
     public void setModel(CareHome model) {
@@ -46,9 +46,10 @@ public class AssignShiftController {
         // Clear previous dropdown entries to avoid duplicates
         staffChoice.getItems().clear();
 
-
+        // Populate the dropdown with all Doctors and Nurses
         for (Staff s : model.getStaffList()) {
             if (s instanceof Doctor || s instanceof Nurse) {
+                // Display format: "ID - Name" for clarity
                 staffChoice.getItems().add(s.getId() + " - " + s.getName());
             }
         }
@@ -62,29 +63,33 @@ public class AssignShiftController {
     }
 
     /**
-     * When staff selection changes, update time options.
+     * Updates the available time options in the dropdown based on the selected staff member.
      */
 
     private void updateTimeChoices() {
         timeChoice.getItems().clear(); // clear previous options
 
+        // If no staff is currently selected, stop here
         if (staffChoice.getValue() == null) return;
 
         // Get staff ID from "d1 - Alice"
         String staffId = staffChoice.getValue().split(" - ")[0];
+
+        // Find the matching Staff object in the model
         Staff selected = model.findStaffById(staffId);
 
         if (selected == null) return;
 
-        // Doctor can only work 1hr
+        // Adjust time options based on staff type
         if (selected instanceof Doctor) {
+            // Doctors: only one 1-hour shift
             timeChoice.getItems().add("1hr");
-            timeChoice.setValue("1hr");
+            timeChoice.setValue("1hr"); // pre-select
         }
-        // Nurse can work Morning or Afternoon
         else if (selected instanceof Nurse) {
+            // Nurses: can choose Morning or Afternoon
             timeChoice.getItems().addAll("Morning", "Afternoon");
-            timeChoice.setValue("Morning");
+            timeChoice.setValue("Morning"); // pre-select
         }
     }
 
@@ -98,37 +103,45 @@ public class AssignShiftController {
     }
 
     /**
-     * Handle the Assign Shift button click.
-     * @param event The button click event
+     * Handles the "Assign Shift" button click event from the user interface.
+     * @param event the button click event that triggered this action
      */
 
     @FXML
     void onAssignShift(ActionEvent event) {
         try {
-            String staffInfo = staffChoice.getValue();
+            // Retrieve selected input values from dropdowns
+            String staffInfo = staffChoice.getValue(); // e.g., "N1 - Lucy"
             String day = dayChoice.getValue();
             String time = timeChoice.getValue();
 
+            // Validate that all required fields are selected
             if (staffInfo == null || day == null || time == null) {
                 showAlert("Please select all fields before assigning.");
                 return;
             }
             // Get staff ID from string like "n1 - Lucy"
             String staffId = staffInfo.split(" - ")[0];
-            Staff selected = model.findStaffById(staffId);
 
+            // Find the corresponding Staff object from the model
+            Staff selected = model.findStaffById(staffId);
             if (selected == null) {
                 showAlert("Staff not found!");
                 return;
             }
 
+            // Create a new Shift with the chosen day and time
             Shift shift = new Shift(day, time);
-            // Assign the shift
+
+            // Assign the shift, must be a manager
             model.assignShift((Manager) loggedInStaff, selected, shift);
 
+            // Notify the user of successful recording
             showAlert("Shift assigned successfully!");
+            // Go back to the dashboard page
             onBack(event);
         } catch (Exception e) {
+            // Catch-all for unexpected errors
             showAlert("Error: " + e.getMessage());
         }
     }

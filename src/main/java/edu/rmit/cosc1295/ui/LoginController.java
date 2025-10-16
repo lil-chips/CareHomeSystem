@@ -41,6 +41,11 @@ public class LoginController {
         roleChoice.setValue("Manager"); // default value
     }
 
+    /**
+     * Handles the "Login" button click event from the user interface.
+     * @param event the button click event that triggered this action
+     */
+
     @FXML
     void onLogin(ActionEvent event) {
 
@@ -50,10 +55,12 @@ public class LoginController {
             return;
         }
 
+        // Retrieve input values from the text fields
         String id = idField.getText().trim();
         String pass = passwordField.getText().trim();
         String role = roleChoice.getValue();
 
+        // Validate that both ID and password fields are not empty
         if (id.isEmpty() || pass.isEmpty()) {
             showAlert("Please enter ID and password!");
             return;

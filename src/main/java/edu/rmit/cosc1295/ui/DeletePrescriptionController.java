@@ -36,6 +36,7 @@ public class DeletePrescriptionController {
      */
 
     public void setModel(CareHome model) {
+        // Store the shared CareHome instance for data access
         this.model = model;
 
         // Fill all existing bed IDs
@@ -46,6 +47,7 @@ public class DeletePrescriptionController {
             }
         }
 
+        // If there are occupied beds, pre-select the first one
         if (!bedChoice.getItems().isEmpty()) {
             bedChoice.setValue(bedChoice.getItems().getFirst());
         }
@@ -68,30 +70,38 @@ public class DeletePrescriptionController {
     @FXML
     void onDeletePrescription(ActionEvent event) {
         try {
+            // Verify authorization — only doctors can delete prescriptions
             if (!(loggedInStaff instanceof Doctor)) {
                 showAlert("Only doctors can delete prescriptions!");
                 return;
             }
 
-            Integer bedId = bedChoice.getValue();
-            String indexText = indexField.getText().trim();
+            // Retrieve user input from the GUI
+            Integer bedId = bedChoice.getValue(); // selected bed ID from dropdown
+            String indexText = indexField.getText().trim(); // prescription index input
 
+            // Validate inputs — both bed and index must be provided
             if (bedId == null || indexText.isEmpty()) {
                 showAlert("Please select a bed and enter prescription index.");
                 return;
             }
 
+            // Convert prescription index to integer
             int index = Integer.parseInt(indexText);
 
-            // Call backend logic
+            // Call backend logic to delete the prescription
             model.docDeletePres((Doctor) loggedInStaff, bedId, index);
 
+            // Notify the user of successful recording
             showAlert("Prescription deleted successfully!");
+            // Go back to the dashboard page
             onBack(event);
 
         } catch (NumberFormatException e) {
+            // Handle invalid number format for index
             showAlert("Index must be a number (0 for first prescription).");
         } catch (Exception e) {
+            // Catch-all for unexpected errors
             showAlert("Failed to delete prescription: " + e.getMessage());
         }
     }
