@@ -117,6 +117,11 @@ public class AddPrescriptionController {
         }
     }
 
+    /**
+     * Helper function that shows an information pop-up message.
+     * @param msg The message to display in the alert box
+     */
+
     private void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);

@@ -16,14 +16,9 @@ import java.awt.*;
 
 public class AddResidentController {
 
-    @FXML
-    private TextField nameField;
-
-    @FXML
-    private ChoiceBox<String> genderChoice;
-
-    @FXML
-    private ChoiceBox<Integer> bedChoice;
+    @FXML private TextField nameField;
+    @FXML private ChoiceBox<String> genderChoice;
+    @FXML private ChoiceBox<Integer> bedChoice;
 
     private CareHome model;
     private Staff loggedInStaff;
@@ -120,13 +115,14 @@ public class AddResidentController {
     @FXML
     void onBack(ActionEvent event) {
         try {
+            // Load the Dashboard FXML layout
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
             Scene scene = new Scene(loader.load(), 600, 400);
 
             // Pass data back to DashboardController
             DashboardController controller = loader.getController();
-            controller.setModel(model);
-            controller.setLoggedInStaff(loggedInStaff);
+            controller.setModel(model); // Share the CareHome model instance
+            controller.setLoggedInStaff(loggedInStaff); // Keep the logged-in user info
 
             // Replace current scene with dashboard
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -135,6 +131,7 @@ public class AddResidentController {
             stage.show();
 
         } catch (Exception e) {
+            // Handle any loading or transition errors
             showAlert("Failed to return to dashboard: " + e.getMessage());
         }
     }

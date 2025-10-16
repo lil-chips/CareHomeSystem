@@ -1454,25 +1454,36 @@ public class CareHome implements Serializable {
      */
 
     public void addPrescription(Doctor doctor, String residentName, String medicine, String dose, String time) {
+        // Validate doctor authorization
         if (doctor == null) {
             throw new UnauthorizedException("Only doctor can add prescriptions");
         }
 
+        // Locate the resident by name
         Resident resident = findResidentByName(residentName);
         if (resident == null) {
             throw new IllegalArgumentException("Resident not found: " + residentName);
         }
 
+        // Create a new Prescription object
         Prescription p = new Prescription(doctor.getId(), medicine, dose, time);
+
+        // Add the prescription to the resident’s personal list
         resident.addPrescription(p);
 
-        // Write into database
+        // Try to also write the record into the database for persistence
         try {
-            // simple ID = position + 1
+            // Simple resident ID: use list index
             int residentId = residents.indexOf(resident) + 1;
+
+            // Insert the prescription into the SQLite database
             CareHomeDatabase.insertPrescription(residentId, doctor.getId(), medicine, dose, time);
+
+            // Print confirmation message
             System.out.println("Prescription saved into database for resident " + residentName);
         } catch (Exception e) {
+
+            // Handle any DB error gracefully
             System.out.println("Failed to insert prescription: " + e.getMessage());
         }
 
@@ -1493,31 +1504,36 @@ public class CareHome implements Serializable {
      */
 
     public Staff findStaffById(String id) {
+        // if the given ID is null or blank, skip the search
         if (id == null || id.isBlank()) {
             return null;
         }
 
+        // Loop through all staff members to find a matching ID
         for (Staff s : staffList) {
-            if (s.getId().equalsIgnoreCase(id)) {
-                return s;
+            if (s.getId().equalsIgnoreCase(id)) { // Case-insensitive match
+                return s; // Found the matching staff member
             }
         }
         return null; // not found
     }
 
     /**
-     * Helper function to show pop-up messages.
-     *
+     * Displays a simple pop-up information alert with a given title and message.
+     * @param title the title of the alert window
+     * @param message the main message content to be displayed in the alert
      */
 
     public static void showAlert(String title, String message) {
         try {
+            // Run the alert creation on the JavaFX Application Thread
             javafx.application.Platform.runLater(() -> {
+                // Create a simple informational alert
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle(title);
-                alert.setHeaderText(null);
-                alert.setContentText(message);
-                alert.showAndWait();
+                alert.setHeaderText(null); // No header text for cleaner UI
+                alert.setContentText(message); // Set the alert message
+                alert.showAndWait(); // Block until the user closes the alert
             });
         } catch (Exception e) {
             System.out.println("[Alert Suppressed] " + title + ": " + message);

@@ -71,28 +71,37 @@ public class AddBedController {
     @FXML
     void onBack(ActionEvent event) {
         try {
+            // Load the Dashboard FXML layout
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/rmit/cosc1295/ui/dashboard.fxml"));
             Scene scene = new Scene(loader.load(), 600, 400);
 
+            // Pass data back to DashboardController
             DashboardController controller = loader.getController();
-            controller.setModel(model);
-            controller.setLoggedInStaff(loggedInStaff);
+            controller.setModel(model); // Share the CareHome model instance
+            controller.setLoggedInStaff(loggedInStaff); // Keep the logged-in user info
 
+            // Replace current scene with dashboard
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("CareHome - Dashboard");
             stage.show();
 
         } catch (Exception e) {
+            // Handle any loading or transition errors
             showAlert("Failed to return: " + e.getMessage());
         }
     }
 
+    /**
+     * Helper function that shows an information pop-up message.
+     * @param msg The message to display in the alert box
+     */
+
     private void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
+        alert.setHeaderText(null); // We don’t need a title
+        alert.setContentText(msg); // Show our message
+        alert.showAndWait(); // Wait until the user closes it
 
     }
 }

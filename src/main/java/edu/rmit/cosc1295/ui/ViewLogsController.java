@@ -12,7 +12,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Shows all log entries stored in the CareHome system.
@@ -23,6 +29,7 @@ public class ViewLogsController {
     @FXML private ListView<String> logList;
     @FXML private Button refreshBtn;
     @FXML private Button backBtn;
+    @FXML private Button exportBtn;
 
     private CareHome model;
     private Staff loggedInStaff;
@@ -52,6 +59,23 @@ public class ViewLogsController {
     private void refreshLogs() {
         ObservableList<String> logs = FXCollections.observableArrayList(CareHome.getLogs());
         logList.setItems(logs);
+    }
+
+    /**
+     * Handles the export of all system logs to a text file.
+     * @param event the button click event that triggers this method
+     */
+
+    @FXML
+    void onExport(ActionEvent event) {
+        // Retrieve all logs currently stored in the system
+        ArrayList<String> logs = CareHome.getLogs();
+
+        // If there are no logs, inform the user and return early
+        if (logs.isEmpty()) {
+            showAlert("No logs to export.");
+            return;
+        }
     }
 
     /**

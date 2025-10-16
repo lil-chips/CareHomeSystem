@@ -6,24 +6,35 @@ import java.io.File;
 
 public class CareHomeTest {
 
+    /**
+     * Enables the global test mode before any tests are executed.
+     */
+
     @BeforeAll
     static void enableTestMode() {
+        // Set a custom system property to signal that tests are running
         System.setProperty("test.mode", "true");
     }
 
+    /**
+     * Resets the SQLite database before each test case.
+     */
+
     @BeforeEach
     void resetDatabase() {
+        // Determine the absolute path of the database file
         String dbPath = System.getProperty("user.dir") + File.separator + "care_home.db";
         File dbFile = new File(dbPath);
 
+        // Delete existing database (if any)
         if (dbFile.exists()) {
-            dbFile.delete();
+            dbFile.delete(); // Remove old DB to avoid leftover test data
             System.out.println("Database reset for clean test (deleted successfully).");
         } else {
             System.out.println("No database found, skipping delete.");
         }
 
-        // Recreate tables for next test
+        // Rebuild database structure for the next test
         CareHomeDatabase.initializeDatabase();
         System.out.println("Rebuilt database structure for test.");
     }
